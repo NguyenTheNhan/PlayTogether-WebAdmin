@@ -1,0 +1,20 @@
+﻿@page "/"
+@inject NavigationManager Navigation
+
+@*<PageTitle>Home | PlayTogether</PageTitle>*@
+
+<PAPage >
+	<AuthorizeView>
+		<Authorized>
+			<h2>Welcome </h2>
+		</Authorized>
+		<NotAuthorized>
+			<MudText Typo="Typo.h5" Color="Color.Error">You need to Login to use Planner App</MudText>
+			<a href="/authentication/login"><MudButton Variant="Variant.Filled" Color="Color.Primary">Login</MudButton></a>
+		</NotAuthorized>
+	</AuthorizeView>
+</PAPage>
+@code
+{
+
+}
