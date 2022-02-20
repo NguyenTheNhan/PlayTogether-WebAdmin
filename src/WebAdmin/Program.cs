@@ -11,16 +11,12 @@ using MudBlazor.Services;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using WebAdmin.Client.Services;
+using Microsoft.AspNetCore.Components.Web;
+using WebAdmin;
 
-namespace WebAdmin
-{
-    public class Program
-    {
-        public static async Task Main(string[] args)
-        {
-            var builder = WebAssemblyHostBuilder.CreateDefault(args);
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
-            //builder.RootComponents.Add<HeadOutlet>("head::after");
+            builder.RootComponents.Add<HeadOutlet>("head::after");
 
             builder.Services.AddHttpClient("PlayTogether.Api", client =>
             {
@@ -41,6 +37,4 @@ namespace WebAdmin
 
 
             await builder.Build().RunAsync();
-        }
-    }
-}
+

@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-<MudLayout Class="mt-5">
+<MudLayout >
     <MudAppBar Elevation="1" Color="Color.Transparent">
         <img oncontextmenu="return false;" src="https://media.publit.io/file/LogoPlayTogether/logo.png" alt="logo" style="width:6%"/>
         <img oncontextmenu="return false;" src="https://media.publit.io/file/LogoPlayTogether/name.png" alt="name" style="width:10%" class="mt-1"/>
@@ -17,15 +17,16 @@
         </MudGrid>
     </MudMainContent>    
 </MudPaper>
-<MudTFootRow Style="background-color:powderblue;">
+
+<MudPaper Class="pa-16 mt-16"  Elevation="0" Height="100%" Width="100%"  >
 @*    <MudGrid Justify="Justify.Center" Class="mt-6">
     <MudItem xs="12">*@
-    <MudText Class="ml-6">Contacts: 0123456789</MudText>
-    <MudText Class="ml-6"><a href="playtogether@support.com">playtogether@support.com</a></MudText>
+    @*<MudText Class="mb-0"><a href="playtogether@support.com">playtogether@support.com</a></MudText>*@
 @*    </MudItem>
-
     </MudGrid>*@
-</MudTFootRow>
+    <MudText Align="Align.Center">Play Together © 2021 All Rights Reserved.</MudText>
+</MudPaper>
+
 </MudLayout>
 <MudThemeProvider />
 

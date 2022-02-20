@@ -73,7 +73,7 @@ namespace WebAdmin.Components
             catch (Exception ex)
             {
 
-                Error.HandleError(ex);
+                _errorMessage = ex.Message;
             }
 
             _isBusy = false;

@@ -1,9 +1,38 @@
-﻿<MudNavMenu>
-        <MudText Typo="Typo.h6" Class="px-4">Planner App</MudText>
-        <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Secondary Text</MudText>
-        <MudDivider Class="my-2"/>
-        <MudNavLink Href="/">Home</MudNavLink>
-        <MudNavLink Href="/plans">Plans</MudNavLink>
-        <MudNavLink Href="/plans/form" >Add Plan</MudNavLink>
-        <MudNavLink Href="/about">About</MudNavLink>
-</MudNavMenu>
+﻿@inject Blazored.LocalStorage.ILocalStorageService Storage
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager Navigation
+
+<MudPaper Width="240px" Class="d-inline-flex py-3" Elevation="0">
+    <MudNavMenu Rounded="true" Class="mud-width-full rounded-xl" Dense="true" Color="Color.Primary" >
+        @*<MudDivider Class="my-2" />*@
+        <MudNavLink Href="/" Icon="@Icons.Filled.Home" IconColor="Color.Primary" Style="font-size:large" Match="NavLinkMatch.Prefix">Trang chủ</MudNavLink>
+        <MudNavGroup Title="Danh mục" Icon="@Icons.Outlined.AllInbox" Expanded="false" Style="font-size:large">
+            <MudNavLink Href="/gametypes" Style="font-size:medium" Class="ml-1">Thể loại</MudNavLink>
+            <MudNavLink Href="/rankofgame" Style="font-size:medium" Class="ml-1">Thông tin</MudNavLink>
+        </MudNavGroup>
+        <MudNavGroup Title="Tài khoản" Icon="@Icons.Outlined.Groups" Expanded="false" Style="font-size:large">
+            <MudNavLink Href="/hirers" Style="font-size:medium" Class="ml-1">Hirers</MudNavLink>
+            <MudNavLink Href="/players" Style="font-size:medium" Class="ml-1">Players</MudNavLink>
+            <MudNavLink Href="/charities" Style="font-size:medium" Class="ml-1">Charities</MudNavLink>
+        </MudNavGroup>
+        <MudNavGroup Title="Báo cáo" Icon="@Icons.Outlined.ListAlt" Expanded="false" Style="font-size:large">
+            <MudNavLink Href="/account-reports" Style="font-size:medium" Class="ml-1">AccountReports</MudNavLink>
+            <MudNavLink Href="/feedback-reports" Style="font-size:medium" Class="ml-1">FeedbackReports</MudNavLink>
+        </MudNavGroup>
+        <MudNavLink Href="/revenues" Icon="@Icons.Outlined.BarChart" Style="font-size:large">Doanh thu</MudNavLink>
+        <MudNavLink Href="/settings" Icon="@Icons.Outlined.Settings" Style="font-size:large">Cài đặt</MudNavLink>
+        <MudNavLink Icon="@Icons.Outlined.PowerSettingsNew" Style="font-size:large" OnClick="LogoutAsync">Đăng xuất</MudNavLink>
+    </MudNavMenu>
+</MudPaper>
+
+@code {
+    private async Task LogoutAsync()
+    {
+        await Storage.RemoveItemAsync("access_token");
+        await Storage.RemoveItemAsync("expire_date");
+
+        await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        Navigation.NavigateTo("/authentication/login");
+
+    }
+}

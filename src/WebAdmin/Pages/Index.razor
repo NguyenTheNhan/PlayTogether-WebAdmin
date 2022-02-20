@@ -1,16 +1,27 @@
 ﻿@page "/"
 @inject NavigationManager Navigation
 
-@*<PageTitle>Home | PlayTogether</PageTitle>*@
-
+<PageTitle>Home | PlayTogether</PageTitle>
 <PAPage >
 	<AuthorizeView>
 		<Authorized>
 			<h2>Welcome </h2>
 		</Authorized>
 		<NotAuthorized>
-			<MudText Typo="Typo.h5" Color="Color.Error">You need to Login to use Planner App</MudText>
-			<a href="/authentication/login"><MudButton Variant="Variant.Filled" Color="Color.Primary">Login</MudButton></a>
+			<MudPaper Elevation="0" Height="100%" Width="100%">
+				<MudGrid Justify="Justify.Center">		
+					<MudItem xs="4" >
+			<MudText Typo="Typo.h5" Color="Color.Error" Align="Align.Right">You need to </MudText>
+					</MudItem>
+					<MudItem xs="0" >
+			<MudLink Typo="Typo.h5" Href="/authentication/login" Align="Align.Center" Underline="Underline.Always" >Login</MudLink>
+					</MudItem>
+					<MudItem xs="4" >
+			<MudText Typo="Typo.h5" Color="Color.Error" Align="Align.Left">to continue</MudText>
+					</MudItem>
+				</MudGrid>
+				
+			</MudPaper>
 		</NotAuthorized>
 	</AuthorizeView>
 </PAPage>
