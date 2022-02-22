@@ -33,7 +33,7 @@ namespace WebAdmin
             }
 
             //Empty claim principal mean no identity and user is not logged in
-            return new AuthenticationState(new ClaimsPrincipal()); 
+            return new AuthenticationState(new ClaimsPrincipal());
         }
     }
 }

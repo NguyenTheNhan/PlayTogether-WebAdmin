@@ -1,7 +1,7 @@
 {
   "name": "WebAdmin",
   "short_name": "WebAdmin",
-  "start_url": "./",
+  "start_url": "./index",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#03173d",

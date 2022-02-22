@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAdmin", "WebAdmin\WebAdmin.csproj", "{DEC666F7-5000-4A69-8F9D-4C4F40CC0DDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAdmin.Shared", "WebAdmin.Shared\WebAdmin.Shared.csproj", "{9FADEEDA-048A-41BA-A437-CD233C6789C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAdmin.Shared", "WebAdmin.Shared\WebAdmin.Shared.csproj", "{9FADEEDA-048A-41BA-A437-CD233C6789C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAdmin.Client.Services", "WebAdmin.Client.Services\WebAdmin.Client.Services.csproj", "{759BC5AF-CD90-4B54-9C3A-2BC4A7792F4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAdmin.Client.Services", "WebAdmin.Client.Services\WebAdmin.Client.Services.csproj", "{759BC5AF-CD90-4B54-9C3A-2BC4A7792F4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,24 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using System.Net.Http;
-using System.Net.Http.Json;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.AspNetCore.Components.WebAssembly.Http;
-using Microsoft.JSInterop;
-using WebAdmin;
-using WebAdmin.Shared;
-using MudBlazor;
-using WebAdmin.Client.Services.Interfaces;
-using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.LocalStorage;
-using WebAdmin.Shared.Models;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using System;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
+using WebAdmin.Client.Services.Interfaces;
+using WebAdmin.Shared;
+using WebAdmin.Shared.Models;
 
 namespace WebAdmin.Components
 {
@@ -62,7 +52,7 @@ namespace WebAdmin.Components
 
                     await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
-                    Navigation.NavigateTo("/");
+                    Navigation.NavigateTo("/index");
                 }
 
             }
@@ -79,7 +69,7 @@ namespace WebAdmin.Components
             _isBusy = false;
         }
 
-        
+
 
     }
 }
