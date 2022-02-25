@@ -21,11 +21,16 @@ using Blazored.FluentValidation;
 
 namespace WebAdmin.Pages.GameType
 {
-    public partial class GameType
-    {        private List<BreadcrumbItem> _breadcrumbItems => new()
+    public partial class CreateEditGameType
+    {
+        [Parameter]
+        public string Id { get; set; }
+
+        private List<BreadcrumbItem> _breadcrumbItems = new()
         {
             new BreadcrumbItem("Trang chủ", "/index"),
-            new BreadcrumbItem("Thể loại", "/gametypes", true)
+            new BreadcrumbItem("Thể loại", "/gametypes"),
+            new BreadcrumbItem("Tạo mới thể loại", "/gametypes/form", true)
         };
     }
 }

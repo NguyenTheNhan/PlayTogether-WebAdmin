@@ -1,0 +1,29 @@
+﻿@namespace WebAdmin.Components
+
+<MudText Typo="Typo.h6" Style="mb-2"> Thông tin</MudText>
+
+<MudPaper Class="py-4 px-4">
+
+<EditForm Model="_model" OnValidSubmit="SubmitFormAsync">
+    <FluentValidationValidator />
+    <MudTextField Label="Thể loại" HelperText="Required" @bind-Value="@_model.Name" Variant="Variant.Outlined" />
+    <MudTextField Label="Tên khác" HelperText="Optional" @bind-Value="@_model.OtherName" Variant="Variant.Outlined" />
+    <MudTextField Label="Tên viết tắt" HelperText="Required" @bind-Value="@_model.ShortName" Variant="Variant.Outlined" />
+    <MudTextField Label="Description" HelperText="Optional" @bind-Value="@_model.Description" Lines="4" Variant="Variant.Outlined" />
+
+
+
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_errorMessage</MudAlert>
+    }
+
+    <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
+
+    <ValidationSummary/>
+    <MudAppBarSpacer />
+    <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit"  Disabled="_isBusy">Save</MudButton>
+    <MudButton Color="Color.Default" Variant="Variant.Filled" OnClick='() => Navigation.NavigateTo($"/gametypes")'  Disabled="_isBusy">Cancel</MudButton>
+</EditForm>
+
+</MudPaper>

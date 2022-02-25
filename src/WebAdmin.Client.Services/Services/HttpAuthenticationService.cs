@@ -4,9 +4,10 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared.Models;
+using WebAdmin.Shared.Models.Auth;
 using WebAdmin.Shared.Responses;
 
-namespace WebAdmin.Client.Services
+namespace WebAdmin.Client.Services.Services
 {
     public class HttpAuthenticationService : IAuthenticationService
     {

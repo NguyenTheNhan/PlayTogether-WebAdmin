@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared.Models;
+using WebAdmin.Shared.Models.GameType;
 using WebAdmin.Shared.Responses;
 
-namespace WebAdmin.Client.Services
+namespace WebAdmin.Client.Services.Services
 {
     public class HttpGameTypeService : IGameTypeService
     {
@@ -21,10 +22,9 @@ namespace WebAdmin.Client.Services
             _httpClient = httpClient;
         }
         public async Task<GameTypeSummary> CreateAsync(GameTypeSummary model)
-        {
-            var form = PrepareGameTypeForm(model, false);
+        {            
 
-            var response = await _httpClient.PostAsync("/api/play-together/v1/game-types", form);
+            var response = await _httpClient.PostAsJsonAsync($"/api/play-together/v1/game-types", model);
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<GameTypeSummary>();
@@ -47,11 +47,10 @@ namespace WebAdmin.Client.Services
             }
         }
 
-        public async Task<GameTypeSummary> EditAsync(GameTypeSummary model)
-        {
-            var form = PrepareGameTypeForm(model, true);
+        public async Task<GameTypeSummary> EditAsync(GameTypeSummary model, string id)
+        {         
 
-            var response = await _httpClient.PutAsync("/api/play-together/v1/game-types", form);
+            var response = await _httpClient.PutAsJsonAsync<object>($"/api/play-together/v1/game-types/{id}", model);
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<GameTypeSummary>();

@@ -8,16 +8,17 @@
         <MudAppBarSpacer />
         <LoginDisplay />
     </MudAppBar>
-        @*<AuthorizeView>
-            <Authorized>*@
+        <AuthorizeView>
+            <Authorized>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu />
     </MudDrawer>
-            @*</Authorized>
-        </AuthorizeView>*@
+            </Authorized>
+        </AuthorizeView>
     <MudMainContent>
         @Body
     </MudMainContent>
+
 </MudLayout>
 
 <MudThemeProvider />

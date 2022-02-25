@@ -1,12 +1,10 @@
-﻿@page "/index"
-@inject NavigationManager Navigation
+﻿@page "/gametypes/form"
+@page "/gametypes/form/{id}"
 
-<PageTitle>Home | PlayTogether</PageTitle>
-<PAPage>
+<PageTitle>@(Id == null ? "Create" : "Edit") | Play Together </PageTitle>
+
+<PAPage Title='@(Id == null ? "Tạo mới thể loại" : "Chỉnh sửa thể loại" )' BreadcrumbItems="_breadcrumbItems">
     <AuthorizeView>
-        <Authorized>
-            <h2>Welcome </h2>
-        </Authorized>
         <NotAuthorized>
             <MudPaper Elevation="0" Height="100%" Width="100%">
                 <MudText Typo="Typo.h5" Color="Color.Error" >
@@ -22,9 +20,13 @@
                 </MudText>
             </MudPaper>
         </NotAuthorized>
+
+        <Authorized>
+            <MudGrid>
+                <MudItem lg="6" md="8" sm="12">
+                    <GameTypeForm Id="@Id" />
+                </MudItem>
+            </MudGrid>
+        </Authorized>
     </AuthorizeView>
 </PAPage>
-@code
-{
-
-}

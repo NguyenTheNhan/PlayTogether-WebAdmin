@@ -18,18 +18,17 @@ using WebAdmin.Shared;
 using WebAdmin.Components;
 using MudBlazor;
 using Blazored.FluentValidation;
-using WebAdmin.Client.Services.Interfaces;
-using WebAdmin.Shared.Models;
+using WebAdmin.Shared.Models.Game;
 using WebAdmin.Client.Services.Exceptions;
+using WebAdmin.Client.Services.Interfaces;
 using AKSoftware.Blazor.Utilities;
-using WebAdmin.Shared.Models.GameType;
 
 namespace WebAdmin.Components
 {
-    public partial class GameTypeList
+    public partial class GameList
     {
         [Inject]
-        public IGameTypeService GameTypeService { get; set; }
+        public IGameService GameService { get; set; }
 
         [Inject]
         public NavigationManager Navigation { get; set; }
@@ -43,15 +42,15 @@ namespace WebAdmin.Components
         private bool _isBusy = false;
         private string _errorMessage = string.Empty;
 
-        private List<GameTypeSummary> _gameTypes = new();
+        private List<GameSummary> _games = new();
 
-        private async Task<IEnumerable<GameTypeSummary>> GetGameTypesAsync(string query = "", int pageNumber = 1, int pageSize = 10)
+        private async Task<IEnumerable<GameSummary>> GetGamesAsync(string query = "", int pageNumber = 1, int pageSize = 10)
         {
             _isBusy = true;
             try
             {
-                var result = await GameTypeService.GetGameTypesAsync(query, pageNumber, pageSize);
-                _gameTypes = result.ToList();
+                var result = await GameService.GetGamesAsync(query, pageNumber, pageSize);
+                _games = result.ToList();
 
                 return result;
             }
@@ -68,17 +67,17 @@ namespace WebAdmin.Components
         }
 
         #region Edit
-        private void EditGameType(GameTypeSummary gameType)
+        private void EditGame(GameSummary game)
         {
-            Navigation.NavigateTo($"/gametypes/form/{gameType.Id}");
+            Navigation.NavigateTo($"/games/form/{game.Id}");
         }
         #endregion
 
         #region Delete
-        private async Task DeleteGameTypeAsync(GameTypeSummary gameType)
+        private async Task DeleteGameAsync(GameSummary game)
         {
             var parameters = new DialogParameters();
-            parameters.Add("ContentText", $"Do you really want to delete '{gameType.ShortName}'?");
+            parameters.Add("ContentText", $"Do you really want to delete '{game.Name}'?");
             parameters.Add("ButtonText", "Delete");
             parameters.Add("Color", Color.Error);
 
@@ -92,10 +91,10 @@ namespace WebAdmin.Components
                 // Confirmed to delete
                 try
                 {
-                    await GameTypeService.DeleteAsync(gameType.Id);
+                    await GameService.DeleteAsync(game.Id);
 
                     // Send a message about the deleted game type
-                    MessagingCenter.Send(this, "gameType_deleted", gameType);
+                    MessagingCenter.Send(this, "game_deleted", game);
                 }
                 catch (ApiException ex)
                 {
@@ -109,7 +108,6 @@ namespace WebAdmin.Components
             }
         }
         #endregion
-
 
     }
 }

@@ -1,6 +1,6 @@
 ﻿
 
-namespace WebAdmin.Shared.Models
+namespace WebAdmin.Shared.Models.GameType
 {
     public class GameTypeSummary
     {

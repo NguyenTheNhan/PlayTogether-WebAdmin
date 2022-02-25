@@ -19,47 +19,46 @@ using WebAdmin.Components;
 using MudBlazor;
 using Blazored.FluentValidation;
 using WebAdmin.Client.Services.Interfaces;
-using WebAdmin.Shared.Models;
+using WebAdmin.Shared.Models.Game;
 using AKSoftware.Blazor.Utilities;
-using WebAdmin.Shared.Models.GameType;
 
 namespace WebAdmin.Components
 {
-    public partial class GameTypeTable
+    public partial class GameTable
     {
         [Inject]
-        public IGameTypeService GameTypeService { get; set; }
+        public IGameService GameService { get; set; }
 
 
         [Parameter]
-        public EventCallback<GameTypeSummary> OnDeleteClicked { get; set; }
+        public EventCallback<GameSummary> OnDeleteClicked { get; set; }
 
         [Parameter]
-        public EventCallback<GameTypeSummary> OnEditClicked { get; set; }
+        public EventCallback<GameSummary> OnEditClicked { get; set; }
 
         [CascadingParameter]
         public Error Error { get; set; }
         public bool _isBusy { get; set; }
 
         private string _query = string.Empty;
-        private MudTable<GameTypeSummary> _table;
+        private MudTable<GameSummary> _table;
 
         protected override void OnInitialized()
         {
-            MessagingCenter.Subscribe<GameTypeList, GameTypeSummary>(this, "gameType_deleted", async (sender, args) =>
+            MessagingCenter.Subscribe<GameList, GameSummary>(this, "game_deleted", async (sender, args) =>
             {
                 await _table.ReloadServerData();
                 StateHasChanged();
             });
         }
 
-        private async Task<TableData<GameTypeSummary>> ServerReloadAsync(TableState state)
+        private async Task<TableData<GameSummary>> ServerReloadAsync(TableState state)
         {
             try
             {
-                var result = await GameTypeService.GetGameTypesAsync(_query, state.Page, state.PageSize);
+                var result = await GameService.GetGamesAsync(_query, state.Page, state.PageSize);
 
-                return new TableData<GameTypeSummary>
+                return new TableData<GameSummary>
                 {
                     Items = result,
                     TotalItems = result.Count()
@@ -67,12 +66,12 @@ namespace WebAdmin.Components
             }
             catch (Exception ex)
             {
-               Error.HandleError(ex);
+                Error.HandleError(ex);
             }
 
-            return new TableData<GameTypeSummary>
+            return new TableData<GameSummary>
             {
-                Items = new List<GameTypeSummary>(),
+                Items = new List<GameSummary>(),
                 TotalItems = 0
             };
         }

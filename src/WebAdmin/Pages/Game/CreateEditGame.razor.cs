@@ -19,13 +19,18 @@ using WebAdmin.Components;
 using MudBlazor;
 using Blazored.FluentValidation;
 
-namespace WebAdmin.Pages.GameType
+namespace WebAdmin.Pages.Game
 {
-    public partial class GameType
-    {        private List<BreadcrumbItem> _breadcrumbItems => new()
+    public partial class CreateEditGame
+    {
+        [Parameter]
+        public string Id { get; set; }
+
+        private List<BreadcrumbItem> _breadcrumbItems = new()
         {
             new BreadcrumbItem("Trang chủ", "/index"),
-            new BreadcrumbItem("Thể loại", "/gametypes", true)
+            new BreadcrumbItem("Game", "/games"),
+            new BreadcrumbItem("Tạo mới Game", "/games/form", true)
         };
     }
 }

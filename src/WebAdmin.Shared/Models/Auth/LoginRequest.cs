@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebAdmin.Shared.Models
+namespace WebAdmin.Shared.Models.Auth
 {
     public class LoginRequest
     {
