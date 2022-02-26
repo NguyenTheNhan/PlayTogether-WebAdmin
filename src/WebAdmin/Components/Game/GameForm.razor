@@ -2,7 +2,7 @@
 
 <MudText Typo="Typo.h6" Style="mb-2"> Thông tin</MudText>
 
-<MudPaper Class="py-4 px-4">
+<MudPaper Class="py-4 px-4" Width="100%">
 
 <EditForm Model="_model" OnValidSubmit="SubmitFormAsync">
     <FluentValidationValidator />
@@ -10,12 +10,14 @@
     <MudTextField Label="Tên khác" HelperText="Optional" @bind-Value="@_model.OtherName" Variant="Variant.Outlined" />
     <MudTextField Label="Tên hiển thị" HelperText="Required" @bind-Value="@_model.DisplayName" Variant="Variant.Outlined" />
 
-
     @if (_isEditMode)
     {
     }
-
-    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+        @if (_ranks != null)
+        {
+            <RankList GameId="@_model.Id" />
+        }
+        @if (!string.IsNullOrWhiteSpace(_errorMessage))
     {
         <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_errorMessage</MudAlert>
     }

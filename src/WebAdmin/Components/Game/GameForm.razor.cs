@@ -22,6 +22,7 @@ using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared.Models.Game;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Shared.Models.TypeOfGame;
+using WebAdmin.Shared.Models.Rank;
 
 namespace WebAdmin.Components
 {
@@ -42,16 +43,20 @@ namespace WebAdmin.Components
         private bool _isEditMode => Id != null;
 
         private GameDetail _model = new GameDetail();
-        private List<TypeOfGameDetail> typeOfGames = new();
+        private List<TypeOfGameDetail> _typeOfGames = new();
+        private List<RankDetail> _ranks = new();
+
         private bool _isBusy = false;
         private string _fileName = string.Empty;
         private string _errorMessage = string.Empty;
+
 
         protected override async Task OnInitializedAsync()
         {
             if (_isEditMode)
                 await FetchGameByIdAsync();
         }
+
 
         private async Task SubmitFormAsync()
         {
@@ -84,6 +89,30 @@ namespace WebAdmin.Components
 
         }
 
+        //private async Task<TableData<RankDetail>> ServerReloadAsync(TableState state)
+        //{
+        //    try
+        //    {
+        //        var result = await GameService.GetByIdAsync(Id);
+
+        //        return new TableData<RankDetail>
+        //        {
+        //            Items = result.ranks,
+        //            TotalItems = result.ranks.Count(),
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Error.HandleError(ex);
+        //    }
+
+        //    return new TableData<RankDetail>
+        //    {
+        //        Items = new List<RankDetail>(),
+        //        TotalItems = 0
+        //    };
+        //}
+
         private async Task FetchGameByIdAsync()
         {
             _isBusy = true;
@@ -92,7 +121,9 @@ namespace WebAdmin.Components
             {
                 var result = await GameService.GetByIdAsync(Id);
                 _model = result;
-
+                _ranks = _model.ranks;
+                _typeOfGames = _model.typeOfGames;
+                StateHasChanged();
             }
             catch (ApiException ex)
             {

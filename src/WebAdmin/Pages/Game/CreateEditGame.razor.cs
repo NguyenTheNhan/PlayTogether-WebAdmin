@@ -29,8 +29,8 @@ namespace WebAdmin.Pages.Game
         private List<BreadcrumbItem> _breadcrumbItems = new()
         {
             new BreadcrumbItem("Trang chủ", "/index"),
-            new BreadcrumbItem("Game", "/games"),
-            new BreadcrumbItem("Tạo mới Game", "/games/form", true)
+            new BreadcrumbItem("Games", "/games"),
+            new BreadcrumbItem("Thông tin Game", "/games/form", true)
         };
     }
 }

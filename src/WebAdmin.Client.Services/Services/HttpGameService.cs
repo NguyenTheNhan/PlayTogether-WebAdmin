@@ -79,7 +79,7 @@ namespace WebAdmin.Client.Services.Services
 
         public async Task<IEnumerable<GameSummary>> GetGamesAsync(string query = null, int pageNumber = 1, int pageSize = 10)
         {
-            var response = await _httpClient.GetAsync($"/api/play-together/v1/games?SearchString={query}&pageNumber={pageNumber}&pageSize={pageSize}");
+            var response = await _httpClient.GetAsync($"/api/play-together/v1/games?Name={query}&pageNumber={pageNumber}&pageSize={pageSize}");
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<IEnumerable<GameSummary>>();

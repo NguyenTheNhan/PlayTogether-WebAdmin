@@ -18,17 +18,18 @@ using WebAdmin.Shared;
 using WebAdmin.Components;
 using MudBlazor;
 using Blazored.FluentValidation;
-using WebAdmin.Shared.Models.Game;
-using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
+using WebAdmin.Shared.Models.Rank;
+using WebAdmin.Shared.Models;
+using WebAdmin.Client.Services.Exceptions;
 using AKSoftware.Blazor.Utilities;
 
 namespace WebAdmin.Components
 {
-    public partial class GameList
+    public partial class RankList
     {
         [Inject]
-        public IGameService GameService { get; set; }
+        public IRankService RankService { get; set; }
 
         [Inject]
         public NavigationManager Navigation { get; set; }
@@ -36,23 +37,24 @@ namespace WebAdmin.Components
         [Inject]
         public IDialogService DialogService { get; set; }
 
+        [Parameter]
+        public string GameId { get; set; }
+
         [CascadingParameter]
         public Error Error { get; set; }
-
+       
         private bool _isBusy = false;
         private string _errorMessage = string.Empty;
+        private List<RankDetail> _ranks = new();
 
 
-        private List<GameSummary> _games = new();
-
-        private async Task<IEnumerable<GameSummary>> GetGamesAsync(string query = "", int pageNumber = 1, int pageSize = 10)
+        private async Task<IEnumerable<RankDetail>> GetRankAsync()
         {
             _isBusy = true;
             try
             {
-                var result = await GameService.GetGamesAsync(query, pageNumber, pageSize);
-                _games = result.ToList();
-
+                var result = await RankService.GetRankAsync(GameId);
+                _ranks = result.ToList();
                 return result;
             }
             catch (ApiException ex)
@@ -61,24 +63,26 @@ namespace WebAdmin.Components
             }
             catch (Exception ex)
             {
+                //TODO: log this error
                 Error.HandleError(ex);
             }
             _isBusy = false;
             return null;
         }
 
+
         #region Edit
-        private void EditGame(GameSummary game)
+        private void EditRank(RankDetail rank)
         {
-            Navigation.NavigateTo($"/games/form/{game.Id}");
+            Navigation.NavigateTo($"/ranks/form/{rank.Id}");
         }
         #endregion
 
         #region Delete
-        private async Task DeleteGameAsync(GameSummary game)
+        private async Task DeleteRankAsync(RankDetail rank)
         {
             var parameters = new DialogParameters();
-            parameters.Add("ContentText", $"Do you really want to delete '{game.Name}'?");
+            parameters.Add("ContentText", $"Do you really want to delete '{rank.Name}'?");
             parameters.Add("ButtonText", "Delete");
             parameters.Add("Color", Color.Error);
 
@@ -92,10 +96,10 @@ namespace WebAdmin.Components
                 // Confirmed to delete
                 try
                 {
-                    await GameService.DeleteAsync(game.Id);
+                    await RankService.DeleteAsync(rank.Id);
 
-                    // Send a message about the deleted game type
-                    MessagingCenter.Send(this, "game_deleted", game);
+                    // Send a message about the deleted rank type
+                    MessagingCenter.Send(this, "rank_deleted", rank);
                 }
                 catch (ApiException ex)
                 {
@@ -109,6 +113,5 @@ namespace WebAdmin.Components
             }
         }
         #endregion
-
     }
 }

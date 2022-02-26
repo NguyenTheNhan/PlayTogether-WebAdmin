@@ -10,10 +10,10 @@ namespace WebAdmin.Client.Services.Interfaces
 {
     public interface IRankService
     {
-        Task<RankDetail> CreateAsync(RankDetail model, string gameId);
+        Task<RankDetail> CreateAsync(int no, string name, string gameId);
         Task<RankDetail> EditAsync(string id, int no, string name, string gameId);
         Task<RankDetail> GetByIdAsync(string id);
-        Task<PagedList<RankDetail>> GetRankAsync(string gameId);
+        Task<IEnumerable<RankDetail>> GetRankAsync(string gameId);
 
         Task DeleteAsync(string id);
     }

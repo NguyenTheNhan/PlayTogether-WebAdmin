@@ -1,0 +1,53 @@
+﻿@namespace WebAdmin.Components
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">Rank Details </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem sm="12" md="5">
+                @if (_isBusy)
+                {
+                    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text"
+                             Style="min-width:200px" />
+                    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle"
+                             Height="40px" Style="min-width:200px" />
+                    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text"
+                             Style="min-width:200px" />
+                    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text"
+                             Style="min-width:200px" />
+                }
+                else
+                {
+                    <MudText Typo="Typo.subtitle1">@_rank?.Name</MudText>                   
+                    <MudText Typo="Typo.body1">@_rank?.No</MudText>
+                }
+                </MudItem>
+                <MudItem sm="12" md="7">
+                @if (_isBusy)
+                {
+                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"/>
+                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"/>
+                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"/>
+                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"/>
+                }
+                else
+                {
+                <!-- Rank's detail go here --!>
+@*                <CreateToDoItemForm PlanId="@PlanId" OnToDoItemAdded="OnToDoItemAddedCallBack" />
+                    <div class="items-container">
+                    @foreach (var item in _item)
+                    {
+                    <TodoItem Item="item" OnItemDeleted="OnItemDeletedCallBack"
+                                    OnItemEdited="OnItemEditedCallBack"/>
+                    }
+                    </div>*@
+                }
+                </MudItem>
+            </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

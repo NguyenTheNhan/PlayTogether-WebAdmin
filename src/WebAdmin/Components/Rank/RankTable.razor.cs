@@ -19,49 +19,51 @@ using WebAdmin.Components;
 using MudBlazor;
 using Blazored.FluentValidation;
 using WebAdmin.Client.Services.Interfaces;
-using WebAdmin.Shared.Models.Game;
+using WebAdmin.Shared.Models.Rank;
 using AKSoftware.Blazor.Utilities;
 
 namespace WebAdmin.Components
 {
-    public partial class GameTable
+    public partial class RankTable
     {
         [Inject]
-        public IGameService GameService { get; set; }
+        public IRankService RankService { get; set; }
 
 
         [Parameter]
-        public EventCallback<GameSummary> OnDeleteClicked { get; set; }
+        public EventCallback<RankDetail> OnDeleteClicked { get; set; }
 
         [Parameter]
-        public EventCallback<GameSummary> OnEditClicked { get; set; }
+        public EventCallback<RankDetail> OnEditClicked { get; set; }
+
+        [Parameter]
+        public string GameId { get; set; }
 
         [CascadingParameter]
         public Error Error { get; set; }
         public bool _isBusy { get; set; }
 
-        private MudTable<GameSummary> _table;
-        private string _query = string.Empty;
+        private MudTable<RankDetail> _table;
 
         protected override void OnInitialized()
         {
-            MessagingCenter.Subscribe<GameList, GameSummary>(this, "game_deleted", async (sender, args) =>
+            MessagingCenter.Subscribe<RankList, RankDetail>(this, "rank_deleted", async (sender, args) =>
             {
                 await _table.ReloadServerData();
                 StateHasChanged();
             });
         }
 
-        private async Task<TableData<GameSummary>> ServerReloadAsync(TableState state)
+        private async Task<TableData<RankDetail>> ServerReloadAsync(TableState state)
         {
             try
             {
-                var result = await GameService.GetGamesAsync(_query, state.Page, state.PageSize);
+                var result = await RankService.GetRankAsync(GameId);
 
-                return new TableData<GameSummary>
+                return new TableData<RankDetail>
                 {
                     Items = result,
-                    TotalItems = result.Count()
+                    TotalItems = result.Count(),
                 };
             }
             catch (Exception ex)
@@ -69,17 +71,17 @@ namespace WebAdmin.Components
                 Error.HandleError(ex);
             }
 
-            return new TableData<GameSummary>
+            return new TableData<RankDetail>
             {
-                Items = new List<GameSummary>(),
+                Items = new List<RankDetail>(),
                 TotalItems = 0
             };
         }
 
-        private void OnSearch(string query)
-        {
-            _query = query;
-            _table.ReloadServerData();
-        }
+        //private void OnSearch(string query)
+        //{
+        //    _query = query;
+        //    _table.ReloadServerData();
+        //}
     }
 }

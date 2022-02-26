@@ -22,13 +22,13 @@ namespace WebAdmin.Client.Services.Services
             _httpClient = httpClient;
         }
 
-        public async Task<RankDetail> CreateAsync(RankDetail model, string gameId)
+        public async Task<RankDetail> CreateAsync(int no, string name, string gameId)
         {
             var response = await _httpClient.PostAsJsonAsync($"/api/play-together/v1/games/{gameId}/ranks", new
             {
                 GameId = gameId,
-                No = model.No,
-                Name = model.Name,
+                No = no,
+                Name = name,
             });
             if (response.IsSuccessStatusCode)
             {
@@ -88,12 +88,12 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<PagedList<RankDetail>> GetRankAsync(string gameId)
+        public async Task<IEnumerable<RankDetail>> GetRankAsync(string gameId)
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/games/{gameId}/ranks");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<PagedList<RankDetail>> ();
+                var result = await response.Content.ReadFromJsonAsync<IEnumerable<RankDetail>> ();
                 return result;
             }
             else
