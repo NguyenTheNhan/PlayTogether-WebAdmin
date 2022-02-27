@@ -59,7 +59,7 @@ namespace WebAdmin.Components
             {
                 if (_isEditMode)
                 {
-                    await GameTypeService.EditAsync(_model, Id);
+                    await GameTypeService.EditAsync(_model);
                 }
                 else
                 {

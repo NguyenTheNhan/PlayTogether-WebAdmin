@@ -1,3 +1,14 @@
 ﻿@namespace WebAdmin.Components
 
+<div class=" d-flex flex-row align-center my-2">
+    <MudTextField @bind-Value="_name" 
+                  Label="New Item Description" 
+                  Placeholder="Going to the Gym" 
+                  Class="flex-grow-1 flex-shrink-0 mr-2" 
+                  Variant="Variant.Outlined" 
+                  Error="@(!string.IsNullOrWhiteSpace(_errorMessage))"
+                  ErrorText="@_errorMessage"
+                  Margin="Margin.Dense"></MudTextField>
+   
 
+</div>

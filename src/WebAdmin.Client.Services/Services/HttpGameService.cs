@@ -52,7 +52,7 @@ namespace WebAdmin.Client.Services.Services
             var response = await _httpClient.PutAsJsonAsync($"/api/play-together/v1/games/{model.Id}", model);
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<GameDetail>();
+                var result = await GetByIdAsync(model.Id);
                 return result;
             }
             else

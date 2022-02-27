@@ -63,7 +63,7 @@ namespace WebAdmin.Client.Services.Services
             });
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<RankDetail>();
+                var result = await GetByIdAsync(id);
                 return result;
             }
             else

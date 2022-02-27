@@ -38,39 +38,39 @@ namespace WebAdmin.Components
         private int _no { get; set; }
         private string _errorMessage = string.Empty;
 
-        private async Task AddRankAsync()
-        {
-            _errorMessage = string.Empty;
-            try
-            {
-                if (string.IsNullOrWhiteSpace(_name))
-                {
-                    _errorMessage = "Name is required";
-                    return;
-                }if (_no<=0)
-                {
-                    _errorMessage = "No must more than 0";
-                    return;
-                }
-                _isBusy = true;
-                //Call Api to add ToDo Item
-                var result = await RankService.CreateAsync(_no,_name, GameId);
-                _name = string.Empty;
+        //private async Task AddRankAsync()
+        //{
+        //    _errorMessage = string.Empty;
+        //    try
+        //    {
+        //        if (string.IsNullOrWhiteSpace(_name))
+        //        {
+        //            _errorMessage = "Name is required";
+        //            return;
+        //        }if (_no<=0)
+        //        {
+        //            _errorMessage = "No must more than 0";
+        //            return;
+        //        }
+        //        _isBusy = true;
+        //        //Call Api to add ToDo Item
+        //        var result = await RankService.CreateAsync(_no,_name, GameId);
+        //        _name = string.Empty;
 
-                //Notify the parent about the newly added item
-                //await OnRankAdded.InvokeAsync(result.Value);
-            }
-            catch (ApiException ex)
-            {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
+        //        //Notify the parent about the newly added item
+        //        //await OnRankAdded.InvokeAsync(result.Value);
+        //    }
+        //    catch (ApiException ex)
+        //    {
+        //        _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                //TODO: Handle error globally
-                Error.HandleError(ex);
-            }
-            _isBusy = false;
-        }
+        //        //TODO: Handle error globally
+        //        Error.HandleError(ex);
+        //    }
+        //    _isBusy = false;
+        //}
     }
 }

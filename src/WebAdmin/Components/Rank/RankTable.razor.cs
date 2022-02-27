@@ -34,7 +34,7 @@ namespace WebAdmin.Components
         public EventCallback<RankDetail> OnDeleteClicked { get; set; }
 
         [Parameter]
-        public EventCallback<RankDetail> OnEditClicked { get; set; }
+        public EventCallback<RankDetail> OnViewClicked { get; set; }
 
         [Parameter]
         public string GameId { get; set; }

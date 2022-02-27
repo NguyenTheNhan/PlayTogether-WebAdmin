@@ -15,7 +15,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddHttpClient("PlayTogether.Api", client =>
 {
-    client.BaseAddress = new Uri("https://play-together.azurewebsites.net/swagger/play-together/");
+    client.BaseAddress = new Uri("https://play-together.azurewebsites.net/swagger/play-together/index.html?urls.primaryName=V1");
 }).AddHttpMessageHandler<AuthorizationMessageHandler>();
 builder.Services.AddTransient<AuthorizationMessageHandler>();
 

@@ -34,6 +34,8 @@ namespace WebAdmin.Components
 
         [Parameter]
         public string RankId { get; set; }
+        [Parameter]
+        public string GameId { get; set; }
         [CascadingParameter]
         public Error Error { get; set; }
 
@@ -81,7 +83,13 @@ namespace WebAdmin.Components
             _isBusy = false;
         }
 
+        private void OnItemEditedCallBack(RankDetail rank)
+        {
+            var editedItem = rank;
+            editedItem.Name = rank.Name;
+            editedItem.No = rank.No;
 
+        }
 
     }
 }

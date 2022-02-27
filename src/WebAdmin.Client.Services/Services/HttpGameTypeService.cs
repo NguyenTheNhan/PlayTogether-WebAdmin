@@ -27,11 +27,13 @@ namespace WebAdmin.Client.Services.Services
             var response = await _httpClient.PostAsJsonAsync($"/api/play-together/v1/game-types", model);
             if (response.IsSuccessStatusCode)
             {
+                Console.WriteLine("OK nè");
                 var result = await response.Content.ReadFromJsonAsync<GameTypeSummary>();
                 return result;
             }
             else
             {
+                Console.WriteLine("Không Ok rồi");
                 var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
                 throw new ApiException(errorResponse, response.StatusCode);
             }
@@ -47,17 +49,18 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<GameTypeSummary> EditAsync(GameTypeSummary model, string id)
+        public async Task<GameTypeSummary> EditAsync(GameTypeSummary model)
         {         
 
-            var response = await _httpClient.PutAsJsonAsync<object>($"/api/play-together/v1/game-types/{id}", model);
+            var response = await _httpClient.PutAsJsonAsync($"/api/play-together/v1/game-types/{model.Id}", model);
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<GameTypeSummary>();
+                var result = await GetByIdAsync(model.Id);
                 return result;
             }
             else
             {
+                
                 var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
                 throw new ApiException(errorResponse, response.StatusCode);
             }

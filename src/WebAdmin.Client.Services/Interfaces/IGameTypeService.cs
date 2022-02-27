@@ -16,7 +16,7 @@ namespace WebAdmin.Client.Services.Interfaces
 
         Task<GameTypeSummary> CreateAsync(GameTypeSummary model);
 
-        Task<GameTypeSummary> EditAsync(GameTypeSummary model, string id);
+        Task<GameTypeSummary> EditAsync(GameTypeSummary model);
         //Task<GameTypeSummary> EditAsync( string id, string name, string shortName, string otherName, string description);
 
         Task DeleteAsync(string id);

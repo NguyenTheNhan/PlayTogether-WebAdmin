@@ -71,10 +71,17 @@ namespace WebAdmin.Components
         }
 
 
-        #region Edit
-        private void EditRank(RankDetail rank)
+        #region View
+        private void ViewRank(RankDetail rank)
         {
-            Navigation.NavigateTo($"/ranks/form/{rank.Id}");
+            var parameters = new DialogParameters();
+            parameters.Add("RankId", rank.Id);
+            parameters.Add("GameId", GameId);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
+
+            var dialog = DialogService.Show<RankDetailDialog>("Details", parameters, options);
+
         }
         #endregion
 
