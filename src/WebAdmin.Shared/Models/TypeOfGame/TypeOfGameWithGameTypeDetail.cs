@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAdmin.Shared.Models.GameType;
 
 namespace WebAdmin.Shared.Models.TypeOfGame
 {
-    public class TypeOfGameDetail
+    public class TypeOfGameWithGameTypeDetail : TypeOfGameSummary
     {
-        public string Id { get; set; }
-        public string GameTypeId { get; set; }
-        public string GameId { get; set; }
+        public GameTypeSummary GameType { get; set; }
     }
-
 }

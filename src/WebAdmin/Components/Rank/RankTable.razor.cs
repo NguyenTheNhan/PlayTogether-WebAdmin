@@ -35,6 +35,8 @@ namespace WebAdmin.Components
 
         [Parameter]
         public EventCallback<RankDetail> OnViewClicked { get; set; }
+        [Parameter]
+        public EventCallback<RankDetail> OnAddClicked { get; set; }
 
         [Parameter]
         public string GameId { get; set; }
@@ -52,6 +54,17 @@ namespace WebAdmin.Components
                 await _table.ReloadServerData();
                 StateHasChanged();
             });
+            MessagingCenter.Subscribe<RankItem, RankDetail>(this, "rank_edited", async (sender, args) =>
+            {
+                await _table.ReloadServerData();
+                StateHasChanged();
+            });
+            MessagingCenter.Subscribe<CreateEditRankForm, RankDetail>(this, "rank_added", async (sender, args) =>
+            {
+                await _table.ReloadServerData();
+                StateHasChanged();
+            });
+
         }
 
         private async Task<TableData<RankDetail>> ServerReloadAsync(TableState state)

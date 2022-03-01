@@ -10,7 +10,7 @@ namespace WebAdmin.Shared.Models.Game
 {
     public class GameDetail : GameSummary
     {
-        public List<TypeOfGameDetail> typeOfGames { get; set; }
+        public List<TypeOfGameWithGameTypeDetail> typeOfGames { get; set; }
         public List<RankDetail> ranks { get; set; }
     }
 }

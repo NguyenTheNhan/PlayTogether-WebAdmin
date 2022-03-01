@@ -19,54 +19,45 @@ using WebAdmin.Components;
 using MudBlazor;
 using Blazored.FluentValidation;
 using WebAdmin.Client.Services.Interfaces;
+using WebAdmin.Shared.Models.TypeOfGame;
 using WebAdmin.Client.Services.Exceptions;
-using AKSoftware.Blazor.Utilities;
 
 namespace WebAdmin.Components
 {
-    public partial class CreateEditRankForm
+    public partial class TypeOfGameItem
     {
         [Inject]
-        public IRankService RankService { get; set; }
+        public ITypeOfGameService TypeOfGameService { get; set; }
+
+        [Parameter]
+        public TypeOfGameWithGameTypeDetail Item { get; set; }
         [Parameter]
         public string GameId { get; set; }
+        [Parameter]
+        public EventCallback<TypeOfGameWithGameTypeDetail> OnItemDeleted { get; set; }
 
         [CascadingParameter]
         public Error Error { get; set; }
 
-        private bool _isBusy = false;
-        private string _name { get; set; }
-        private int _no { get; set; }
+        public bool _isBusy = false;
+
         private string _errorMessage = string.Empty;
 
-        private async Task AddRankAsync()
+        private async Task RemoveItemAsync()
         {
-            _errorMessage = string.Empty;
             try
             {
-                if (string.IsNullOrWhiteSpace(_name))
-                {
-                    _errorMessage = "Name is required";
-                    return;
-                }
-                if (_no <= 0)
-                {
-                    _errorMessage = "No must more than 0";
-                    return;
-                }
                 _isBusy = true;
-                //Call Api to add Rank Item
-                var result = await RankService.CreateAsync(_no, _name, GameId);
-                _name = string.Empty;
-                _no = 0;
+                //Call Api to add ToDo Item
+                await TypeOfGameService.DeleteAsync(Item.Id);
 
-                MessagingCenter.Send(this, "rank_added", result);
 
                 //Notify the parent about the newly added item
-                //await OnRankAdded.InvokeAsync(result.Value);
+                await OnItemDeleted.InvokeAsync(Item);
             }
             catch (ApiException ex)
             {
+                //TODO: Handle error globally
                 _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
             }
             catch (Exception ex)
@@ -77,5 +68,6 @@ namespace WebAdmin.Components
             }
             _isBusy = false;
         }
+
     }
 }

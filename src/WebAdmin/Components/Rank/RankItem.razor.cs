@@ -21,6 +21,7 @@ using Blazored.FluentValidation;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared.Models.Rank;
+using AKSoftware.Blazor.Utilities;
 
 namespace WebAdmin.Components
 {
@@ -86,6 +87,8 @@ namespace WebAdmin.Components
                 _isBusy = true;
                 //Call Api to edit ToDo Item
                 var result = await RankService.EditAsync(Item.Id, Item.No, Item.Name, GameId);
+
+                MessagingCenter.Send(this, "rank_edited", Item);
 
                 //Notify the parent about the edited item
                 await OnItemEdited.InvokeAsync(result);

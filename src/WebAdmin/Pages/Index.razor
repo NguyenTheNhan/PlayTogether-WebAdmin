@@ -2,10 +2,39 @@
 @inject NavigationManager Navigation
 
 <PageTitle>Home | PlayTogether</PageTitle>
-<PAPage>
+<PAPage Title="Trang chủ" BreadcrumbItems="_breadcrumbItems">
     <AuthorizeView>
         <Authorized>
-            <h2>Welcome </h2>
+            <MudGrid Justify="Justify.Center" Spacing="8">
+                <MudItem sm="10" md="10" lg="5" >
+                    <MudPaper Height="150px" Width="100%" Style="background-color:#8980FF" Class="pa-2 ">
+                        <MudText Align="Align.Center" style="color:white" Typo="Typo.h5">Tổng lượt thuê theo ngày</MudText>
+                        <MudText Align="Align.Center" style="color:white" Typo="Typo.h2">1.500</MudText>
+                        <MudText Align="Align.Center"> <MudLink Underline="Underline.Always" Style="text-align:center" Typo="Typo.h5">Xem chi tiết</MudLink> </MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem sm="10" md="10" lg="5" >
+                    <MudPaper Height="150px" Width="100%"  Style="background-color:#8980FF" Class="pa-2 ">
+                        <MudText Align="Align.Center" style="color:white" Typo="Typo.h5">Tổng số lượng người sử dụng</MudText>
+                        <MudText Align="Align.Center" style="color:white" Typo="Typo.h2">10.000</MudText>
+                        <MudText Align="Align.Center"> <MudLink Underline="Underline.Always" Style="text-align:center" Typo="Typo.h5">Xem chi tiết</MudLink> </MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem sm="10" md="10" lg="5"  >
+                    <MudPaper Height="150px" Width="100%" Style="background-color:#8980FF" Class="pa-2 ">
+                        <MudText Align="Align.Center" style="color:white" Typo="Typo.h5">Tổng doanh thu theo ngày</MudText>
+                        <MudText Align="Align.Center" style="color:white" Typo="Typo.h2">250.000.000</MudText>
+                        <MudText Align="Align.Center"> <MudLink Underline="Underline.Always" Style="text-align:center" Typo="Typo.h5">Xem chi tiết</MudLink> </MudText>
+                    </MudPaper>
+                </MudItem>
+                <MudItem sm="10" md="10" lg="5" >
+                    <MudPaper Height="150px" Width="100%"  Style="background-color:#8980FF" Class="pa-2 ">
+                        <MudText Align="Align.Center" style="color:white" Typo="Typo.h5">Tổng số tiền từ thiện theo ngày</MudText>
+                        <MudText Align="Align.Center" style="color:white" Typo="Typo.h2">50.000</MudText>
+                        <MudText Align="Align.Center"> <MudLink Underline="Underline.Always" Style="text-align:center" Typo="Typo.h5">Xem chi tiết</MudLink> </MudText>
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
         </Authorized>
         <NotAuthorized>
             <MudPaper Elevation="0" Height="100%" Width="100%">
@@ -26,5 +55,8 @@
 </PAPage>
 @code
 {
-
+    private List<BreadcrumbItem> _breadcrumbItems => new()
+        {
+            new BreadcrumbItem("Trang chủ", "/index" , true),
+        };
 }

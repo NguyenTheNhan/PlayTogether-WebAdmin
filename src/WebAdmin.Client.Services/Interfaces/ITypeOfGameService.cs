@@ -9,8 +9,8 @@ namespace WebAdmin.Client.Services.Interfaces
 {
     public interface ITypeOfGameService
     {
-        Task<TypeOfGameDetail> CreateAsync(string gameTypeId, string gameId);
-        Task<TypeOfGameDetail> GetByIdAsync(string id);
+        Task<TypeOfGameSummary> CreateAsync(string gameTypeId, string gameId);
+        Task<TypeOfGameSummary> GetByIdAsync(string id);
 
         Task DeleteAsync(string id);
     }

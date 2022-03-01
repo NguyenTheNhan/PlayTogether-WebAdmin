@@ -1,0 +1,25 @@
+﻿@namespace WebAdmin.Components
+@using WebAdmin.Shared.Models.GameType
+
+<div class=" d-flex flex-row align-center my-2">
+
+    <MudSelect HelperText="Thêm thể loại" @bind-Value="model" Label="Thể loại" Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter">
+
+        @foreach (var item in GameTypes)
+        {
+            <MudSelectItem Value="@item">@item.ShortName</MudSelectItem>
+        }
+
+    </MudSelect>
+    @if (_isBusy)
+    {
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" Class="flex-grow-0 flex-shrink-0 mr-2" />
+    }
+    else
+    {
+        <MudIconButton Icon="@Icons.Material.Filled.Add" aria-label="delete" Color="Color.Success" Class="flex-grow-0 flex-shrink-0 mr-2"
+                   OnClick="AddTypeOfGameItemAsync"></MudIconButton>
+    }
+
+</div>
+

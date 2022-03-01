@@ -23,6 +23,7 @@ using WebAdmin.Shared.Models.Game;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Shared.Models.TypeOfGame;
 using WebAdmin.Shared.Models.Rank;
+using WebAdmin.Shared.Models.GameType;
 
 namespace WebAdmin.Components
 {
@@ -30,6 +31,10 @@ namespace WebAdmin.Components
     {
         [Inject]
         public IGameService GameService { get; set; }
+        [Inject]
+        public IGameTypeService GameTypeService { get; set; }
+        [Inject]
+        public IDialogService DialogService { get; set; }
 
         [Inject]
         public NavigationManager Navigation { get; set; }
@@ -43,8 +48,13 @@ namespace WebAdmin.Components
         private bool _isEditMode => Id != null;
 
         private GameDetail _model = new GameDetail();
-        private List<TypeOfGameDetail> _typeOfGames = new();
+
+        private List<TypeOfGameSummary> _typeOfGames = new();
+        private List<TypeOfGameWithGameTypeDetail> _typeOfGameWithGameTypes = new();
+
         private List<RankDetail> _ranks = new();
+
+        private List<GameTypeSummary> _gameTypes = new();
 
         private bool _isBusy = false;
         private string _fileName = string.Empty;
@@ -55,6 +65,7 @@ namespace WebAdmin.Components
         {
             if (_isEditMode)
                 await FetchGameByIdAsync();
+            await FetchGameTypeAsync();
         }
 
 
@@ -89,29 +100,16 @@ namespace WebAdmin.Components
 
         }
 
-        //private async Task<TableData<RankDetail>> ServerReloadAsync(TableState state)
-        //{
-        //    try
-        //    {
-        //        var result = await GameService.GetByIdAsync(Id);
+        private void  OnItemAddedCallBack(TypeOfGameWithGameTypeDetail item)
+        {
+            _typeOfGameWithGameTypes.Add(item);
 
-        //        return new TableData<RankDetail>
-        //        {
-        //            Items = result.ranks,
-        //            TotalItems = result.ranks.Count(),
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Error.HandleError(ex);
-        //    }
+        }
+        private void OnItemDeletedCallBack(TypeOfGameWithGameTypeDetail item)
+        {
+            _typeOfGameWithGameTypes.Remove(item);
 
-        //    return new TableData<RankDetail>
-        //    {
-        //        Items = new List<RankDetail>(),
-        //        TotalItems = 0
-        //    };
-        //}
+        }
 
         private async Task FetchGameByIdAsync()
         {
@@ -122,7 +120,8 @@ namespace WebAdmin.Components
                 var result = await GameService.GetByIdAsync(Id);
                 _model = result;
                 _ranks = _model.ranks;
-                _typeOfGames = _model.typeOfGames;
+                _typeOfGameWithGameTypes = _model.typeOfGames;
+                
                 StateHasChanged();
             }
             catch (ApiException ex)
@@ -137,6 +136,41 @@ namespace WebAdmin.Components
             }
 
             _isBusy = false;
+        }
+        private async Task FetchGameTypeAsync()
+        {
+            _isBusy = true;
+
+            try
+            {
+                var result = await GameTypeService.GetGameTypesAsync("",1,100);
+                _gameTypes = result.ToList();
+                StateHasChanged();
+            }
+            catch (ApiException ex)
+            {
+                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                //TODO: log the error
+                Error.HandleError(ex);
+
+            }
+
+            _isBusy = false;
+        }
+
+
+        private void OnAddClicked()
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("_model", _model);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
+
+            var dialog = DialogService.Show<CreateTypeOfGameDialog>("Details", parameters, options);
+
         }
     }
 }

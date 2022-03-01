@@ -6,28 +6,25 @@
     </TitleContent>
     <DialogContent>
         <MudGrid>
-            
-                
-                <MudItem sm="12" md="10" lg="10">
+            <MudItem sm="12" md="10" lg="10">
                 @if (_isBusy)
                 {
-                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"/>
-                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"/>
-                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"/>
-                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"/>
+                    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
                 }
                 else
                 {
-                
-                
-                    <div class="items-container">                    
-                    <RankItem Item="_rank" 
-                                    OnItemEdited="OnItemEditedCallBack"/>
-                    
+
+                    <div class="items-container">
+                        <RankItem Item="_rank"
+                              OnItemEdited="OnItemEditedCallBack" />
+
                     </div>
                 }
-                </MudItem>
-            </MudGrid>
+            </MudItem>
+        </MudGrid>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Close">Close</MudButton>

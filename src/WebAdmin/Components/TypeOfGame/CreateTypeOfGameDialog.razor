@@ -1,0 +1,19 @@
+﻿@namespace WebAdmin.Components
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">Thêm thể loại @_model.Name</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem sm="12" md="10" lg="10">
+                
+                    <CreateTypeOfGameItem GameId="@_model.Id" GameTypes="_gameTypes" />
+                
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>

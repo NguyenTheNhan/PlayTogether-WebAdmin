@@ -1,14 +1,30 @@
 ﻿@namespace WebAdmin.Components
 
+<MudPaper Elevation="1" Class="mt-2 px-3">
 <div class=" d-flex flex-row align-center my-2">
     <MudTextField @bind-Value="_name" 
-                  Label="New Item Description" 
-                  Placeholder="Going to the Gym" 
+                  Label="Name" 
                   Class="flex-grow-1 flex-shrink-0 mr-2" 
                   Variant="Variant.Outlined" 
-                  Error="@(!string.IsNullOrWhiteSpace(_errorMessage))"
-                  ErrorText="@_errorMessage"
-                  Margin="Margin.Dense"></MudTextField>
-   
+                  Margin="Margin.Dense"
+                  Error="@(!string.IsNullOrEmpty(_errorMessage))"
+                  ErrorText="@_errorMessage"></MudTextField>
+    <MudNumericField @bind-Value="_no" 
+                  Label="No" 
+                  Class="flex-grow-0 mr-1" 
+                  Variant="Variant.Outlined" 
+                  Margin="Margin.Dense"
+                  Error="@(!string.IsNullOrEmpty(_errorMessage))"
+                  ErrorText="@_errorMessage" />
+    @if (_isBusy)
+            {
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" Class="flex-grow-0 flex-shrink-0 mr-2" />
+            }
+            else
+            {
+                <MudIconButton Icon="@Icons.Material.Filled.Save" aria-label="delete" Color="Color.Success" Class="flex-grow-0 flex-shrink-0 mr-1"
+                       OnClick="AddRankAsync" />
+            }
 
 </div>
+</MudPaper>

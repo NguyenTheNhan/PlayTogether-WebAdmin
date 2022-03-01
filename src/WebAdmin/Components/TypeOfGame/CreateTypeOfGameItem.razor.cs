@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,52 +18,50 @@ using WebAdmin.Shared;
 using WebAdmin.Components;
 using MudBlazor;
 using Blazored.FluentValidation;
-using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Client.Services.Exceptions;
-using AKSoftware.Blazor.Utilities;
+using WebAdmin.Client.Services.Interfaces;
+using WebAdmin.Shared.Models.TypeOfGame;
+using WebAdmin.Shared.Models.GameType;
 
 namespace WebAdmin.Components
 {
-    public partial class CreateEditRankForm
+    public partial class CreateTypeOfGameItem
     {
         [Inject]
-        public IRankService RankService { get; set; }
+        public ITypeOfGameService TypeOfGameService { get; set; }
         [Parameter]
         public string GameId { get; set; }
+        [Parameter]
+        public List<GameTypeSummary> GameTypes { get; set; }
 
+        [Parameter]
+        public EventCallback<TypeOfGameWithGameTypeDetail> OnTypeOfGameAdded { get; set; }
         [CascadingParameter]
         public Error Error { get; set; }
 
         private bool _isBusy = false;
-        private string _name { get; set; }
-        private int _no { get; set; }
-        private string _errorMessage = string.Empty;
+        private GameTypeSummary model { get; set; }
 
-        private async Task AddRankAsync()
+        private string _errorMessage = string.Empty;
+        
+
+        private async Task AddTypeOfGameItemAsync()
         {
             _errorMessage = string.Empty;
             try
             {
-                if (string.IsNullOrWhiteSpace(_name))
+                if (string.IsNullOrWhiteSpace(model.Id))
                 {
-                    _errorMessage = "Name is required";
-                    return;
-                }
-                if (_no <= 0)
-                {
-                    _errorMessage = "No must more than 0";
+                    _errorMessage = "GameType is required";
                     return;
                 }
                 _isBusy = true;
-                //Call Api to add Rank Item
-                var result = await RankService.CreateAsync(_no, _name, GameId);
-                _name = string.Empty;
-                _no = 0;
-
-                MessagingCenter.Send(this, "rank_added", result);
+                //Call Api to add TypeOfGame Item
+                var result = await TypeOfGameService.CreateAsync( GameId, model.Id);
+                
 
                 //Notify the parent about the newly added item
-                //await OnRankAdded.InvokeAsync(result.Value);
+                await OnTypeOfGameAdded.InvokeAsync();
             }
             catch (ApiException ex)
             {
@@ -72,7 +70,7 @@ namespace WebAdmin.Components
             catch (Exception ex)
             {
 
-                //TODO: Handle error globally
+                //TypeOfGame: Handle error globally
                 Error.HandleError(ex);
             }
             _isBusy = false;

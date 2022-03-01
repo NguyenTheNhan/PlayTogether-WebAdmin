@@ -70,6 +70,19 @@ namespace WebAdmin.Components
             return null;
         }
 
+        #region Add Rank
+        private void AddRank()
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("GameId", GameId);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
+
+            var dialog = DialogService.Show<CreateEditRankForm>("Add Rank", parameters, options);
+
+        }
+
+        #endregion
 
         #region View
         private void ViewRank(RankDetail rank)

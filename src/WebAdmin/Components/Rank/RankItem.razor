@@ -7,9 +7,9 @@
             <MudTextField @bind-Value="Item.Name" Label="Name" Class="flex-grow-1 flex-shrink-0 mr-2" Variant="Variant.Outlined" Margin="Margin.Dense"
                       Error="@(!string.IsNullOrEmpty(_errorMessage))"
                       ErrorText="@_errorMessage"></MudTextField>
-            <MudTextField @bind-Value="Item.No" Label="No" Class="flex-grow-0 mr-1" Variant="Variant.Outlined" Margin="Margin.Dense"
+            <MudNumericField  @bind-Value="Item.No"  Label="No" Class="flex-grow-0 mr-1" Variant="Variant.Outlined" Margin="Margin.Dense"
                       Error="@(!string.IsNullOrEmpty(_errorMessage))"
-                      ErrorText="@_errorMessage"></MudTextField>
+                      ErrorText="@_errorMessage" />
 
 
             @if (_isBusy)
