@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
-using WebAdmin.Shared.Models;
 using WebAdmin.Shared.Models.Auth;
 
 namespace WebAdmin.Components

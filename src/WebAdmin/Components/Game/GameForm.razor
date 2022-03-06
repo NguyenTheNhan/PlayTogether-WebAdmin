@@ -2,61 +2,71 @@
 
 <MudText Typo="Typo.h5" Style="mb-2"> Thông tin</MudText>
 
-<MudPaper Class="py-4 px-4" Width="100%">
-<EditForm Model="_model" OnValidSubmit="SubmitFormAsync">
-    <MudGrid>
-    <FluentValidationValidator />
-    <MudItem sm="12" md="7" lg="7">
-    <MudTextField Label="Tên Game" HelperText="Required" @bind-Value="@_model.Name" Variant="Variant.Outlined" />
-    <MudTextField Label="Tên khác" HelperText="Optional" @bind-Value="@_model.OtherName" Variant="Variant.Outlined" />
-    <MudTextField Label="Tên hiển thị" HelperText="Required" @bind-Value="@_model.DisplayName" Variant="Variant.Outlined" />
-    </MudItem>
-    <MudItem sm="12" md="5" lg="5">
+<MudPaper Class="py-4 px-4" Width=@(_isEditMode ? "100%" : "")>
+    <EditForm Model="_model" OnValidSubmit="SubmitFormAsync">
+        @if (_isEditMode)
+        {
+            <MudGrid>
+                <FluentValidationValidator />
+                <MudItem sm="12" md="7" lg="7">
+                    <MudTextField Label="Tên Game" HelperText="Required" @bind-Value="@_model.Name" Variant="Variant.Outlined" />
+                    <MudTextField Label="Tên khác" HelperText="Optional" @bind-Value="@_model.OtherName" Variant="Variant.Outlined" />
+                    <MudTextField Label="Tên hiển thị" HelperText="Required" @bind-Value="@_model.DisplayName" Variant="Variant.Outlined" />
+                </MudItem>
+                <MudItem sm="12" md="5" lg="5">
 
 
-        <MudText Typo="Typo.h6"
-                 Class="flex-grow-1 flex-shrink-0 mr-2">
-                 Thể loại Game
-        </MudText>
+                    <MudText Typo="Typo.h6"
+                         Class="flex-grow-1 flex-shrink-0 mr-2">
+                        Thể loại Game
+                    </MudText>
 
-                @if (_isBusy)
-                {
-                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"/>
-                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"/>
-                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"/>
-                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"/>
-                }
-                else
-                {                
-                
-                    <div class="items-container">
-                    @foreach (var item in _typeOfGameWithGameTypes)
+                    @if (_isBusy)
                     {
-                    <TypeOfGameItem Item="item" OnItemDeleted="OnItemDeletedCallBack" />
+                        <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                        <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                        <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                        <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
                     }
-                    </div>
-                    <CreateTypeOfGameItem GameId="@_model.Id" GameTypes="@_gameTypes" OnTypeOfGameAdded="OnItemAddedCallBack"/>
-                }
+                    else
+                    {
+
+                        <div class="items-container">
+                            @foreach (var item in _typeOfGameWithGameTypes)
+                            {
+                                <TypeOfGameItem Item="item" OnItemDeleted="OnItemDeletedCallBack" />
+                            }
+                        </div>
+                        <CreateTypeOfGameItem GameId="@_model.Id" GameTypes="@_gameTypes" OnTypeOfGameAdded="OnItemAddedCallBack" />
+                    }
                 </MudItem>
 
-        </MudGrid>
-    @if (_isEditMode)
-    {
-    }
+            </MudGrid>
+        }
+        else
+        {
+            <FluentValidationValidator />
+            <MudTextField Label="Tên Game" HelperText="Required" @bind-Value="@_model.Name" Variant="Variant.Outlined" />
+            <MudTextField Label="Tên khác" HelperText="Optional" @bind-Value="@_model.OtherName" Variant="Variant.Outlined" />
+            <MudTextField Label="Tên hiển thị" HelperText="Required" @bind-Value="@_model.DisplayName" Variant="Variant.Outlined" />
+        }
+
+        
+
         @if (_ranks != null)
         {
             <RankList GameId="@_model.Id" />
         }
         @if (!string.IsNullOrWhiteSpace(_errorMessage))
-    {
-        <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_errorMessage</MudAlert>
-    }
+        {
+            <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_errorMessage</MudAlert>
+        }
 
-    <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
 
-    <ValidationSummary/>
+        <ValidationSummary />
 
-    <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit" FullWidth="true" Disabled="_isBusy">Save</MudButton>
-</EditForm>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit" FullWidth="true" Disabled="_isBusy">Save</MudButton>
+    </EditForm>
 
 </MudPaper>

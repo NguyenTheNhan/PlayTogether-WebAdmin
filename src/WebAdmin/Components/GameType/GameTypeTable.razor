@@ -5,11 +5,11 @@
 
 <MudTable ServerData="@(new Func<TableState, Task<TableData<GameTypeSummary>>>(ServerReloadAsync))"
           Dense="true" Hover="true" @ref="_table" MultiSelection="true" FixedHeader="true"
-          Height="400px" Striped="true" onload="true">
+          Height="400px" Striped="true" Loading="true">
     <ToolBarContent >
         <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Tìm kiếm" Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-        <MudAppBarSpacer />
+        <MudSpacer />
         <MudIconButton Icon="@Icons.Material.Filled.AddCircle" Color="Color.Primary" OnClick='() => Navigation.NavigateTo($"/gametypes/form")'/>
         <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Class="ma-4"/>
     </ToolBarContent>

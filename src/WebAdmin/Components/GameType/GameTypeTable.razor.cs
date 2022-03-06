@@ -1,26 +1,12 @@
+using AKSoftware.Blazor.Utilities;
+using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using System.Net.Http;
-using System.Net.Http.Json;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.AspNetCore.Components.WebAssembly.Http;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.JSInterop;
-using WebAdmin;
-using WebAdmin.Shared;
-using WebAdmin.Components;
-using MudBlazor;
-using Blazored.FluentValidation;
 using WebAdmin.Client.Services.Interfaces;
-using WebAdmin.Shared.Models;
-using AKSoftware.Blazor.Utilities;
+using WebAdmin.Shared;
 using WebAdmin.Shared.Models.GameType;
 
 namespace WebAdmin.Components
@@ -67,7 +53,7 @@ namespace WebAdmin.Components
             }
             catch (Exception ex)
             {
-               Error.HandleError(ex);
+                Error.HandleError(ex);
             }
 
             return new TableData<GameTypeSummary>

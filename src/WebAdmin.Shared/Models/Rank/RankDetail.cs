@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WebAdmin.Shared.Models.Rank
+﻿namespace WebAdmin.Shared.Models.Rank
 {
 
     public class RankDetail

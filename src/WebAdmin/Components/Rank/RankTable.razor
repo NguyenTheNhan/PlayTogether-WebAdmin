@@ -4,17 +4,15 @@
 
 <MudTable ServerData="@(new Func<TableState, Task<TableData<RankDetail>>>(ServerReloadAsync))"
           Dense="true" Hover="true" @ref="_table" FixedHeader="true"
-          Height= "100%" Striped="true" MultiSelection="true" onloadeddata="true"
+          Height= "100%" Striped="true" MultiSelection="true"
           Bordered = "true">
     <ToolBarContent >
         <MudText Typo="Typo.h5" Class="mt-0">Chi tiết các bậc xếp hạng</MudText>
-        <MudAppBarSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.AddCircle" Color="Color.Primary" OnClick="async () => await OnAddClicked.InvokeAsync()"/>
+        <MudSpacer />
+           <MudIconButton Icon="@Icons.Material.Filled.AddCircle" Color="Color.Primary" OnClick="async () => await OnAddClicked.InvokeAsync()"/>
         <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Class="ma-4"/>
     </ToolBarContent>
     <HeaderContent >
-@*        <MudTh><MudTableSortLabel SortLabel="nr_field" T="GameDetails"></MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortLabel="sign_field" T="GameDetails">Tên danh mục</MudTableSortLabel></MudTh>*@
         <MudTh><MudTableSortLabel SortLabel="sign_field" T="RankDetail">No</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortLabel="sign_field" T="RankDetail">Rank</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortLabel="position_field" T="RankDetail">Actions</MudTableSortLabel></MudTh>

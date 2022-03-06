@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using WebAdmin.Shared.Models;
 using WebAdmin.Shared.Models.Auth;
 
 namespace WebAdmin.Client.Services.Interfaces

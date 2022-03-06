@@ -10,9 +10,10 @@ namespace WebAdmin.Client.Services
         {
             return services.AddScoped<IAuthenticationService, HttpAuthenticationService>()
                            .AddScoped<IGameTypeService, HttpGameTypeService>()
-                           .AddScoped<IGameService,HttpGameService>()
-                           .AddScoped<ITypeOfGameService,HttpTypeOfGameService>()
-                           .AddScoped<IRankService,HttpRankService>();
+                           .AddScoped<IGameService, HttpGameService>()
+                           .AddScoped<ITypeOfGameService, HttpTypeOfGameService>()
+                           .AddScoped<IRankService, HttpRankService>()
+                           .AddScoped<IHirerService, HttpHirerService>();
         }
     }
 }

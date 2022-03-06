@@ -1,27 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using System.Net.Http;
-using System.Net.Http.Json;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.AspNetCore.Components.WebAssembly.Http;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.JSInterop;
-using WebAdmin;
-using WebAdmin.Shared;
-using WebAdmin.Components;
-using MudBlazor;
-using Blazored.FluentValidation;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
-using WebAdmin.Shared.Models.TypeOfGame;
+using WebAdmin.Shared;
 using WebAdmin.Shared.Models.GameType;
+using WebAdmin.Shared.Models.TypeOfGame;
 
 namespace WebAdmin.Components
 {
@@ -43,7 +29,7 @@ namespace WebAdmin.Components
         private GameTypeSummary model { get; set; }
 
         private string _errorMessage = string.Empty;
-        
+
 
         private async Task AddTypeOfGameItemAsync()
         {
@@ -57,8 +43,8 @@ namespace WebAdmin.Components
                 }
                 _isBusy = true;
                 //Call Api to add TypeOfGame Item
-                var result = await TypeOfGameService.CreateAsync( GameId, model.Id);
-                
+                var result = await TypeOfGameService.CreateAsync(GameId, model.Id);
+
 
                 //Notify the parent about the newly added item
                 await OnTypeOfGameAdded.InvokeAsync();
@@ -74,6 +60,19 @@ namespace WebAdmin.Components
                 Error.HandleError(ex);
             }
             _isBusy = false;
+        }
+
+        private async Task<IEnumerable<GameTypeSummary>> Search1(string value)
+        {
+            // In real life use an asynchronous function for fetching data from an api.
+            await Task.Delay(5);
+
+            // if text is null or empty, show complete list
+            if (string.IsNullOrEmpty(value))
+                return GameTypes;
+            return GameTypes.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase)
+                                      || x.OtherName.Contains(value, StringComparison.InvariantCultureIgnoreCase)
+                                      || x.ShortName.Contains(value, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

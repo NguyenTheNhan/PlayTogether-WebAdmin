@@ -21,9 +21,11 @@
     <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
 
     <ValidationSummary/>
-    <MudAppBarSpacer />
+    <MudCardActions >
+
     <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit"  Disabled="_isBusy">Save</MudButton>
-    <MudButton Color="Color.Default" Variant="Variant.Filled" OnClick='() => Navigation.NavigateTo($"/gametypes")'  Disabled="_isBusy">Cancel</MudButton>
+    <MudButton Color="Color.Default" Variant="Variant.Filled" OnClick='() => Navigation.NavigateTo($"/gametypes")' Class="mx-2" Disabled="_isBusy">Cancel</MudButton>
+    </MudCardActions>
 </EditForm>
 
 </MudPaper>
