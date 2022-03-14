@@ -21,11 +21,15 @@ namespace WebAdmin.Client.Services.Services
         public async Task<LoginResult> LoginUserAsync(LoginRequest model)
         {
             _errorMessage = string.Empty;
-            var response = await _client.PostAsJsonAsync("/api/play-together/v1/accounts/login", model);
+            var response = await _client.PostAsJsonAsync("/api/play-together/v1/accounts/login-admin", model);
+
             if (response.IsSuccessStatusCode)
             {
+
+
                 var result = await response.Content.ReadFromJsonAsync<LoginResult>();
                 return result;
+
             }
             else
             {
@@ -35,5 +39,7 @@ namespace WebAdmin.Client.Services.Services
             }
 
         }
+
+
     }
 }

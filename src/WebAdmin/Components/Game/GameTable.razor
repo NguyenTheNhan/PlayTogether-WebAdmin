@@ -19,12 +19,14 @@
     <RowTemplate>
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="Actions">
+            <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
+
             <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
                            OnClick="async () => await OnEditClicked.InvokeAsync(context)" />
-            @*<MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Default"
-                           OnClick="async () => await OnEditClicked.InvokeAsync(context)" />*@
             <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"
                            OnClick="async () => await OnDeleteClicked.InvokeAsync(context)" />
+
+            </MudButtonGroup>
         </MudTd>
     </RowTemplate>
     <PagerContent>

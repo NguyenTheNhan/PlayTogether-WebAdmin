@@ -6,12 +6,12 @@
     <MudItem xs="12" sm="9">
         <MudTable ServerData="@(new Func<TableState, Task<TableData<HirerSummary>>>(ServerReloadAsync))"
                   Dense="true" Hover="true" @ref="_table" FixedHeader="true"
-                  Height="400px" Striped="true" Loading="true">
-           @* <ToolBarContent>                
+                  Height="400px" Striped="true" >
+            @* <ToolBarContent>
                 <MudSpacer />
                 <MudIconButton Icon="@Icons.Material.Filled.AddCircle" Color="Color.Primary" OnClick='() => Navigation.NavigateTo($"/hirers/form")' />
                 <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Class="ma-4" />
-            </ToolBarContent>*@
+                </ToolBarContent>*@
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="HirerSummary">Tên tài khoản</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="HirerSummary">Email</MudTableSortLabel></MudTh>
@@ -25,11 +25,16 @@
                 <MudTd DataLabel="Thể loại"> @context.CreatedDate</MudTd>
                 <MudTd DataLabel="Mô tả">@(context.IsActive == true ? "Active" : "Banned")</MudTd>
                 <MudTd DataLabel="Actions">
-                    <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
-                                   OnClick="async () => await OnEditClicked.InvokeAsync(context)" />
+                    
                     @*<MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Default"
                         OnClick="async () => await OnEditClicked.InvokeAsync(context)" />*@
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />
+                    @*<MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />*@
+                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
+                        <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
+                                   OnClick="async () => await OnViewClicked.InvokeAsync(context)" />
+                        <MudIconButton Icon="@(context.IsActive ? Icons.Material.Filled.Lock : Icons.Material.Filled.LockOpen)" Color="@(context.IsActive ? Color.Error : Color.Success)"
+                                              OnClick="async () => await OnEditClicked.InvokeAsync(context)"/>
+                    </MudButtonGroup>
                 </MudTd>
             </RowTemplate>
             <PagerContent>
@@ -38,7 +43,7 @@
         </MudTable>
     </MudItem>
     <MudItem xs="12" sm="3">
-        
+
 
         <MudPaper>
             <MudCard>
@@ -49,7 +54,7 @@
                 </MudCardHeader>
                 <MudCardContent>
                     <MudTextField Label="Tên tài khoản/Email" @bind-Value="_query" />
-                    
+
                     <MudSelect Label="Trạng thái" AnchorOrigin="Origin.BottomCenter" @bind-Value="_isActive">
                         @*<MudSelectItem Value="null">---</MudSelectItem>*@
                         <MudSelectItem Value="true">Active</MudSelectItem>

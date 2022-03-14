@@ -8,5 +8,7 @@ namespace WebAdmin.Client.Services.Interfaces
 
         Task<LoginResult> LoginUserAsync(LoginRequest model);
 
+
+
     }
 }

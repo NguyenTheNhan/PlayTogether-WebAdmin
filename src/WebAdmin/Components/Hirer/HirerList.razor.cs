@@ -1,3 +1,4 @@
+﻿using AKSoftware.Blazor.Utilities;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
@@ -53,11 +54,51 @@ namespace WebAdmin.Components
         }
 
         #region Edit
-        private void EditHirer(HirerSummary hirer)
+        private async Task EditHirer(HirerSummary hirer)
         {
-            Navigation.NavigateTo($"/hirers/form/{hirer.Id}");
+            var parameters = new DialogParameters();
+            parameters.Add("ContentText", hirer.IsActive ? $"Bạn có muốn khoá tài khoản '{hirer.Email}'?" : $"Bạn có muốn mở khoá tài khoản '{hirer.Email}'?");
+            parameters.Add("ButtonText", hirer.IsActive ? "Khoá" : "Mở khoá");
+            parameters.Add("Color", hirer.IsActive ? Color.Error : Color.Success);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+            var dialog = DialogService.Show<ConfirmationDialog>(hirer.IsActive ? "Khoá tài khoản" : "Mở khoá tài khoản", parameters, options);
+
+            var confirmationResult = await dialog.Result;
+            if (!confirmationResult.Cancelled)
+            {
+                //Confirm to active/unactive
+                try
+                {
+                    await HirerService.ActiveAsync(hirer.Id, !hirer.IsActive);
+
+                    //send a message about the active/unactive
+                    MessagingCenter.Send(this, "hirer_locked", hirer);
+                }
+                catch (ApiException ex)
+                {
+                    //TODO: log this error
+                    _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Log this error
+
+                    Error.HandleError(ex);
+                }
+            }
+            #endregion
+
+
+
+
+        }
+        #region View
+        private void ViewHirer(HirerSummary hirer)
+        {
+            Navigation.NavigateTo($"/hirers/details/{hirer.Id}");
         }
         #endregion
-
     }
 }

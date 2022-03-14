@@ -19,6 +19,8 @@ namespace WebAdmin.Components
 
         [Parameter]
         public EventCallback<HirerSummary> OnEditClicked { get; set; }
+        [Parameter]
+        public EventCallback<HirerSummary> OnViewClicked { get; set; }
 
         [CascadingParameter]
         public Error Error { get; set; }
@@ -26,12 +28,12 @@ namespace WebAdmin.Components
 
         private string _query = string.Empty;
         private string _status { get; set; } = string.Empty;
-        private bool _isActive { get; set; }
+        private bool _isActive { get; set; } = true;
         private MudTable<HirerSummary> _table;
 
         protected override void OnInitialized()
         {
-            MessagingCenter.Subscribe<HirerList, HirerSummary>(this, "hirer_deleted", async (sender, args) =>
+            MessagingCenter.Subscribe<HirerList, HirerSummary>(this, "hirer_locked", async (sender, args) =>
             {
                 await _table.ReloadServerData();
                 StateHasChanged();

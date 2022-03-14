@@ -17,6 +17,13 @@ namespace WebAdmin
         {
             if (await _storage.ContainKeyAsync("access_token"))
             {
+                //var now = DateTime.Now;
+                //var time = await _storage.GetItemAsStringAsync("expire_date");
+                //DateTime storeDate = DateTime.Parse(time);
+                //var compare = DateTime.Compare(storeDate, now);
+                //if (compare > 0)
+                //{
+
                 //the user is logged in
                 var tokenAsString = await _storage.GetItemAsStringAsync("access_token");
                 var tokenHandler = new JwtSecurityTokenHandler();
@@ -30,6 +37,15 @@ namespace WebAdmin
                 NotifyAuthenticationStateChanged(Task.FromResult(authState));
 
                 return authState;
+                //}
+                //else
+                //{
+                //    await _storage.RemoveItemAsync("access_token");
+                //    await _storage.RemoveItemAsync("expire_date");
+
+                //    return new AuthenticationState(new ClaimsPrincipal());
+
+                //}
             }
 
             //Empty claim principal mean no identity and user is not logged in

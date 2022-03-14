@@ -21,10 +21,13 @@
         <MudTd DataLabel="No">@context.No</MudTd>
         <MudTd DataLabel="Rank">@context.Name</MudTd>
         <MudTd DataLabel="Actions">
+            <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
+
             <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Success"
                            OnClick="async () => await OnViewClicked.InvokeAsync(context)" />
             <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"
                            OnClick="async () => await OnDeleteClicked.InvokeAsync(context)" />
+            </MudButtonGroup>
 
         </MudTd>
     </RowTemplate>

@@ -1,4 +1,4 @@
-using Blazored.LocalStorage;
+﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using System;
@@ -45,17 +45,25 @@ namespace WebAdmin.Components
                 var result = await AuthenticationService.LoginUserAsync(_model);
                 if (result != null)
                 {
+                    if (result.Success == false)
+                    {
+                        _errorMessage = "Email or Password incorrect. Try again!";
+                    }
+                    else
+                    {
 
-                    // Store it in local storage 
-                    await Storage.SetItemAsStringAsync("access_token", result.Message);
-                    await Storage.SetItemAsync<DateTime>("expire_date", result.ExpireDate);
+                        // Store it in local storage 
+                        await Storage.SetItemAsStringAsync("access_token", result.Message);
+                        await Storage.SetItemAsync<DateTime>("expire_date", result.ExpireDate);
 
-                    await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                        await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
-                    Navigation.NavigateTo("/index");
+                        Navigation.NavigateTo("/index");
+                    }
                 }
 
             }
+
             catch (ApiException ex)
             {
                 _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
@@ -73,3 +81,8 @@ namespace WebAdmin.Components
 
     }
 }
+
+
+
+
+

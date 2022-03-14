@@ -47,7 +47,7 @@ namespace WebAdmin.Client.Services.Services
         }
 
 
-        public async Task<HirerSummary> ActiveAsync(string id, bool isActive, string message)
+        public async Task<HirerSummary> ActiveAsync(string id, bool isActive, string message = "")
         {
             var response = await _httpClient.PutAsJsonAsync($"/api/play-together/v1/admins/hirer-status/{id}", new
             {
