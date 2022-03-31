@@ -78,7 +78,7 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<IEnumerable<GameTypeSummary>> GetGameTypesAsync(string query = null, int pageNumber = 1, int pageSize = 10)
+        public async Task<IEnumerable<GameTypeSummary>> GetGameTypesAsync(string query = null, int pageNumber = 1, int pageSize = 100)
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/game-types?SearchString={query}&PageNumber={pageNumber}&PageSize={pageSize}");
             if (response.IsSuccessStatusCode)

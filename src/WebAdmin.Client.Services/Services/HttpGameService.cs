@@ -9,7 +9,7 @@ using WebAdmin.Shared.Responses;
 
 namespace WebAdmin.Client.Services.Services
 {
-    internal class HttpGameService : IGameService
+    public class HttpGameService : IGameService
     {
         private readonly HttpClient _httpClient;
 

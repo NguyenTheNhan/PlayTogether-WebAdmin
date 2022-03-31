@@ -1,0 +1,122 @@
+﻿@namespace WebAdmin.Components
+
+
+
+<EditForm Model="_model" OnValidSubmit="SubmitFormAsync">
+    <FluentValidationValidator />
+
+    <MudGrid>
+        <MudItem lg="8" md="8" sm="12">
+            @if (_isBusy)
+            {
+                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+            }
+            else
+            {
+                <MudGrid>
+                    <MudItem xs="2">
+                        <br />
+                        <MudText>
+                            Tên tài khoản:
+                        </MudText>
+                    </MudItem>
+                    <MudItem xs="10">
+                        <MudTextField @bind-Value="@_model.Name" Variant="Variant.Outlined" ReadOnly="true" />
+                    </MudItem>
+                </MudGrid>
+                <MudGrid>
+                    <MudItem xs="2">
+                        <br />
+                        <MudText>Email:</MudText>
+                    </MudItem>
+                    <MudItem xs="10">
+                        <MudTextField @bind-Value="@_model.Email" Variant="Variant.Outlined" ReadOnly="true" />
+                    </MudItem>
+                </MudGrid>
+                <MudGrid>
+                    <MudItem xs="2">
+                        <div>
+                            <br />
+                            <MudText>Thành phố:</MudText>
+                        </div>
+                    </MudItem>
+                    <MudItem xs="10">
+
+                        <MudTextField @bind-Value="@_model.City" Variant="Variant.Outlined" ReadOnly="true" />
+
+
+                    </MudItem>
+                </MudGrid>
+                <MudGrid>
+                    <MudItem xs="2">
+                        <div>
+                            <br />
+                            <MudText>Giới tính:</MudText>
+                        </div>
+                    </MudItem>
+                    <MudItem xs="10">
+                        <div class="d-flex">
+                            <MudRadioGroup @bind-SelectedOption="@_model.Gender" Class="mt-2">
+                                <MudRadio Option="true" Disabled="true">Nam</MudRadio>
+                                <MudRadio Option="false" Disabled="true">Nữ</MudRadio>
+                            </MudRadioGroup>
+                            <div>
+                                <br />
+                                <MudText Class="ml-6 mr-3">Ngày sinh:</MudText>
+                            </div>
+                            <MudTextField @bind-Value="@_model.DateOfBirth" Variant="Variant.Outlined" ReadOnly="true" />
+                        </div>
+                    </MudItem>
+                </MudGrid>
+
+                <MudGrid>
+                    <MudItem xs="2">
+                        <br />
+                        <MudText>Mô tả:</MudText>
+                    </MudItem>
+                    <MudItem xs="10">
+                        <MudTextField @bind-Value="@_model.Description" Lines="4" Variant="Variant.Outlined" ReadOnly="true" />
+                    </MudItem>
+                </MudGrid>
+            }
+        </MudItem>
+        <MudItem lg="4" md="4" sm="12">
+            <img src="@_model.Avatar" style="width:75%; " class="rounded-circle" />
+            <MudCardActions Class="ma-2">
+                @if (_model.IsActive == true)
+                {
+                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
+                        <MudButton EndIcon="@Icons.Material.Filled.Lock" IconColor="@Color.Error" FullWidth="true">  @_action </MudButton>
+                        <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown">
+                            <MudMenuItem OnClick='() => _action = "Khoá 1 ngày"'>Khoá 1 ngày</MudMenuItem>
+                            <MudMenuItem OnClick='() => _action = "Khoá 3 ngày"'>Khoá 3 ngày</MudMenuItem>
+                            <MudMenuItem OnClick='() => _action = "Khoá vĩnh viễn"'>Khoá vĩnh viễn</MudMenuItem>
+                        </MudMenu>
+                    </MudButtonGroup>
+                }
+                else
+                {
+                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
+                        <MudButton EndIcon="@Icons.Material.Filled.LockOpen" IconColor="@Color.Success">  Mở khoá </MudButton>
+                    </MudButtonGroup>
+                }                
+            <MudButton Color="Color.Default" Variant="Variant.Filled" OnClick='() => Navigation.NavigateTo($"/hirers")' Class="mx-2" Disabled="_isBusy">Quay lại</MudButton>
+            </MudCardActions>
+
+        </MudItem>
+    </MudGrid>
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_errorMessage</MudAlert>
+    }
+
+    <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
+
+    <ValidationSummary />
+
+</EditForm>
+
+

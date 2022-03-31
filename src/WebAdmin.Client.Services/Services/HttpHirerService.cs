@@ -19,7 +19,7 @@ namespace WebAdmin.Client.Services.Services
         }
         public async Task<IEnumerable<HirerSummary>> GetHirersAsync(string query = null, string status = null, bool? isActive = null, int pageNumber = 1, int pageSize = 10)
         {
-            var response = await _httpClient.GetAsync($"/api/play-together/v1/hirers?Name={query}&Status={status}&IsActive={isActive}&PageNumber={pageNumber}&PageSize={pageSize}");
+            var response = await _httpClient.GetAsync($"/api/play-together/v1/admins/users?Name={query}&Status={status}&IsActive={isActive}&PageNumber={pageNumber}&PageSize={pageSize}");
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<IEnumerable<HirerSummary>>();
@@ -31,12 +31,12 @@ namespace WebAdmin.Client.Services.Services
                 throw new ApiException(errorResponse, response.StatusCode);
             }
         }
-        public async Task<HirerSummary> GetByIdAsync(string id)
+        public async Task<UserDetail> GetByIdAsync(string id)
         {
-            var response = await _httpClient.GetAsync($"/api/play-together/v1/hirers/{id}");
+            var response = await _httpClient.GetAsync($"/api/play-together/v1/users/{id}");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<HirerSummary>();
+                var result = await response.Content.ReadFromJsonAsync<UserDetail>();
                 return result;
             }
             else
@@ -47,7 +47,7 @@ namespace WebAdmin.Client.Services.Services
         }
 
 
-        public async Task<HirerSummary> ActiveAsync(string id, bool isActive, string message = "")
+        public async Task<UserDetail> ActiveAsync(string id, bool isActive, string message = "")
         {
             var response = await _httpClient.PutAsJsonAsync($"/api/play-together/v1/admins/hirer-status/{id}", new
             {

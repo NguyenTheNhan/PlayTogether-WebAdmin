@@ -7,7 +7,7 @@ namespace WebAdmin.Client.Services.Interfaces
     public interface IGameTypeService
     {
         //
-        Task<IEnumerable<GameTypeSummary>> GetGameTypesAsync(string query = null, int pageNumber = 1, int pageSize = 10);
+        Task<IEnumerable<GameTypeSummary>> GetGameTypesAsync(string query = null, int pageNumber = 1, int pageSize = 100);
         Task<GameTypeSummary> GetByIdAsync(string id);
 
         Task<GameTypeSummary> CreateAsync(GameTypeSummary model);

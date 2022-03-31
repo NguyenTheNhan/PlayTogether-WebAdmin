@@ -45,12 +45,12 @@ namespace WebAdmin.Components
         {
             try
             {
-                var result = await HirerService.GetHirersAsync(_query, _status, _isActive, state.Page, state.PageSize);
-
+                var result = await HirerService.GetHirersAsync(_query, _status, _isActive, state.Page + 1, state.PageSize);
+                var tmp = await HirerService.GetHirersAsync(_query, _status, _isActive, 0, 1000);
                 return new TableData<HirerSummary>
                 {
                     Items = result,
-                    TotalItems = result.Count()
+                    TotalItems = tmp.Count()
                 };
             }
             catch (Exception ex)

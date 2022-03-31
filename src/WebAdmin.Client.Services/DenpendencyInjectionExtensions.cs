@@ -13,7 +13,9 @@ namespace WebAdmin.Client.Services
                            .AddScoped<IGameService, HttpGameService>()
                            .AddScoped<ITypeOfGameService, HttpTypeOfGameService>()
                            .AddScoped<IRankService, HttpRankService>()
-                           .AddScoped<IHirerService, HttpHirerService>();
+                           .AddScoped<IHirerService, HttpHirerService>()
+                           .AddScoped<IOrderService, HttpOrderService>()
+                           .AddScoped<ITransactionService, HttpTransactionService>();
         }
     }
 }

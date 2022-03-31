@@ -21,13 +21,12 @@ namespace WebAdmin.Client.Services.Services
 
             var response = await _httpClient.PostAsJsonAsync($"/api/play-together/v1/types-of-game", new
             {
-                GameId = gameId,
                 GameTypeId = gameTypeId,
+                GameId = gameId,
             });
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<TypeOfGameSummary>();
-                return result;
+                return null;
             }
             else
             {

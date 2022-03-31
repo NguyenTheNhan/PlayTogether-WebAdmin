@@ -1,13 +1,16 @@
 ﻿@namespace WebAdmin.Components
 
-<MudTabs Elevation="2" Rounded="true"  ApplyEffectsToContainer="true" PanelClass="pa-6">
-    <MudTabPanel Text="Thông tin">
-        <MudText>Thông tin nè</MudText>
+<MudTabs Elevation="2"  ApplyEffectsToContainer="true" PanelClass="pa-6">
+    <MudTabPanel Text="Thông tin" >
+        <UserInfo Id="@Id"/>        
     </MudTabPanel>
     <MudTabPanel Text="Lịch sử thuê">
-        <MudText>Lịch sử thuê</MudText>
+        <OrderList UserId="@Id"/>
     </MudTabPanel>
     <MudTabPanel Text="Lịch sử giao dịch">
-        <MudText>lịch sử giao dịch</MudText>
+       <TransactionList UserId="@Id" />
+    </MudTabPanel>
+    <MudTabPanel Text="Lịch sử báo cáo">
+        <MudText>lịch sử báo cáo</MudText>
     </MudTabPanel>
 </MudTabs>

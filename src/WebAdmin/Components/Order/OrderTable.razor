@@ -1,0 +1,60 @@
+﻿@namespace WebAdmin.Components
+@using WebAdmin.Shared.Models.Order
+@inject NavigationManager Navigation
+
+<MudGrid>
+    <MudItem xs="12" sm="9">
+        <MudTable ServerData="@(new Func<TableState, Task<TableData<OrderDetail>>>(ServerReloadAsync))"
+                   Hover="true" @ref="_table" FixedHeader="true"
+                  Height="400px" Striped="true" >            
+            <HeaderContent>
+                <MudTh><MudTableSortLabel SortLabel="sign_field" T="OrderDetail">Người thuê</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="sign_field" T="OrderDetail">Người được thuê</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="sign_field" T="OrderDetail">Ngày thuê</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="name_field" T="OrderDetail">Trạng thái</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="position_field" T="OrderDetail">Actions</MudTableSortLabel></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Người thuê">@context.User.Name</MudTd>
+                <MudTd DataLabel="Người được thuê">@context.ToUser.Name</MudTd>
+                <MudTd DataLabel="Ngày thuê"> @context.TimeStart</MudTd>
+                <MudTd DataLabel="Trạng thái">@context.Status</MudTd>
+                <MudTd DataLabel="Actions">                
+                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
+                        <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
+                                   OnClick="async () => await OnViewClicked.InvokeAsync(context)" />                        
+                    </MudButtonGroup>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+    </MudItem>
+    <MudItem xs="12" sm="3">
+        <MudPaper>
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6" Align="Align.Center">Bộ lọc lịch sử</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudTextField Label="Tên tài khoản/Email" @bind-Value="_query" />  
+                    <MudDatePicker Label="Từ ngày" @bind-Date="_fromDate" Editable="true" Mask="@(new DateMask("dd.MM.yyyy"))" DateFormat="dd.MM.yyyy" />
+                    <MudDatePicker Label="Đến ngày" @bind-Date="_toDate" DateFormat="dd.MM.yyyy" Editable="true" Mask="@(new DateMask("dd.MM.yyyy"))" />
+                    <MudSelect T="string" Label="Trạng thái" AnchorOrigin="Origin.BottomCenter" @bind-Value="_status">
+                        <MudSelectItem Value='"Finish"'>Finish</MudSelectItem>
+                        <MudSelectItem Value='"Finish soon"'>Finish soon</MudSelectItem>
+                        <MudSelectItem Value='"Processing"'>Processing</MudSelectItem>
+                        <MudSelectItem Value='"Cancel"'>Cancel</MudSelectItem>
+                    </MudSelect>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton FullWidth="true" OnClick="() => OnSearch(_query,_status,_fromDate,_toDate)" Variant="Variant.Filled" Color="Color.Primary" Disabled="_isBusy">Áp dụng</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+

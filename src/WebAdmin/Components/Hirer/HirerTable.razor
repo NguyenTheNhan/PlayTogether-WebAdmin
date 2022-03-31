@@ -5,13 +5,8 @@
 <MudGrid>
     <MudItem xs="12" sm="9">
         <MudTable ServerData="@(new Func<TableState, Task<TableData<HirerSummary>>>(ServerReloadAsync))"
-                  Dense="true" Hover="true" @ref="_table" FixedHeader="true"
-                  Height="400px" Striped="true" >
-            @* <ToolBarContent>
-                <MudSpacer />
-                <MudIconButton Icon="@Icons.Material.Filled.AddCircle" Color="Color.Primary" OnClick='() => Navigation.NavigateTo($"/hirers/form")' />
-                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Class="ma-4" />
-                </ToolBarContent>*@
+                  Hover="true" @ref="_table" FixedHeader="true"
+                  Height="480px" Striped="true" >            
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="HirerSummary">Tên tài khoản</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="HirerSummary">Email</MudTableSortLabel></MudTh>
@@ -20,15 +15,11 @@
                 <MudTh><MudTableSortLabel SortLabel="position_field" T="HirerSummary">Actions</MudTableSortLabel></MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Thể loại">@context.Firstname @context.Lastname</MudTd>
+                <MudTd DataLabel="Tên tài khoản">@context.Name</MudTd>
                 <MudTd DataLabel="Email">@context.Email</MudTd>
-                <MudTd DataLabel="Thể loại"> @context.CreatedDate</MudTd>
-                <MudTd DataLabel="Mô tả">@(context.IsActive == true ? "Active" : "Banned")</MudTd>
-                <MudTd DataLabel="Actions">
-                    
-                    @*<MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Default"
-                        OnClick="async () => await OnEditClicked.InvokeAsync(context)" />*@
-                    @*<MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" />*@
+                <MudTd DataLabel="Ngày đăng ký"> @context.CreatedDate</MudTd>
+                <MudTd DataLabel="Trạng thái">@(context.IsActive == true ? "Active" : "Banned")</MudTd>
+                <MudTd DataLabel="Actions">                
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
                         <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
                                    OnClick="async () => await OnViewClicked.InvokeAsync(context)" />
@@ -43,8 +34,6 @@
         </MudTable>
     </MudItem>
     <MudItem xs="12" sm="3">
-
-
         <MudPaper>
             <MudCard>
                 <MudCardHeader>
@@ -56,7 +45,6 @@
                     <MudTextField Label="Tên tài khoản/Email" @bind-Value="_query" />
 
                     <MudSelect Label="Trạng thái" AnchorOrigin="Origin.BottomCenter" @bind-Value="_isActive">
-                        @*<MudSelectItem Value="null">---</MudSelectItem>*@
                         <MudSelectItem Value="true">Active</MudSelectItem>
                         <MudSelectItem Value="false">Banned</MudSelectItem>
                     </MudSelect>
@@ -66,6 +54,5 @@
                 </MudCardActions>
             </MudCard>
         </MudPaper>
-
     </MudItem>
 </MudGrid>

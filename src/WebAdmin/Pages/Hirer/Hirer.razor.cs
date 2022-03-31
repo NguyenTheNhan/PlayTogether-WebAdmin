@@ -8,7 +8,7 @@ namespace WebAdmin.Pages.Hirer
         private List<BreadcrumbItem> _breadcrumbItems => new()
         {
             new BreadcrumbItem("Trang chủ", "/index"),
-            new BreadcrumbItem("Hirer", "/hirers", true)
+            new BreadcrumbItem("Tài khoản", "/hirers", true)
         };
     }
 }

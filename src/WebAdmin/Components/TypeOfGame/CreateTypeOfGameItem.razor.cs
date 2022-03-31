@@ -43,7 +43,7 @@ namespace WebAdmin.Components
                 }
                 _isBusy = true;
                 //Call Api to add TypeOfGame Item
-                var result = await TypeOfGameService.CreateAsync(GameId, model.Id);
+                await TypeOfGameService.CreateAsync(GameId, model.Id);
 
 
                 //Notify the parent about the newly added item
