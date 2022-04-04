@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Components\Hirer\OrderHistory.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AKSoftware.Blazor.Utilities" Version="1.0.0" />
     <PackageReference Include="Blazored.FluentValidation" Version="2.0.3" />
     <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
@@ -31,18 +27,6 @@
 
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Components\Hirer\OrderHistory.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Components\Hirer\OrderHistory.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Components\Hirer\OrderHistory.razor" />
   </ItemGroup>
 
 </Project>

@@ -26,7 +26,7 @@ namespace WebAdmin.Client.Services.Services
                                                                           int pageNumber = 1,
                                                                           int pageSize = 1000)
         {
-            var response = await _httpClient.GetAsync($"/api/play-together/v1/admins/transactions/{userId}?FromDate={fromDate}&ToDate={toDate}&Type={type}&PageNumber={pageNumber}&PageSize={pageSize}");
+            var response = await _httpClient.GetAsync($"/api/play-together/v1/admins/transactions/{userId}?FromDate={fromDate}&ToDate={toDate}&Type={type}&PageNumber={pageNumber}&PageSize={pageSize}&IsNew=true");
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<IEnumerable<TransactionSummary>>();

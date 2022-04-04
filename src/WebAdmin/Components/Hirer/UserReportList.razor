@@ -1,0 +1,25 @@
+﻿@namespace WebAdmin.Components
+
+<div class="mt-4" />
+<MudSpacer />
+
+@if (_isBusy)
+{
+    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+}
+else
+{
+        @if  (_reports.Count > 0)
+        {
+        <UserReportTable UserId="@UserId" />
+        }
+        else
+        {
+        <MudText>
+            Không có lịch sử thuê
+        </MudText>
+        }
+}

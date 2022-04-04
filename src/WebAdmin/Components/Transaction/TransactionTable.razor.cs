@@ -38,7 +38,7 @@ namespace WebAdmin.Components
         {
             try
             {
-                var result = await TransactionService.GetTransactionsAsync(UserId, _type, _fromDate, _toDate, state.Page, state.PageSize);
+                var result = await TransactionService.GetTransactionsAsync(UserId, _type, _fromDate, _toDate, state.Page + 1, state.PageSize);
                 var tmp = await TransactionService.GetTransactionsAsync(UserId, _type, _fromDate, _toDate, 0, 1000);
 
                 return new TableData<TransactionSummary>
