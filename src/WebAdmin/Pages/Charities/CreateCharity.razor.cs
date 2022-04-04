@@ -2,9 +2,9 @@
 using MudBlazor;
 using System.Collections.Generic;
 
-namespace WebAdmin.Pages.Hirer
+namespace WebAdmin.Pages.Charities
 {
-    public partial class HirerDetail
+    public partial class CreateCharity
     {
         [Parameter]
         public string Id { get; set; }
@@ -12,8 +12,8 @@ namespace WebAdmin.Pages.Hirer
         private List<BreadcrumbItem> _breadcrumbItems = new()
         {
             new BreadcrumbItem("Trang chủ", "/index"),
-            new BreadcrumbItem("Tài khoản", "/hirers"),
-            new BreadcrumbItem("Thông tin", "/hirers/details/{id}", true)
+            new BreadcrumbItem("Tổ chức từ thiện", "/charities"),
+            new BreadcrumbItem("Đăng ký", "/charities/details/form", true)
         };
     }
 }

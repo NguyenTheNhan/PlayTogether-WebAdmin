@@ -1,4 +1,4 @@
-using AKSoftware.Blazor.Utilities;
+﻿using AKSoftware.Blazor.Utilities;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Linq;
@@ -44,8 +44,16 @@ namespace WebAdmin.Components
                 var result = await RankService.CreateAsync(_no, _name, GameId);
                 _name = string.Empty;
                 _no = 0;
-
-                MessagingCenter.Send(this, "rank_added", result);
+                if (result.Id != null)
+                {
+                    MessagingCenter.Send(this, "rank_added", result);
+                    //_errorMessage = string.Empty;
+                }
+                else
+                {
+                    _errorMessage = "No hoặc Name đã tồn tại";
+                    Error.HandleError("Không thể thêm mới rank");
+                }
 
                 //Notify the parent about the newly added item
                 //await OnRankAdded.InvokeAsync(result.Value);

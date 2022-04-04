@@ -73,7 +73,7 @@ namespace WebAdmin.Components
                 //Call Api to edit ToDo Item
                 var result = await RankService.EditAsync(Item.Id, Item.No, Item.Name, GameId);
 
-                MessagingCenter.Send(this, "rank_edited", Item);
+                MessagingCenter.Send(this, "rank_edited", result);
 
                 //Notify the parent about the edited item
                 await OnItemEdited.InvokeAsync(result);

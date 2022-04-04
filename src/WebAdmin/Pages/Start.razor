@@ -1,12 +1,8 @@
 ﻿@page "/"
 @inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject Blazored.LocalStorage.ILocalStorageService Storage
 
 <h1>Index Page</h1>
 
-@code {
-    protected override void OnInitialized()
-    {
 
-        NavManager.NavigateTo("/index");
-    }
-}

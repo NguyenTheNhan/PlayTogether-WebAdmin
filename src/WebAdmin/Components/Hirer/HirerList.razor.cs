@@ -71,8 +71,11 @@ namespace WebAdmin.Components
                 //Confirm to active/unactive
                 try
                 {
-                    await HirerService.ActiveAsync(hirer.Id, !hirer.IsActive);
+                    // await HirerService.ActiveAsync(hirer.Id, !hirer.IsActive);
+                    await HirerService.ActiveAsync(hirer.Id, !hirer.IsActive, 0, DateTime.Now);
 
+                    //success
+                    Error.HandleSuccess(hirer.IsActive ? "Khoá tài khoản" : "Mở khoá tài khoản");
                     //send a message about the active/unactive
                     MessagingCenter.Send(this, "hirer_locked", hirer);
                 }
@@ -88,12 +91,12 @@ namespace WebAdmin.Components
                     Error.HandleError(ex);
                 }
             }
-            #endregion
-
-
-
-
         }
+        #endregion
+
+
+
+
         #region View
         private void ViewHirer(HirerSummary hirer)
         {

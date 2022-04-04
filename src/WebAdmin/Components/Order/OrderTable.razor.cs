@@ -19,6 +19,8 @@ namespace WebAdmin.Components
         [Parameter]
         public EventCallback<OrderDetail> OnViewClicked { get; set; }
 
+
+
         [Parameter]
         public string UserId { get; set; }
 
@@ -28,7 +30,7 @@ namespace WebAdmin.Components
 
         private string _query { get; set; } = string.Empty;
         private string _status { get; set; } = string.Empty;
-        private DateTime? _fromDate { get; set; } = DateTime.Parse("1/1/2000");
+        private DateTime? _fromDate { get; set; } = DateTime.Parse("1/1/0001");
         private DateTime? _toDate { get; set; } = DateTime.Now;
 
         private MudTable<OrderDetail> _table;

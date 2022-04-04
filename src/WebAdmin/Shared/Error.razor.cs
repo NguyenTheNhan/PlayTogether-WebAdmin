@@ -19,5 +19,16 @@ namespace WebAdmin.Shared
             Console.WriteLine($"{ex.Message} at {DateTime.Now }");
 
         }
+        public void HandleError(string ex)
+        {
+            Snackbar.Configuration.SnackbarVariant = Variant.Filled;
+            Snackbar.Add(ex, Severity.Error);
+        }
+
+        public void HandleSuccess(string action)
+        {
+            Snackbar.Configuration.SnackbarVariant = Variant.Filled;
+            Snackbar.Add(action + " thành công", Severity.Success);
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace WebAdmin.Client.Services.Interfaces
         Task<RankDetail> CreateAsync(int no, string name, string gameId);
         Task<RankDetail> EditAsync(string id, int no, string name, string gameId);
         Task<RankDetail> GetByIdAsync(string id);
-        Task<IEnumerable<RankDetail>> GetRankAsync(string gameId);
+        Task<IEnumerable<RankDetail>> GetRankAsync(string gameId, int pageNumber = 1, int pageSize = 10);
 
         Task DeleteAsync(string id);
     }

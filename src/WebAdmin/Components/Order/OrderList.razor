@@ -3,4 +3,23 @@
 <div class="mt-4" />
 <MudSpacer />
 
-<OrderTable OnViewClicked="ViewOrder" UserId="@UserId"/>
+@if (_isBusy)
+{
+    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+}
+else
+{
+        @if  (_orders.Count > 0)
+        {
+        <OrderTable OnViewClicked="ViewOrder" UserId="@UserId" />
+        }
+        else
+        {
+        <MudText>
+            Không có lịch sử thuê
+        </MudText>
+        }
+}

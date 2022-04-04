@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
-using WebAdmin.Shared.Models.Transaction;
+using WebAdmin.Shared.Models.Charities;
 
 namespace WebAdmin.Components
 {
-    public partial class TransactionList
+    public partial class CharitiesList
     {
-
         [Inject]
-        public ITransactionService TransactionService { get; set; }
+        public ICharitiesService CharitiesService { get; set; }
 
         [Inject]
         public NavigationManager Navigation { get; set; }
@@ -23,29 +22,22 @@ namespace WebAdmin.Components
         [Inject]
         public IDialogService DialogService { get; set; }
 
-        [Parameter]
-        public string UserId { get; set; }
-
         [CascadingParameter]
         public Error Error { get; set; }
 
         private bool _isBusy = false;
         private string _errorMessage = string.Empty;
-        private List<TransactionSummary> _transactions = new();
 
-        protected override async Task OnInitializedAsync()
-        {
-            _isBusy = true;
-            await GetTransactionAsync();
-            _isBusy = false;
-        }
-        private async Task<IEnumerable<TransactionSummary>> GetTransactionAsync()
+        private List<CharitiesSummary> _hirers = new();
+
+        private async Task<IEnumerable<CharitiesSummary>> GetCharitiessAsync(string query = "", bool isActive = true, int pageNumber = 1, int pageSize = 10)
         {
             _isBusy = true;
             try
             {
-                var result = await TransactionService.GetTransactionsAsync(UserId);
-                _transactions = result.ToList();
+                var result = await CharitiesService.GetCharitiesAsync(query, isActive, pageNumber, pageSize);
+                _hirers = result.ToList();
+
                 return result;
             }
             catch (ApiException ex)
@@ -54,13 +46,27 @@ namespace WebAdmin.Components
             }
             catch (Exception ex)
             {
-                //TODO: log this error
                 Error.HandleError(ex);
             }
             _isBusy = false;
             return null;
         }
+
+        #region Edit
+        private async Task EditCharities(CharitiesSummary charity)
+        {
+            Navigation.NavigateTo($"/charities/details/{charity.Id}");
+        }
+        #endregion
+
+
+
+
+        #region View
+        private void ViewCharities(CharitiesSummary charity)
+        {
+            Navigation.NavigateTo($"/charities/details/{charity.Id}");
+        }
+        #endregion
     }
 }
-
-

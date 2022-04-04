@@ -2,6 +2,8 @@
 @using WebAdmin.Shared.Models.Order
 @inject NavigationManager Navigation
 
+
+
 <MudGrid>
     <MudItem xs="12" sm="9">
         <MudTable ServerData="@(new Func<TableState, Task<TableData<OrderDetail>>>(ServerReloadAsync))"
@@ -17,7 +19,7 @@
             <RowTemplate>
                 <MudTd DataLabel="Người thuê">@context.User.Name</MudTd>
                 <MudTd DataLabel="Người được thuê">@context.ToUser.Name</MudTd>
-                <MudTd DataLabel="Ngày thuê"> @context.TimeStart</MudTd>
+                <MudTd DataLabel="Ngày thuê"> @context.ProcessExpired</MudTd>
                 <MudTd DataLabel="Trạng thái">@context.Status</MudTd>
                 <MudTd DataLabel="Actions">                
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">

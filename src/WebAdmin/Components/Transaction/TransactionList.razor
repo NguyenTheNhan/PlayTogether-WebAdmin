@@ -3,4 +3,24 @@
 <div class="mt-4" />
 <MudSpacer />
 
-<TransactionTable  UserId="@UserId"/>
+
+@if (_isBusy)
+{
+    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+}
+else
+{
+        @if  (_transactions.Count > 0)
+        {
+        <TransactionTable  UserId="@UserId"/>
+        }
+        else
+        {
+        <MudText>
+            Không có lịch sử giao dịch
+        </MudText>
+        }
+}

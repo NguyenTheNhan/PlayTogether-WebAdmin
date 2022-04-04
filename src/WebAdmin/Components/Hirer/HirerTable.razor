@@ -3,7 +3,7 @@
 @inject NavigationManager Navigation
 
 <MudGrid>
-    <MudItem xs="12" sm="9">
+    <MudItem xs="12" lg="9">
         <MudTable ServerData="@(new Func<TableState, Task<TableData<HirerSummary>>>(ServerReloadAsync))"
                   Hover="true" @ref="_table" FixedHeader="true"
                   Height="480px" Striped="true" >            
@@ -23,8 +23,11 @@
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
                         <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
                                    OnClick="async () => await OnViewClicked.InvokeAsync(context)" />
+                        @if(context.IsActive == false)
+                        {
                         <MudIconButton Icon="@(context.IsActive ? Icons.Material.Filled.Lock : Icons.Material.Filled.LockOpen)" Color="@(context.IsActive ? Color.Error : Color.Success)"
-                                              OnClick="async () => await OnEditClicked.InvokeAsync(context)"/>
+                                              OnClick="async () => await OnEditClicked.InvokeAsync(context)"/>                            
+                        }
                     </MudButtonGroup>
                 </MudTd>
             </RowTemplate>
@@ -33,7 +36,7 @@
             </PagerContent>
         </MudTable>
     </MudItem>
-    <MudItem xs="12" sm="3">
+    <MudItem xs="12" lg="3">
         <MudPaper>
             <MudCard>
                 <MudCardHeader>

@@ -2,9 +2,9 @@
 using MudBlazor;
 using System.Collections.Generic;
 
-namespace WebAdmin.Pages.Hirer
+namespace WebAdmin.Pages.Order
 {
-    public partial class HirerDetail
+    public partial class OrderDetail
     {
         [Parameter]
         public string Id { get; set; }
@@ -13,7 +13,7 @@ namespace WebAdmin.Pages.Hirer
         {
             new BreadcrumbItem("Trang chủ", "/index"),
             new BreadcrumbItem("Tài khoản", "/hirers"),
-            new BreadcrumbItem("Thông tin", "/hirers/details/{id}", true)
+            new BreadcrumbItem("Chi tiết thuê", "/hirers/order/{id}", true)
         };
     }
 }

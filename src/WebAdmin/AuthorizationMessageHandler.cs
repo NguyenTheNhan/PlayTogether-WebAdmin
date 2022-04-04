@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
 using System;
 using System.Net.Http;
 using System.Threading;
@@ -11,6 +12,9 @@ namespace WebAdmin
 
         private readonly ILocalStorageService _storage;
 
+        public AuthenticationStateProvider AuthenticationStateProvider;
+
+
         public AuthorizationMessageHandler(ILocalStorageService storage)
         {
             _storage = storage;
@@ -20,8 +24,24 @@ namespace WebAdmin
         {
             if (await _storage.ContainKeyAsync("access_token"))
             {
-                var token = await _storage.GetItemAsStringAsync("access_token");
-                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                var now = DateTime.Now;
+                var time = await _storage.GetItemAsync<DateTime>("expire_date");
+                var compare = DateTime.Compare(time, now);
+                if (compare > 0)
+                {
+                    var token = await _storage.GetItemAsStringAsync("access_token");
+                    request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                }
+                else
+                {
+
+                    await _storage.RemoveItemAsync("access_token");
+                    await _storage.RemoveItemAsync("expire_date");
+
+                    await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+
+                }
             }
             Console.WriteLine("Authorization Message Handler Called");
             return await base.SendAsync(request, cancellationToken);

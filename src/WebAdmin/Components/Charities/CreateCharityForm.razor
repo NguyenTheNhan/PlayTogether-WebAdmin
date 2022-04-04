@@ -1,0 +1,30 @@
+﻿@namespace WebAdmin.Components
+
+<MudText Typo="Typo.h6" Style="mb-2"> Đăng ký tài khoản</MudText>
+
+<MudPaper Class="py-4 px-4">
+
+<EditForm Model="_model" OnValidSubmit="SubmitFormAsync">
+    <FluentValidationValidator />
+    <MudTextField Label="Email" HelperText="Required" @bind-Value="@_model.Email" Variant="Variant.Outlined" />
+    <MudTextField Label="Tên tổ chức" HelperText="Optional" @bind-Value="@_model.OrganizationName" Lines="4" Variant="Variant.Outlined" />
+    <MudTextField Label="Mật khẩu" HelperText="Optional" @bind-Value="@_model.Password" Variant="Variant.Outlined" />
+    <MudTextField Label="Nhập lại mật khẩu" HelperText="Required" @bind-Value="@_model.ConfirmPassword" Variant="Variant.Outlined" />
+
+
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_errorMessage</MudAlert>
+    }
+
+    <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
+
+    <ValidationSummary/>
+    <MudCardActions >
+
+    <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit"  Disabled="_isBusy">Lưu</MudButton>
+    <MudButton Color="Color.Default" Variant="Variant.Filled" OnClick='() => Navigation.NavigateTo($"/charities")' Class="mx-2" Disabled="_isBusy">Quay lại</MudButton>
+    </MudCardActions>
+</EditForm>
+
+</MudPaper>

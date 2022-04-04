@@ -20,6 +20,7 @@ namespace WebAdmin.Client.Services.Services
 
         public async Task<RankDetail> CreateAsync(int no, string name, string gameId)
         {
+
             var response = await _httpClient.PostAsJsonAsync($"/api/play-together/v1/games/{gameId}/ranks", new
             {
                 GameId = gameId,
@@ -34,7 +35,9 @@ namespace WebAdmin.Client.Services.Services
             else
             {
                 var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
-                throw new ApiException(errorResponse, response.StatusCode);
+                RankDetail result = new();
+                return result;
+                //throw new ApiException(errorResponse, response.StatusCode);
             }
         }
 
@@ -84,9 +87,9 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<IEnumerable<RankDetail>> GetRankAsync(string gameId)
+        public async Task<IEnumerable<RankDetail>> GetRankAsync(string gameId, int pageNumber = 1, int pageSize = 10)
         {
-            var response = await _httpClient.GetAsync($"/api/play-together/v1/games/{gameId}/ranks");
+            var response = await _httpClient.GetAsync($"/api/play-together/v1/games/{gameId}/ranks?PageNumber={pageNumber}&PageSize={pageSize}");
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<IEnumerable<RankDetail>>();

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
-using WebAdmin.Shared.Models.Hirer;
+using WebAdmin.Shared.Models.Charities;
 
 namespace WebAdmin.Components
 {
-    public partial class UserInfo
+    public partial class CharityInfo
     {
         [Inject]
-        public IHirerService UserService { get; set; }
+        public ICharitiesService CharitiesService { get; set; }
 
         [Inject]
         public NavigationManager Navigation { get; set; }
@@ -27,66 +27,24 @@ namespace WebAdmin.Components
         public Error Error { get; set; }
 
 
-        private UserDetail _model = new UserDetail();
+        private CharitiesSummary _model = new CharitiesSummary();
         private bool _isBusy = false;
-        private string _action = "Khoá 1 ngày";
-        private int _numDateDisable = 1;
+        // private string _action = "Khoá 1 ngày";
         private string _errorMessage = string.Empty;
 
         protected override async Task OnInitializedAsync()
         {
 
-            await FetchUserByIdAsync();
+            await FetchCharitiesByIdAsync();
         }
 
-        private async void selectOption(int option)
-        {
-            _numDateDisable = option;
-            if (option <= 3)
-            {
-                _action = "khoá " + option + " ngày";
 
-            }
-            else
-            {
-                _action = "khoá vĩnh viễn";
-            }
-        }
-
-        //private async Task SubmitFormAsync()
-        //{
-        //    _isBusy = true;
-        //    try
-        //    {
-
-        //        await UserService.ActiveAsync(_model.Id, !_model.IsActive, _numDateDisable, DateTime.Now);
-
-
-
-        //        //success
-        //        Error.HandleSuccess("Thao tác");
-        //        //Navigation.NavigateTo("/hirers");
-        //    }
-        //    catch (ApiException ex)
-        //    {
-        //        _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //        Error.HandleError(ex);
-
-        //    }
-
-        //    _isBusy = false;
-
-        //}
 
         private async Task ActiveAsync()
         {
             _isBusy = true;
             var parameters = new DialogParameters();
-            parameters.Add("ContentText", _model.IsActive ? $"Bạn có muốn {_action} '{_model.Name}'?" : $"Bạn có muốn mở khoá tài khoản '{_model.Name}' ?");
+            parameters.Add("ContentText", _model.IsActive ? $"Bạn có muốn khoá tài khoản '{_model.OrganizationName}'?" : $"Bạn có muốn mở khoá tài khoản '{_model.OrganizationName}'?");
             parameters.Add("ButtonText", _model.IsActive ? "Khoá" : "Mở khoá");
             parameters.Add("Color", _model.IsActive ? Color.Error : Color.Success);
 
@@ -100,11 +58,11 @@ namespace WebAdmin.Components
                 try
                 {
 
-                    await UserService.ActiveAsync(_model.Id, !_model.IsActive, _numDateDisable, DateTime.Now);
+                    await CharitiesService.ActiveAsync(_model.Id, !_model.IsActive);
 
                     //success
                     Error.HandleSuccess(_model.IsActive ? "Khoá tài khoản" : "Mở khoá tài khoản");
-                    await FetchUserByIdAsync();
+                    await FetchCharitiesByIdAsync();
 
                 }
                 catch (ApiException ex)
@@ -122,13 +80,13 @@ namespace WebAdmin.Components
 
         }
 
-        private async Task FetchUserByIdAsync()
+        private async Task FetchCharitiesByIdAsync()
         {
             _isBusy = true;
 
             try
             {
-                var result = await UserService.GetByIdAsync(Id);
+                var result = await CharitiesService.GetByIdAsync(Id);
                 _model = result;
 
             }
@@ -145,7 +103,5 @@ namespace WebAdmin.Components
 
             _isBusy = false;
         }
-
-
     }
 }

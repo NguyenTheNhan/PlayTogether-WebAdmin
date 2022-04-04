@@ -2,8 +2,6 @@ using AKSoftware.Blazor.Utilities;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
@@ -31,30 +29,30 @@ namespace WebAdmin.Components
 
         private bool _isBusy = false;
         private string _errorMessage = string.Empty;
-        private List<RankDetail> _ranks = new();
+        // private List<RankDetail> _ranks = new();
 
 
-        private async Task<IEnumerable<RankDetail>> GetRankAsync()
-        {
-            _isBusy = true;
-            try
-            {
-                var result = await RankService.GetRankAsync(GameId);
-                _ranks = result.ToList();
-                return result;
-            }
-            catch (ApiException ex)
-            {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                //TODO: log this error
-                Error.HandleError(ex);
-            }
-            _isBusy = false;
-            return null;
-        }
+        //private async Task<IEnumerable<RankDetail>> GetRankAsync()
+        //{
+        //    _isBusy = true;
+        //    try
+        //    {
+        //        var result = await RankService.GetRankAsync(GameId);
+        //        _ranks = result.ToList();
+        //        return result;
+        //    }
+        //    catch (ApiException ex)
+        //    {
+        //        _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //TODO: log this error
+        //        Error.HandleError(ex);
+        //    }
+        //    _isBusy = false;
+        //    return null;
+        //}
 
         #region Add Rank
         private void AddRank()

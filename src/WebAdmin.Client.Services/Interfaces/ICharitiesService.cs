@@ -6,13 +6,14 @@ namespace WebAdmin.Client.Services.Interfaces
 {
     public interface ICharitiesService
     {
-        Task<IEnumerable<CharitiesSummary>> GetCharitiessAsync(string query = null, int pageNumber = 1, int pageSize = 10);
+        Task<IEnumerable<CharitiesSummary>> GetCharitiesAsync(string query = null, bool isActive = true, int pageNumber = 1, int pageSize = 10);
         Task<CharitiesSummary> GetByIdAsync(string id);
 
-        Task<CharitiesSummary> CreateAsync(CharitiesSummary model);
+        Task CreateAsync(CharityCreate model);
 
         Task<CharitiesSummary> EditAsync(CharitiesSummary model);
 
-        Task DeleteAsync(string id);
+        Task<CharitiesSummary> ActiveAsync(string id, bool isActive);
+
     }
 }

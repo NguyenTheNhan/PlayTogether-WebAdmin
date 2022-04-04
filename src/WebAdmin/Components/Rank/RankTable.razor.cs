@@ -58,12 +58,13 @@ namespace WebAdmin.Components
         {
             try
             {
-                var result = await RankService.GetRankAsync(GameId);
+                var result = await RankService.GetRankAsync(GameId, state.Page + 1, state.PageSize);
+                var tmp = await RankService.GetRankAsync(GameId, 0, 1000);
 
                 return new TableData<RankDetail>
                 {
                     Items = result,
-                    TotalItems = result.Count(),
+                    TotalItems = tmp.Count(),
                 };
             }
             catch (Exception ex)

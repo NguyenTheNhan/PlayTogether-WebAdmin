@@ -15,7 +15,8 @@ namespace WebAdmin.Client.Services
                            .AddScoped<IRankService, HttpRankService>()
                            .AddScoped<IHirerService, HttpHirerService>()
                            .AddScoped<IOrderService, HttpOrderService>()
-                           .AddScoped<ITransactionService, HttpTransactionService>();
+                           .AddScoped<ITransactionService, HttpTransactionService>()
+                           .AddScoped<ICharitiesService, HttpCharitiesService>();
         }
     }
 }

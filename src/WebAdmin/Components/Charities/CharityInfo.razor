@@ -1,0 +1,105 @@
+﻿@namespace WebAdmin.Components
+
+<EditForm Model="_model" >
+    <FluentValidationValidator />
+
+    <MudGrid>
+        <MudItem lg="8" md="8" sm="12">
+            @if (_isBusy)
+            {
+                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+            }
+            else
+            {
+                <MudGrid>
+                    <MudItem xs="2">
+                        <br />
+                        <MudText>
+                            Tên tổ chức:
+                        </MudText>
+                    </MudItem>
+                    <MudItem xs="10">
+                        <MudTextField @bind-Value="@_model.OrganizationName" Variant="Variant.Outlined" ReadOnly="true" />
+                    </MudItem>
+                </MudGrid>
+                <MudGrid>
+                    <MudItem xs="2">
+                        <br />
+                        <MudText>Email:</MudText>
+                    </MudItem>
+                    <MudItem xs="10">
+                        <div class="d-flex">
+                            <MudTextField @bind-Value="@_model.Email" Variant="Variant.Outlined" ReadOnly="true" />
+
+                            <div>
+                            <br />
+                            <MudText Class="mr-4 ml-2">Điện thoại:</MudText>
+                            </div>
+
+                            <MudTextField @bind-Value="@_model.Phone" Variant="Variant.Outlined" ReadOnly="true" />
+
+
+                        </div>
+                    </MudItem>
+                </MudGrid>
+                <MudGrid>
+                    <MudItem xs="2">
+                        <div>
+                            <br />
+                            <MudText>Địa chỉ:</MudText>
+                        </div>
+                    </MudItem>
+                    <MudItem xs="10">
+
+                        <MudTextField @bind-Value="@_model.Address" Variant="Variant.Outlined" ReadOnly="true" />
+
+
+                    </MudItem>
+                </MudGrid>
+
+
+                <MudGrid>
+                    <MudItem xs="2">
+                        <br />
+                        <MudText>Mô tả:</MudText>
+                    </MudItem>
+                    <MudItem xs="10">
+                        <MudTextField @bind-Value="@_model.Information" Lines="8" Variant="Variant.Outlined" ReadOnly="true" />
+                    </MudItem>
+                </MudGrid>
+            }
+        </MudItem>
+        <MudItem lg="4" md="4" sm="12">
+            <img src="@_model.Avatar" style="width:75%; " class="rounded-circle" />
+            
+                @if (_model.IsActive == true)
+                {
+                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Class="mt-2 mr-2">
+                        <MudButton EndIcon="@Icons.Material.Filled.Lock" IconColor="@Color.Error" OnClick="() => ActiveAsync()"> Khoá tài khoản </MudButton>
+                    </MudButtonGroup>
+                }
+                else
+                {
+                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Class="ml-6 mr-4 mt-2">
+                        <MudButton EndIcon="@Icons.Material.Filled.LockOpen" IconColor="@Color.Success" OnClick="() => ActiveAsync()"> Mở khoá </MudButton>
+                    </MudButtonGroup>
+                }
+                <MudButton Color="Color.Default" Variant="Variant.Filled" OnClick='() => Navigation.NavigateTo($"/charities")' Class="mx-2" Disabled="_isBusy">Quay lại</MudButton>
+            
+            
+
+        </MudItem>
+    </MudGrid>
+    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+    {
+        <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_errorMessage</MudAlert>
+    }
+
+    <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
+
+    <ValidationSummary />
+
+</EditForm>

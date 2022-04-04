@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -47,12 +48,15 @@ namespace WebAdmin.Client.Services.Services
         }
 
 
-        public async Task<UserDetail> ActiveAsync(string id, bool isActive, string message = "")
+        public async Task<UserDetail> ActiveAsync(string id, bool isActive, int numDateDisable, DateTime? dateDisable)
         {
-            var response = await _httpClient.PutAsJsonAsync($"/api/play-together/v1/admins/hirer-status/{id}", new
+            var response = await _httpClient.PutAsJsonAsync($"/api/play-together/v1/admins/users/activate/{id}", new
             {
                 isActive = isActive,
-                message = message,
+                note = isActive == true ? "Khoá" : "Mở khoá",
+                numDateDisable = numDateDisable,
+                dateDisable = dateDisable,
+                dateActive = dateDisable?.AddDays(numDateDisable),
             });
             if (response.IsSuccessStatusCode)
             {

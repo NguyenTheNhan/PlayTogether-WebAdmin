@@ -43,12 +43,13 @@ namespace WebAdmin.Components
         {
             try
             {
-                var result = await GameService.GetGamesAsync(_query, state.Page, state.PageSize);
+                var result = await GameService.GetGamesAsync(_query, state.Page + 1, state.PageSize);
+                var tmp = await GameService.GetGamesAsync(_query, 0, 1000);
 
                 return new TableData<GameSummary>
                 {
                     Items = result,
-                    TotalItems = result.Count()
+                    TotalItems = tmp.Count()
                 };
             }
             catch (Exception ex)

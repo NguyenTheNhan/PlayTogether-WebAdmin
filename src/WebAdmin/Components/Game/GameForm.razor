@@ -49,7 +49,11 @@
             <MudTextField Label="Tên khác" HelperText="Optional" @bind-Value="@_model.OtherName" Variant="Variant.Outlined" />
             <MudTextField Label="Tên hiển thị" HelperText="Required" @bind-Value="@_model.DisplayName" Variant="Variant.Outlined" />
         }
+        <MudCardActions >
 
+    <MudButton Color="Color.Primary" Style="width:100px;" Variant="Variant.Filled" ButtonType="ButtonType.Submit"  Disabled="_isBusy">Lưu</MudButton>
+    <MudButton Color="Color.Default" Style="width:100px;" Variant="Variant.Filled" OnClick='() => Navigation.NavigateTo($"/games")' Class="mx-2" Disabled="_isBusy">Quay lại</MudButton>
+    </MudCardActions>
         
 
         @if (_ranks != null)
@@ -65,7 +69,7 @@
 
         <ValidationSummary />
 
-        <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit" FullWidth="true" Disabled="_isBusy">Save</MudButton>
+        
     </EditForm>
 
 </MudPaper>

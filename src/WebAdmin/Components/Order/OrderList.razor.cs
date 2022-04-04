@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
 using System.Collections.Generic;
@@ -32,7 +32,12 @@ namespace WebAdmin.Components
         private string _errorMessage = string.Empty;
         private List<OrderDetail> _orders = new();
 
-
+        protected override async Task OnInitializedAsync()
+        {
+            _isBusy = true;
+            await GetOrderAsync();
+            _isBusy = false;
+        }
         private async Task<IEnumerable<OrderDetail>> GetOrderAsync()
         {
             _isBusy = true;
@@ -57,9 +62,16 @@ namespace WebAdmin.Components
 
 
         #region View
-        private void ViewOrder(OrderDetail Order)
+        private void ViewOrder(OrderDetail order)
         {
+            //Navigation.NavigateTo($"/hirers/order/{order.Id}");
 
+            var parameters = new DialogParameters();
+            parameters.Add("Id", order.Id);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
+
+            var dialog = DialogService.Show<OrderDetails>("Thông tin thuê", parameters, options);
         }
         #endregion
 
