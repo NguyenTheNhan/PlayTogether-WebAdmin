@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using WebAdmin.Shared.Models.Game;
 using WebAdmin.Shared.Models.Hirer;
+using WebAdmin.Shared.Models.Report;
 
 namespace WebAdmin.Shared.Models.Order
 {
@@ -20,6 +21,7 @@ namespace WebAdmin.Shared.Models.Order
         public float TotalPrices { get; set; }
         public float FinalPrices { get; set; }
         public IEnumerable<Rating> Ratings { get; set; }
+        public IEnumerable<ReportInOrder> Reports { get; set; }
         public string Status { get; set; }
         public DateTime TimeStart { get; set; }
         public DateTime TimeFinish { get; set; }

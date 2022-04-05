@@ -12,10 +12,12 @@ namespace WebAdmin.Shared.Models.Hirer
         public string City { get; set; }
         public bool Gender { get; set; }
         public Image[] Images { get; set; }
+        public BehaviorPoint BehaviorPoint { get; set; }
         public string Description { get; set; }
         public float Rate { get; set; }
-        public float pricePerHour { get; set; }
-        public int maxHourHire { get; set; }
+        public int NumOfRate { get; set; }
+        public float PricePerHour { get; set; }
+        public int MaxHourHire { get; set; }
     }
 
     public class Image
@@ -24,4 +26,13 @@ namespace WebAdmin.Shared.Models.Hirer
         public string ImageLink { get; set; }
     }
 
+    public class BehaviorPoint
+    {
+        public string Id { get; set; }
+        public int Point { get; set; }
+        public int SatisfiedPoint { get; set; }
+    }
+
+
 }
+

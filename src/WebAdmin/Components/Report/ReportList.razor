@@ -12,14 +12,7 @@
 }
 else
 {
-        @if  (_reports.Count > 0)
-        {
-        <UserReportTable UserId="@UserId" />
-        }
-        else
-        {
-        <MudText>
-            Không có lịch sử báo cáo
-        </MudText>
-        }
+        
+        <ReportTable  OnViewClicked="ViewReport"/>
+        
 }

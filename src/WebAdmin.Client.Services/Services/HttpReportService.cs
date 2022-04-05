@@ -37,12 +37,12 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<ReportDetail> GetByIdAsync(string id)
+        public async Task<ReportDetails> GetByIdAsync(string id)
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/admins/reports/{id}");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<ReportDetail>();
+                var result = await response.Content.ReadFromJsonAsync<ReportDetails>();
                 return result;
             }
             else

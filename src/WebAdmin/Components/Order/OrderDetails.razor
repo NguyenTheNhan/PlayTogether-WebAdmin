@@ -6,47 +6,46 @@
         <MudText  Typo="Typo.h5">Chi tiết thuê </MudText>
     </TitleContent>
     <DialogContent>
-        @*<MudPaper Class="py-4 px-4">*@
+        <MudContainer MaxWidth="MaxWidth.Small">
+        
             <EditForm Model="_model">
-                <MudGrid>
-                    <MudItem xs="4" Class="align-center">
-                        <MudText Typo="Typo.h6">Tổng giờ thuê: @_model.TotalTimes giờ </MudText>
-                        <MudText Typo="Typo.h6">Tổng chi phí: @_model.TotalPrices đ </MudText>
-                        <MudText Typo="Typo.h6">Giờ thuê thực: @_model.TimeFinish.Subtract(_model.TimeStart).Seconds giây </MudText>
-                        <MudText Typo="Typo.h6">Chi phí thực: @_model.FinalPrices đ</MudText>
-                        <MudText Typo="Typo.h6">Lý do kết thúc: </MudText>
-                        <MudTextField Value="@_model.Reason" Lines="4" ReadOnly="true" Variant="Variant.Outlined" />
-
-                    </MudItem>
-                    <MudItem xs="3">
+                <MudGrid>                    
+                    <MudItem xs="4">
                         <div class="d-flex justify-center">
-                            <MudImage Src="@_hirer.Avatar" Style="width:70%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
+                            <MudImage Src="@_hirer.Avatar" Style="width:75%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
                         </div>
-                        <MudText Align="Align.Center" Typo="Typo.h5" Class="ma-3"> @_hirer.Name </MudText>
+                        <MudText Align="Align.Center" Typo="Typo.h6" Class="ma-3"> @_hirer.Name </MudText>
                         @*<MudLink onclick="@UserDetail(_hirer.Id)"  Underline="Underline.Always">Xem chi tiết</MudLink>*@
                          <div class="d-flex justify-center">
                         <MudButton OnClick='UserDetail'>Xem chi tiết</MudButton>
                         </div>
                     </MudItem>
-                    <MudItem xs="2">
+                    <MudItem xs="4">
                         <div class="d-flex justify-center ">
-                            <MudImage Src="https://media.publit.io/file/LogoPlayTogether/logo.png" Style="width:50%" ObjectFit="ObjectFit.Contain" />
+                            <MudImage Src="https://media.publit.io/file/LogoPlayTogether/logo.png" Style="width:60%" ObjectFit="ObjectFit.Contain" />
                         </div>
-                        <MudText Align="Align.Center" Typo="Typo.h5" Class="ma-3"> @_model.Status </MudText>
+                        <MudText Align="Align.Center" Typo="Typo.h6" Class="ma-3"> @_model.Status </MudText>
                         <div class="d-flex justify-center">
-                            <MudRating SelectedValue="(int) Math.Round(_rating)" ReadOnly="true" />
+                            <MudRating SelectedValue="(int) Math.Round(_rating)" ReadOnly="true" Style="width:75%"/>
                         </div>
                     </MudItem>
-                    <MudItem xs="3">
+                    <MudItem xs="4">
                         <div class="d-flex justify-center">
-                            <MudImage Src="@_player.Avatar" Style="width:70%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
+                            <MudImage Src="@_player.Avatar" Style="width:75%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
                         </div>
-                        <MudText Align="Align.Center" Typo="Typo.h5" Class="ma-3"> @_player.Name </MudText>
+                        <MudText Align="Align.Center" Typo="Typo.h6" Class="ma-3"> @_player.Name </MudText>
                         <div class="d-flex justify-center">
                         <MudButton OnClick='PlayerDetail'>Xem chi tiết</MudButton>
                         </div>
-                    </MudItem>
+                    </MudItem>                    
                 </MudGrid>
+                <MudDivider Class="mt-3" />
+                <MudText Typo="Typo.subtitle1">Tổng giờ thuê: @_model.TotalTimes giờ </MudText>
+                        <MudText Typo="Typo.subtitle1">Tổng chi phí: @_model.TotalPrices đ </MudText>
+                        <MudText Typo="Typo.subtitle1">Giờ thuê thực: @_model.TimeFinish.Subtract(_model.TimeStart).Seconds giây </MudText>
+                        <MudText Typo="Typo.subtitle1">Chi phí thực: @_model.FinalPrices đ</MudText>
+                        <MudText Typo="Typo.subtitle1">Lý do kết thúc: </MudText>
+                        <MudTextField Value="@_model.Reason" Lines="4" ReadOnly="true" Variant="Variant.Outlined" />
                 @if (!string.IsNullOrWhiteSpace(_errorMessage))
                 {
                     <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_errorMessage</MudAlert>
@@ -55,8 +54,9 @@
 
 
             </EditForm>
-            <MudDivider Class="mt-3" />
-        @*</MudPaper>*@
+            
+        
+        </MudContainer>
     </DialogContent>
     <DialogActions>
         <div class="d-flex flex-row-reverse">

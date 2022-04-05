@@ -1,4 +1,5 @@
 ﻿@namespace WebAdmin.Components
+
 @using WebAdmin.Shared.Models.Report
 @inject NavigationManager Navigation
 
@@ -6,7 +7,7 @@
     <MudItem xs="12" sm="9">
         <MudTable ServerData="@(new Func<TableState, Task<TableData<ReportSummary>>>(ServerReloadAsync))"
                    Hover="true" @ref="_table" FixedHeader="true"
-                  Height="400px" Striped="true" >            
+                  Height='@(isMany ? "480px" : null)' Striped="true" >            
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="ReportSummary">Nội dung báo cáo</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="ReportSummary">Ngày báo cáo</MudTableSortLabel></MudTh>

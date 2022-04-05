@@ -1,3 +1,4 @@
+using AKSoftware.Blazor.Utilities;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
@@ -10,7 +11,7 @@ using WebAdmin.Shared.Models.Report;
 
 namespace WebAdmin.Components
 {
-    public partial class UserReportTable
+    public partial class ReportTable
     {
         [Inject]
         public IReportService ReportService { get; set; }
@@ -29,23 +30,29 @@ namespace WebAdmin.Components
         public bool _isBusy { get; set; }
 
         private int tmp { get; set; } = 0;
+        private bool isMany { get; set; } = false;
         private bool? _isApprove { get; set; } = null;
         private DateTime? _fromDate { get; set; } = DateTime.Parse("1/1/0001");
         private DateTime? _toDate { get; set; } = DateTime.Now;
 
         private MudTable<ReportSummary> _table;
 
-
-
-
+        protected override void OnInitialized()
+        {
+            MessagingCenter.Subscribe<ReportDetailDialog, ReportDetails>(this, "report_approved", async (sender, args) =>
+            {
+                await _table.ReloadServerData();
+                StateHasChanged();
+            });
+        }
 
         private async Task<TableData<ReportSummary>> ServerReloadAsync(TableState state)
         {
             try
             {
-                var result = await ReportService.GetByUserIdAsync(UserId, _isApprove, _fromDate, _toDate, state.Page + 1, state.PageSize);
-                var tmp = await ReportService.GetByUserIdAsync(UserId, _isApprove, _fromDate, _toDate, 0, 1000);
-
+                var result = await ReportService.GetReportsAsync(_isApprove, _fromDate, _toDate, state.Page + 1, state.PageSize);
+                var tmp = await ReportService.GetReportsAsync(_isApprove, _fromDate, _toDate, 0, 1000);
+                if (tmp.Count() > 6) isMany = true;
                 return new TableData<ReportSummary>
                 {
                     Items = result,

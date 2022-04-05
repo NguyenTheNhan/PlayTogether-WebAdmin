@@ -53,34 +53,6 @@ namespace WebAdmin.Components
             }
         }
 
-        //private async Task SubmitFormAsync()
-        //{
-        //    _isBusy = true;
-        //    try
-        //    {
-
-        //        await UserService.ActiveAsync(_model.Id, !_model.IsActive, _numDateDisable, DateTime.Now);
-
-
-
-        //        //success
-        //        Error.HandleSuccess("Thao tác");
-        //        //Navigation.NavigateTo("/hirers");
-        //    }
-        //    catch (ApiException ex)
-        //    {
-        //        _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //        Error.HandleError(ex);
-
-        //    }
-
-        //    _isBusy = false;
-
-        //}
 
         private async Task ActiveAsync()
         {

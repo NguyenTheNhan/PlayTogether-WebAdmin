@@ -84,8 +84,14 @@
             }
         </MudItem>
         <MudItem lg="4" md="4" sm="12">
-            <img src="@_model.Avatar" style="width:75%; " class="rounded-circle" />
-            <MudCardActions Class="ma-2">
+            <img src="@_model.Avatar" style="width:60%; " class="rounded-circle" />     
+            <div class="d-flex">
+
+            <MudText Typo="Typo.subtitle1" >Đánh giá: @_model.Rate </MudText><MudIcon Icon="@Icons.Material.Filled.StarRate" Style="color:yellow" /> <MudText Typo="Typo.subtitle1 " Style="color:grey" >(@_model.NumOfRate) </MudText>
+            </div>
+            <MudText Typo="Typo.subtitle1" >Điểm hành vi: @(_model.BehaviorPoint != null ? _model.BehaviorPoint.Point : 100) </MudText>
+            <MudText Typo="Typo.subtitle1" >Điểm hài lòng: @(_model.BehaviorPoint != null ? _model.BehaviorPoint.SatisfiedPoint : 100) </MudText>
+            <MudCardActions Class="mt-2">
                 @if (_model.IsActive == true)
                 {
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
