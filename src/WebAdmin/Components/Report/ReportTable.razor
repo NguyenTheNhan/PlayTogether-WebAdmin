@@ -11,13 +11,13 @@
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="ReportSummary">Nội dung báo cáo</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="ReportSummary">Ngày báo cáo</MudTableSortLabel></MudTh>
-                @*<MudTh><MudTableSortLabel SortLabel="name_field" T="ReportSummary">Trạng thái</MudTableSortLabel></MudTh>*@
+                <MudTh><MudTableSortLabel SortLabel="name_field" T="ReportSummary">Trạng thái</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="position_field" T="ReportSummary">Actions</MudTableSortLabel></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Người báo cáo">@context.ReportMessage</MudTd>
                 <MudTd DataLabel="Ngày báo cáo"> @context.CreatedDate</MudTd>
-                @*<MudTd DataLabel="Trạng thái">@context.</MudTd>*@
+                <MudTd DataLabel="Trạng thái">@(context.IsApprove ==true ? "Đã duyệt" : "Không duyệt")</MudTd>
                 <MudTd DataLabel="Actions">                
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
                         <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"

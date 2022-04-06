@@ -4,28 +4,29 @@
 
 <MudPaper Class="py-4 px-4">
 
-<EditForm Model="_model" OnValidSubmit="SubmitFormAsync">
-    <FluentValidationValidator />
-    <MudTextField Label="Thể loại" HelperText="Required" @bind-Value="@_model.Name" Variant="Variant.Outlined" />
-    <MudTextField Label="Tên khác" HelperText="Optional" @bind-Value="@_model.OtherName" Variant="Variant.Outlined" />
-    <MudTextField Label="Tên viết tắt" HelperText="Required" @bind-Value="@_model.ShortName" Variant="Variant.Outlined" />
-    <MudTextField Label="Description" HelperText="Optional" @bind-Value="@_model.Description" Lines="4" Variant="Variant.Outlined" />
+    <EditForm Model="_model" OnValidSubmit="SubmitFormAsync">
+        <FluentValidationValidator />
+        <MudTextField Label="Thể loại" HelperText="Required" @bind-Value="@_model.Name" Variant="Variant.Outlined" />
+        <MudTextField Label="Tên khác" HelperText="Optional" @bind-Value="@_model.OtherName" Variant="Variant.Outlined" />
+        <MudTextField Label="Tên viết tắt" HelperText="Required" @bind-Value="@_model.ShortName" Variant="Variant.Outlined" />
+        <MudTextField Label="Description" HelperText="Optional" @bind-Value="@_model.Description" Lines="4" Variant="Variant.Outlined" />
 
 
 
-    @if (!string.IsNullOrWhiteSpace(_errorMessage))
-    {
-        <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_errorMessage</MudAlert>
-    }
+        @if (!string.IsNullOrWhiteSpace(_errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_errorMessage</MudAlert>
+        }
 
-    <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
+        <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
 
-    <ValidationSummary/>
-    <MudCardActions >
-
-    <MudButton Color="Color.Primary" Style="width:100px;" Variant="Variant.Filled" ButtonType="ButtonType.Submit"  Disabled="_isBusy">Lưu</MudButton>
-    <MudButton Color="Color.Default" Style="width:100px;" Variant="Variant.Filled" OnClick='() => Navigation.NavigateTo($"/gametypes")' Class="mx-2" Disabled="_isBusy">Quay lại</MudButton>
-    </MudCardActions>
-</EditForm>
+        <ValidationSummary />
+            <div class="d-flex flex-row-reverse">
+        <MudCardActions>
+                <MudButton Color="Color.Default" Style="width:100px;" Variant="Variant.Filled" OnClick='() => Navigation.NavigateTo($"/gametypes")' Class="mx-2" Disabled="_isBusy">Quay lại</MudButton>
+                <MudButton Color="Color.Primary" Style="width:100px;" Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="_isBusy">Lưu</MudButton>
+        </MudCardActions>
+            </div>
+    </EditForm>
 
 </MudPaper>

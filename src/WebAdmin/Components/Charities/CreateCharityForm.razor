@@ -2,14 +2,14 @@
 
 <MudText Typo="Typo.h6" Style="mb-2"> Đăng ký tài khoản</MudText>
 
-<MudPaper Class="py-4 px-4">
+<MudPaper Class="py-4 px-4" Width="75%">
 
 <EditForm Model="_model" OnValidSubmit="SubmitFormAsync">
     <FluentValidationValidator />
-    <MudTextField Label="Email" HelperText="Required" @bind-Value="@_model.Email" Variant="Variant.Outlined" />
-    <MudTextField Label="Tên tổ chức" HelperText="Optional" @bind-Value="@_model.OrganizationName" Lines="4" Variant="Variant.Outlined" />
-    <MudTextField Label="Mật khẩu" HelperText="Optional" @bind-Value="@_model.Password" Variant="Variant.Outlined" />
-    <MudTextField Label="Nhập lại mật khẩu" HelperText="Required" @bind-Value="@_model.ConfirmPassword" Variant="Variant.Outlined" />
+    <MudTextField Label="Email"  Required="true" @bind-Value="@_model.Email" Variant="Variant.Outlined" Class="ma-2 mb-4"/>
+    <MudTextField Label="Tên tổ chức"  Required="true" @bind-Value="@_model.OrganizationName" Lines="2" Class="ma-2 mb-4" Variant="Variant.Outlined" />
+    <MudTextField Label="Mật khẩu"  Required="true" @bind-Value="@_model.Password" Variant="Variant.Outlined" Class="ma-2 mb-4" />
+    <MudTextField Label="Nhập lại mật khẩu"  Required="true" @bind-Value="@_model.ConfirmPassword" Class="ma-2 mb-4" Variant="Variant.Outlined" />
 
 
     @if (!string.IsNullOrWhiteSpace(_errorMessage))
@@ -20,11 +20,13 @@
     <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
 
     <ValidationSummary/>
+    <div class="d-flex flex-row-reverse">
     <MudCardActions >
 
-    <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit"  Disabled="_isBusy">Lưu</MudButton>
-    <MudButton Color="Color.Default" Variant="Variant.Filled" OnClick='() => Navigation.NavigateTo($"/charities")' Class="mx-2" Disabled="_isBusy">Quay lại</MudButton>
+    <MudButton Color="Color.Default" Variant="Variant.Filled" Style="width:100px" OnClick='() => Navigation.NavigateTo($"/charities")' Class="mx-2" Disabled="_isBusy">Quay lại</MudButton>
+    <MudButton Color="Color.Primary" Variant="Variant.Filled" Style="width:100px" ButtonType="ButtonType.Submit"  Disabled="_isBusy">Lưu</MudButton>
     </MudCardActions>
+    </div>
 </EditForm>
 
 </MudPaper>

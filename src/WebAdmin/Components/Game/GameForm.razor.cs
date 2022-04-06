@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
 using System.Collections.Generic;
@@ -64,10 +64,12 @@ namespace WebAdmin.Components
                 if (_isEditMode)
                 {
                     await GameService.EditAsync(_model);
+                    Error.HandleSuccess("Chỉnh sửa");
                 }
                 else
                 {
                     var result = await GameService.CreateAsync(_model);
+                    Error.HandleSuccess("Thêm mới game");
                 }
                 //success
                 Navigation.NavigateTo("/games");

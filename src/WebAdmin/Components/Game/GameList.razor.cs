@@ -81,6 +81,7 @@ namespace WebAdmin.Components
                 {
                     await GameService.DeleteAsync(game.Id);
 
+                    Error.HandleSuccess("Xoá game");
                     // Send a message about the deleted game type
                     MessagingCenter.Send(this, "game_deleted", game);
                 }

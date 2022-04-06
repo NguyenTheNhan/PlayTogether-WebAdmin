@@ -2,48 +2,48 @@
 
 
 <MudDialog>
-    <TitleContent >
-        <MudText  Typo="Typo.h5">Thông tin báo cáo </MudText>
+    <TitleContent>
+        <MudText Typo="Typo.h5">Thông tin báo cáo </MudText>
     </TitleContent>
     <DialogContent>
-        <MudContainer MaxWidth="MaxWidth.Small">        
+        <MudContainer MaxWidth="MaxWidth.Small">
             <EditForm Model="_model">
-                <MudGrid>                    
+                <MudGrid>
                     <MudItem xs="5">
                         <MudText Align="Align.Center" Typo="Typo.subtitle1" Class="ma-3"> Người báo cáo </MudText>
                         <div class="d-flex justify-center">
-                            <MudImage Src="@_reporter.Avatar" Style="width:70%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
+                            <MudImage Src="@_reporter.Avatar" Alt="user" Style="width:70%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
                         </div>
                         <MudText Align="Align.Center" Typo="Typo.h5" Class="ma-3"> @_reporter.Name </MudText>
                         <MudText Align="Align.Center" Typo="Typo.subtitle1" Class="ma-2">Điểm hành vi: @(_reporter.BehaviorPoint != null ? _reporter.BehaviorPoint.Point : 100) </MudText>
                         <MudText Align="Align.Center" Typo="Typo.subtitle1" Class="ma-2">Điểm hài lòng: @(_reporter.BehaviorPoint != null ? _reporter.BehaviorPoint.SatisfiedPoint : 100) </MudText>
-                         <div class="d-flex justify-center">
-                        <MudButton OnClick='Reporter' >Xem chi tiết</MudButton>
+                        <div class="d-flex justify-center">
+                            <MudButton OnClick='Reporter'>Xem chi tiết</MudButton>
                         </div>
                     </MudItem>
                     <MudItem xs="2" Class="align-content-center">
                         <div class="d-flex justify-center align-middle mt-6 pt-5">
-                            <MudImage Class="mt-6 pt-5" Src="https://media.publit.io/file/LogoPlayTogether/logo.png" Style="width:100%" ObjectFit="ObjectFit.Contain" />
+                            <MudImage Class="mt-6 pt-5" Alt="logo" Src="https://media.publit.io/file/LogoPlayTogether/logo.png" Style="width:100%" ObjectFit="ObjectFit.Contain" />
                         </div>
-                        
+
                     </MudItem>
                     <MudItem xs="5">
                         <MudText Align="Align.Center" Typo="Typo.subtitle1" Class="ma-3"> Người bị báo cáo </MudText>
                         <div class="d-flex justify-center">
-                            <MudImage Src="@_reported.Avatar" Style="width:70%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
+                            <MudImage Src="@_reported.Avatar" Alt="user" Style="width:70%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
                         </div>
                         <MudText Align="Align.Center" Typo="Typo.h5" Class="ma-3"> @_reported.Name </MudText>
                         <MudText Align="Align.Center" Typo="Typo.subtitle1" Class="ma-2">Điểm hành vi: @(_reported.BehaviorPoint != null ? _reported.BehaviorPoint.Point : 100) </MudText>
                         <MudText Align="Align.Center" Typo="Typo.subtitle1" Class="ma-2">Điểm hài lòng: @(_reported.BehaviorPoint != null ? _reported.BehaviorPoint.SatisfiedPoint : 100) </MudText>
 
                         <div class="d-flex justify-center">
-                        <MudButton OnClick='Reported'>Xem chi tiết</MudButton>
+                            <MudButton OnClick='Reported'>Xem chi tiết</MudButton>
                         </div>
-                    </MudItem>                    
+                    </MudItem>
                 </MudGrid>
-                <MudDivider Class="mt-3" />                        
-                        <MudText Typo="Typo.subtitle1">Nội dung báo cáo: </MudText>
-                        <MudTextField Value="@_model.ReportMessage" Lines="4" ReadOnly="true" Variant="Variant.Outlined" />
+                <MudDivider Class="mt-3" />
+                <MudText Typo="Typo.subtitle1">Nội dung báo cáo: </MudText>
+                <MudTextField Value="@_model.ReportMessage" Lines="4" ReadOnly="true" Variant="Variant.Outlined" />
                 @if (!string.IsNullOrWhiteSpace(_errorMessage))
                 {
                     <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_errorMessage</MudAlert>
@@ -54,17 +54,22 @@
     <DialogActions>
         <div class="d-flex flex-row-reverse">
             <MudButton Color="Color.Default" Class="mr-3" Style="width:100px;" Variant="Variant.Filled" OnClick="Close">Đóng</MudButton>
-            
-                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined"  Class="mr-3" DisableElevation="true">
-                        <MudButton  OnClick="ApproveAsync">  @_action </MudButton>
-                        <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown">
-                            <MudMenuItem OnClick='() => selectOption(true)'>Duyệt</MudMenuItem>
-                            <MudMenuItem OnClick='() => selectOption(false)'>Không duyệt</MudMenuItem>
-                        </MudMenu>
+            @if (_model.IsApprove == null)
+            {
+                <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Class="mr-3" DisableElevation="true">
+                    <MudButton OnClick="ApproveAsync">  @_action </MudButton>
+                    <MudMenu Icon="@Icons.Material.Filled.ArrowDropDown">
+                        <MudMenuItem OnClick='() => selectOption(true)'>Duyệt</MudMenuItem>
+                        <MudMenuItem OnClick='() => selectOption(false)'>Không duyệt</MudMenuItem>
+                    </MudMenu>
                 </MudButtonGroup>
-            
-        
-               
+            }
+            else
+            {
+                <MudButton OnClick="ApproveAsync" Color="Color.Primary" Variant="@(_model.IsApprove == true ? Variant.Outlined : Variant.Filled)" Class="mr-3" DisableElevation="true" Style="width:150px">@(_model.IsApprove == true ? "Không duyệt" : "Duyệt")</MudButton>
+            }
+
+
         </div>
 
     </DialogActions>

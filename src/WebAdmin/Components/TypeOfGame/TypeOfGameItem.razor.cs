@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,7 +36,7 @@ namespace WebAdmin.Components
                 //Call Api to add ToDo Item
                 await TypeOfGameService.DeleteAsync(Item.Id);
 
-
+                Error.HandleSuccess("Xoá thể loại của game");
                 //Notify the parent about the newly added item
                 await OnItemDeleted.InvokeAsync(Item);
             }

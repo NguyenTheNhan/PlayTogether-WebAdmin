@@ -59,5 +59,19 @@ namespace WebAdmin.Components
             _isBusy = false;
             return null;
         }
+
+        #region View
+        private void ViewReport(ReportSummary report)
+        {
+            //Navigation.NavigateTo($"/hirers/order/{order.Id}");
+
+            var parameters = new DialogParameters();
+            parameters.Add("Id", report.Id);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
+
+            var dialog = DialogService.Show<ReportDetailDialog>("Thông tin report", parameters, options);
+        }
+        #endregion
     }
 }

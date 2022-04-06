@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,10 +44,12 @@ namespace WebAdmin.Components
                 if (_isEditMode)
                 {
                     await GameTypeService.EditAsync(_model);
+                    Error.HandleSuccess("Chỉnh sửa");
                 }
                 else
                 {
                     var result = await GameTypeService.CreateAsync(_model);
+                    Error.HandleSuccess("Thêm mới thể loại");
                 }
                 //success
                 Navigation.NavigateTo("/gametypes");

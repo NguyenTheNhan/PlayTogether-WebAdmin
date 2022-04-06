@@ -1,4 +1,4 @@
-using AKSoftware.Blazor.Utilities;
+﻿using AKSoftware.Blazor.Utilities;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
@@ -79,7 +79,7 @@ namespace WebAdmin.Components
                 try
                 {
                     await GameTypeService.DeleteAsync(gameType.Id);
-
+                    Error.HandleSuccess("Xoá thể loại");
                     // Send a message about the deleted game type
                     MessagingCenter.Send(this, "gameType_deleted", gameType);
                 }

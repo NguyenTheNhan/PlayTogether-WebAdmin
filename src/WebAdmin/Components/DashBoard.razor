@@ -1,0 +1,35 @@
+﻿@namespace WebAdmin.Components
+
+    <div class="d-flex flex-row-reverse mr-5" > 
+        <MudIconButton Icon="@Icons.Material.Filled.Refresh" ButtonType="ButtonType.Reset" OnClick="Reload"/>
+    </div>
+<MudGrid Justify="Justify.Center" Spacing="8">
+    <MudItem sm="10" md="10" lg="5">
+        <MudPaper Height="150px" Width="100%" Style="background-color:#8980FF" Class="pa-2 ">
+            <MudText Align="Align.Center" style="color:white" Typo="Typo.h5">Báo cáo chưa xử lý</MudText>
+            <MudText Align="Align.Center" style="color:white" Typo="Typo.h2">@(dashBoard !=null ? dashBoard.Item1 : 0)</MudText>
+            <MudText Align="Align.Center"> <MudLink Href="/account-reports" Underline="Underline.Always" Style="text-align:center" Typo="Typo.h5">Xem chi tiết</MudLink> </MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem sm="10" md="10" lg="5">
+        <MudPaper Height="150px" Width="100%" Style="background-color:#8980FF" Class="pa-2 ">
+            <MudText Align="Align.Center" style="color:white" Typo="Typo.h5">Tổng số người dùng bị khoá</MudText>
+            <MudText Align="Align.Center" style="color:white" Typo="Typo.h2">@(dashBoard !=null ? dashBoard.Item2 : 0)</MudText>
+            <MudText Align="Align.Center"> <MudLink Href="/hirers" Underline="Underline.Always" Style="text-align:center" Typo="Typo.h5">Xem chi tiết</MudLink> </MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem sm="10" md="10" lg="5">
+        <MudPaper Height="150px" Width="100%" Style="background-color:#8980FF" Class="pa-2 ">
+            <MudText Align="Align.Center" style="color:white" Typo="Typo.h5">Đề xuất từ người dùng</MudText>
+            <MudText Align="Align.Center" style="color:white" Typo="Typo.h2">@(dashBoard !=null ? dashBoard.Item3 : 0)</MudText>
+            <MudText Align="Align.Center"> <MudLink Underline="Underline.Always" Style="text-align:center" Typo="Typo.h5">Xem chi tiết</MudLink> </MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem sm="10" md="10" lg="5">
+        <MudPaper Height="150px" Width="100%" Style="background-color:#8980FF" Class="pa-2 ">
+            <MudText Align="Align.Center" style="color:white" Typo="Typo.h5">Số người đăng ký mới</MudText>
+            <MudText Align="Align.Center" style="color:white" Typo="Typo.h2">@(dashBoard !=null ? dashBoard.Item4 : 0)</MudText>
+            <MudText Align="Align.Center"> <MudLink Href="/hirers" Underline="Underline.Always" Style="text-align:center" Typo="Typo.h5">Xem chi tiết</MudLink> </MudText>
+        </MudPaper>
+    </MudItem>
+</MudGrid>

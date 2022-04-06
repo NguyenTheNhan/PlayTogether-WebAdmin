@@ -30,6 +30,7 @@ namespace WebAdmin.Components
 
         private int tmp { get; set; } = 0;
         private bool? _isApprove { get; set; } = null;
+        private bool isMany { get; set; } = false;
         private DateTime? _fromDate { get; set; } = DateTime.Parse("1/1/0001");
         private DateTime? _toDate { get; set; } = DateTime.Now;
 
@@ -45,7 +46,7 @@ namespace WebAdmin.Components
             {
                 var result = await ReportService.GetByUserIdAsync(UserId, _isApprove, _fromDate, _toDate, state.Page + 1, state.PageSize);
                 var tmp = await ReportService.GetByUserIdAsync(UserId, _isApprove, _fromDate, _toDate, 0, 1000);
-
+                if (tmp.Count() > 6) isMany = true;
                 return new TableData<ReportSummary>
                 {
                     Items = result,

@@ -31,6 +31,7 @@ namespace WebAdmin.Components
         [CascadingParameter]
         public Error Error { get; set; }
         public bool _isBusy { get; set; }
+        public string _isMany { get; set; } = "400px";
 
         private MudTable<RankDetail> _table;
 
@@ -56,16 +57,23 @@ namespace WebAdmin.Components
 
         private async Task<TableData<RankDetail>> ServerReloadAsync(TableState state)
         {
+            _isBusy = true;
             try
             {
-                var result = await RankService.GetRankAsync(GameId, state.Page + 1, state.PageSize);
-                var tmp = await RankService.GetRankAsync(GameId, 0, 1000);
-
+                //var result = await RankService.GetRankAsync(GameId, state.Page + 1, state.PageSize);
+                var result = await RankService.GetRankAsync(GameId, 1, 1000);
+                if (result.Count() > 10) { _isMany = "400px"; }
+                else
+                {
+                    _isMany = null;
+                }
+                _isBusy = false;
                 return new TableData<RankDetail>
                 {
                     Items = result,
-                    TotalItems = tmp.Count(),
+                    TotalItems = result.Count(),
                 };
+
             }
             catch (Exception ex)
             {
@@ -77,6 +85,7 @@ namespace WebAdmin.Components
                 Items = new List<RankDetail>(),
                 TotalItems = 0
             };
+
         }
 
         //private void OnSearch(string query)
