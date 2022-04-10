@@ -7,7 +7,7 @@
     
 <MudTable ServerData="@(new Func<TableState, Task<TableData<RankDetail>>>(ServerReloadAsync))"
           Dense="true" Hover="true" @ref="_table" FixedHeader="true"
-          Height="400px" Striped="true" MultiSelection="true"
+          Height=@_isMany Striped="true" MultiSelection="true"
           Bordered = "true">
     <ToolBarContent >
         <MudText Typo="Typo.h5" Class="mt-0">Chi tiết các bậc xếp hạng</MudText>
@@ -34,9 +34,9 @@
 
         </MudTd>
     </RowTemplate>
-    @*<PagerContent>
+    <PagerContent>
         <MudTablePager />
-    </PagerContent>*@
+    </PagerContent>
 </MudTable>
 
 }

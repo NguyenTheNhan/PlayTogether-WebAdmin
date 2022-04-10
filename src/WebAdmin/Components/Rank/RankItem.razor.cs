@@ -1,7 +1,6 @@
 using AKSoftware.Blazor.Utilities;
 using Microsoft.AspNetCore.Components;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
@@ -73,15 +72,15 @@ namespace WebAdmin.Components
                 //Call Api to edit ToDo Item
                 var result = await RankService.EditAsync(Item.Id, Item.No, Item.Name, GameId);
 
-                MessagingCenter.Send(this, "rank_edited", result);
+                MessagingCenter.Send(this, "rank_edited", result.Content);
 
                 //Notify the parent about the edited item
-                await OnItemEdited.InvokeAsync(result);
+                await OnItemEdited.InvokeAsync(result.Content);
             }
             catch (ApiException ex)
             {
                 //TODO: Handle error globally
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {

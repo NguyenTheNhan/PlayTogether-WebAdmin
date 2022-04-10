@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
@@ -31,7 +30,7 @@ namespace WebAdmin.Components
         [CascadingParameter]
         public Error Error { get; set; }
         public bool _isBusy { get; set; }
-        public string _isMany { get; set; } = "400px";
+        public string _isMany = null;
 
         private MudTable<RankDetail> _table;
 
@@ -55,14 +54,16 @@ namespace WebAdmin.Components
 
         }
 
+
+
         private async Task<TableData<RankDetail>> ServerReloadAsync(TableState state)
         {
             _isBusy = true;
             try
             {
                 //var result = await RankService.GetRankAsync(GameId, state.Page + 1, state.PageSize);
-                var result = await RankService.GetRankAsync(GameId, 1, 1000);
-                if (result.Count() > 10) { _isMany = "400px"; }
+                var result = await RankService.GetRankAsync(GameId, state.Page + 1, state.PageSize);
+                if (result.TotalCount > 10) { _isMany = "400px"; }
                 else
                 {
                     _isMany = null;
@@ -70,8 +71,8 @@ namespace WebAdmin.Components
                 _isBusy = false;
                 return new TableData<RankDetail>
                 {
-                    Items = result,
-                    TotalItems = result.Count(),
+                    Items = result.Content,
+                    TotalItems = result.TotalCount,
                 };
 
             }

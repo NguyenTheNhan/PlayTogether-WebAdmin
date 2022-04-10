@@ -76,7 +76,7 @@ namespace WebAdmin.Components
             }
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {
@@ -109,7 +109,7 @@ namespace WebAdmin.Components
             try
             {
                 var result = await GameService.GetByIdAsync(Id);
-                _model = result;
+                _model = result.Content;
                 _ranks = _model.ranks;
                 _typeOfGameWithGameTypes = _model.typeOfGames;
 
@@ -117,7 +117,7 @@ namespace WebAdmin.Components
             }
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {
@@ -135,12 +135,12 @@ namespace WebAdmin.Components
             try
             {
                 var result = await GameTypeService.GetGameTypesAsync("", 1, 100);
-                _gameTypes = result.ToList();
+                _gameTypes = result.Content.ToList();
                 StateHasChanged();
             }
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {

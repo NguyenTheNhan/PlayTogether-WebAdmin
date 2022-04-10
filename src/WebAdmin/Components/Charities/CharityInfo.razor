@@ -22,7 +22,7 @@
                         </MudText>
                     </MudItem>
                     <MudItem xs="10">
-                        <MudTextField @bind-Value="@_model.OrganizationName" Variant="Variant.Outlined" ReadOnly="true" />
+                        <MudTextField @bind-Value="@_model.OrganizationName" Variant="Variant.Outlined" />
                     </MudItem>
                 </MudGrid>
                 <MudGrid>
@@ -32,14 +32,14 @@
                     </MudItem>
                     <MudItem xs="10">
                         <div class="d-flex">
-                            <MudTextField @bind-Value="@_model.Email" Variant="Variant.Outlined" ReadOnly="true" />
+                            <MudTextField @bind-Value="@_model.Email" Variant="Variant.Outlined"   />
 
                             <div>
                             <br />
                             <MudText Class="mr-4 ml-2">Điện thoại:</MudText>
                             </div>
 
-                            <MudTextField @bind-Value="@_model.Phone" Variant="Variant.Outlined" ReadOnly="true" />
+                            <MudTextField @bind-Value="@_model.Phone" Variant="Variant.Outlined"   />
 
 
                         </div>
@@ -54,7 +54,7 @@
                     </MudItem>
                     <MudItem xs="10">
 
-                        <MudTextField @bind-Value="@_model.Address" Variant="Variant.Outlined" ReadOnly="true" />
+                        <MudTextField @bind-Value="@_model.Address" Variant="Variant.Outlined"   />
 
 
                     </MudItem>
@@ -67,13 +67,13 @@
                         <MudText>Mô tả:</MudText>
                     </MudItem>
                     <MudItem xs="10">
-                        <MudTextField @bind-Value="@_model.Information" Lines="8" Variant="Variant.Outlined" ReadOnly="true" />
+                        <MudTextField @bind-Value="@_model.Information" Lines="8" Variant="Variant.Outlined"   />
                     </MudItem>
                 </MudGrid>
             }
         </MudItem>
         <MudItem lg="4" md="4" sm="12">
-            <img src="@_model.Avatar" style="width:75%; " class="rounded-circle" alt="charity"/>
+            <img src="@_model.Avatar" style="width:75%; "  alt="charity"/>
             
                 @if (_model.IsActive == true)
                 {

@@ -1,3 +1,4 @@
+using AKSoftware.Blazor.Utilities;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
@@ -5,18 +6,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
-using WebAdmin.Shared.Models.Report;
+using WebAdmin.Shared.Models.Feedback;
 
 namespace WebAdmin.Components
 {
-    public partial class UserReportTable
+    public partial class FeedbackTable
     {
         [Inject]
-        public IReportService ReportService { get; set; }
+        public IFeedbackService FeedbackService { get; set; }
 
 
         [Parameter]
-        public EventCallback<ReportSummary> OnViewClicked { get; set; }
+        public EventCallback<FeedbackSummary> OnViewClicked { get; set; }
 
 
 
@@ -28,24 +29,30 @@ namespace WebAdmin.Components
         public bool _isBusy { get; set; }
 
         private int tmp { get; set; } = 0;
-        private bool? _isApprove { get; set; } = null;
         private bool isMany { get; set; } = false;
-        private DateTime? _fromDate { get; set; } = DateTime.Parse("1/1/0001");
+        private bool? _isApprove { get; set; } = null;
+        private string _type { get; set; } = string.Empty;
+        private DateTime? _fromDate { get; set; } = DateTime.Parse("0001-01-01");
         private DateTime? _toDate { get; set; } = DateTime.Now;
 
-        private MudTable<ReportSummary> _table;
+        private MudTable<FeedbackSummary> _table;
 
+        protected override void OnInitialized()
+        {
+            MessagingCenter.Subscribe<FeedbackDetailDialog, FeedbackDetail>(this, "feedback_approved", async (sender, args) =>
+            {
+                await _table.ReloadServerData();
+                StateHasChanged();
+            });
+        }
 
-
-
-
-        private async Task<TableData<ReportSummary>> ServerReloadAsync(TableState state)
+        private async Task<TableData<FeedbackSummary>> ServerReloadAsync(TableState state)
         {
             try
             {
-                var result = await ReportService.GetByUserIdAsync(UserId, _isApprove, _fromDate, _toDate, state.Page + 1, state.PageSize);
+                var result = await FeedbackService.GetFeedbacksAsync(_type, _isApprove, _fromDate, _toDate, state.Page + 1, state.PageSize);
                 if (result.TotalCount > 6) isMany = true;
-                return new TableData<ReportSummary>
+                return new TableData<FeedbackSummary>
                 {
                     Items = result.Content,
                     TotalItems = result.TotalCount,
@@ -56,14 +63,14 @@ namespace WebAdmin.Components
                 Error.HandleError(ex);
             }
 
-            return new TableData<ReportSummary>
+            return new TableData<FeedbackSummary>
             {
-                Items = new List<ReportSummary>(),
+                Items = new List<FeedbackSummary>(),
                 TotalItems = 0
             };
         }
 
-        private void OnSearch(DateTime? fromDate, DateTime? toDate)
+        private void OnSearch(string type, DateTime? fromDate, DateTime? toDate)
         {
             switch (tmp)
             {
@@ -77,6 +84,7 @@ namespace WebAdmin.Components
                     _isApprove = false;
                     break;
             }
+            _type = type;
             _fromDate = fromDate;
             _toDate = toDate;
             _table.ReloadServerData();

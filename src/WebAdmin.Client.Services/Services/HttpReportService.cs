@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
+using WebAdmin.Shared.Models;
 using WebAdmin.Shared.Models.Report;
 using WebAdmin.Shared.Responses;
 
@@ -52,12 +52,12 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<IEnumerable<ReportSummary>> GetByUserIdAsync(string userId, bool? isApprove = null, DateTime? fromDate = null, DateTime? toDate = null, int pageNumber = 1, int pageSize = 10)
+        public async Task<PagedList<ReportSummary>> GetByUserIdAsync(string userId, bool? isApprove = null, DateTime? fromDate = null, DateTime? toDate = null, int pageNumber = 1, int pageSize = 10)
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/reports/{userId}?IsApprove={isApprove}&FromDate={fromDate}&ToDate={toDate}&PageNumber={pageNumber}&PageSize={pageSize}&IsNew=true");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<IEnumerable<ReportSummary>>();
+                var result = await response.Content.ReadFromJsonAsync<PagedList<ReportSummary>>();
                 return result;
             }
             else
@@ -67,12 +67,12 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<IEnumerable<ReportSummary>> GetReportsAsync(bool? isApprove = null, DateTime? fromDate = null, DateTime? toDate = null, int pageNumber = 1, int pageSize = 10)
+        public async Task<PagedList<ReportSummary>> GetReportsAsync(bool? isApprove = null, DateTime? fromDate = null, DateTime? toDate = null, int pageNumber = 1, int pageSize = 10)
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/admins/reports?IsApprove={isApprove}&FromDate={fromDate}&ToDate={toDate}&PageNumber={pageNumber}&PageSize={pageSize}&IsNew=true");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<IEnumerable<ReportSummary>>();
+                var result = await response.Content.ReadFromJsonAsync<PagedList<ReportSummary>>();
                 return result;
             }
             else

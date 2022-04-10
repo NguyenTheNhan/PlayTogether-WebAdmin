@@ -1,7 +1,6 @@
 ﻿using AKSoftware.Blazor.Utilities;
 using Microsoft.AspNetCore.Components;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
@@ -44,9 +43,9 @@ namespace WebAdmin.Components
                 var result = await RankService.CreateAsync(_no, _name, GameId);
                 _name = string.Empty;
                 _no = 0;
-                if (result.Id != null)
+                if (result.Content.Id != null)
                 {
-                    MessagingCenter.Send(this, "rank_added", result);
+                    MessagingCenter.Send(this, "rank_added", result.Content);
                     //_errorMessage = string.Empty;
                 }
                 else
@@ -60,7 +59,7 @@ namespace WebAdmin.Components
             }
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {

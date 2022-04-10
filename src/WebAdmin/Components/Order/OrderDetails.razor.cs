@@ -67,7 +67,7 @@ namespace WebAdmin.Components
             }
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {

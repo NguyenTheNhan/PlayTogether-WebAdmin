@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
@@ -48,7 +47,7 @@ namespace WebAdmin.Components
                 }
                 else
                 {
-                    var result = await GameTypeService.CreateAsync(_model);
+                    await GameTypeService.CreateAsync(_model);
                     Error.HandleSuccess("Thêm mới thể loại");
                 }
                 //success
@@ -56,7 +55,7 @@ namespace WebAdmin.Components
             }
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {
@@ -76,12 +75,12 @@ namespace WebAdmin.Components
             try
             {
                 var result = await GameTypeService.GetByIdAsync(Id);
-                _model = result;
+                _model = result.Content;
 
             }
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Interfaces;
@@ -34,7 +33,7 @@ namespace WebAdmin.Client.Services.Services
             else
             {
                 var errorResult = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
-                _errorMessage = errorResult.Errors.SingleOrDefault();
+                _errorMessage = errorResult.Message;
                 return null;
             }
 

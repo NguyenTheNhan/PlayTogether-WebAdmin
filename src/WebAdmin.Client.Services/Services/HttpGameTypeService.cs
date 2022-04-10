@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
+using WebAdmin.Shared.Models;
 using WebAdmin.Shared.Models.GameType;
 using WebAdmin.Shared.Responses;
 
@@ -18,14 +18,14 @@ namespace WebAdmin.Client.Services.Services
         {
             _httpClient = httpClient;
         }
-        public async Task<GameTypeSummary> CreateAsync(GameTypeSummary model)
+        public async Task<ApiResponse<GameTypeSummary>> CreateAsync(GameTypeSummary model)
         {
 
             var response = await _httpClient.PostAsJsonAsync($"/api/play-together/v1/game-types", model);
             if (response.IsSuccessStatusCode)
             {
                 Console.WriteLine("OK nè");
-                var result = await response.Content.ReadFromJsonAsync<GameTypeSummary>();
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<GameTypeSummary>>();
                 return result;
             }
             else
@@ -46,7 +46,7 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<GameTypeSummary> EditAsync(GameTypeSummary model)
+        public async Task<ApiResponse<GameTypeSummary>> EditAsync(GameTypeSummary model)
         {
 
             var response = await _httpClient.PutAsJsonAsync($"/api/play-together/v1/game-types/{model.Id}", model);
@@ -63,12 +63,12 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<GameTypeSummary> GetByIdAsync(string id)
+        public async Task<ApiResponse<GameTypeSummary>> GetByIdAsync(string id)
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/game-types/{id}");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<GameTypeSummary>();
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<GameTypeSummary>>();
                 return result;
             }
             else
@@ -78,12 +78,12 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<IEnumerable<GameTypeSummary>> GetGameTypesAsync(string query = null, int pageNumber = 1, int pageSize = 100)
+        public async Task<PagedList<GameTypeSummary>> GetGameTypesAsync(string query = null, int pageNumber = 1, int pageSize = 100)
         {
-            var response = await _httpClient.GetAsync($"/api/play-together/v1/game-types?SearchString={query}&PageNumber={pageNumber}&PageSize={pageSize}");
+            var response = await _httpClient.GetAsync($"/api/play-together/v1/game-types?Name={query}&PageNumber={pageNumber}&PageSize={pageSize}");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<IEnumerable<GameTypeSummary>>();
+                var result = await response.Content.ReadFromJsonAsync<PagedList<GameTypeSummary>>();
                 return result;
             }
             else

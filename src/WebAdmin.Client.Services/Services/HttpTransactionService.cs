@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
+using WebAdmin.Shared.Models;
 using WebAdmin.Shared.Models.Transaction;
 using WebAdmin.Shared.Responses;
 
@@ -19,7 +19,7 @@ namespace WebAdmin.Client.Services.Services
             _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<TransactionSummary>> GetTransactionsAsync(string userId,
+        public async Task<PagedList<TransactionSummary>> GetTransactionsAsync(string userId,
                                                                           string type = null,
                                                                           DateTime? fromDate = null,
                                                                           DateTime? toDate = null,
@@ -29,7 +29,7 @@ namespace WebAdmin.Client.Services.Services
             var response = await _httpClient.GetAsync($"/api/play-together/v1/admins/transactions/{userId}?FromDate={fromDate}&ToDate={toDate}&Type={type}&PageNumber={pageNumber}&PageSize={pageSize}&IsNew=true");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<IEnumerable<TransactionSummary>>();
+                var result = await response.Content.ReadFromJsonAsync<PagedList<TransactionSummary>>();
                 return result;
             }
             else

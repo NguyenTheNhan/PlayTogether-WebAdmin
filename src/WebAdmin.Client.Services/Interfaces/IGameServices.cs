@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using WebAdmin.Shared.Models;
 using WebAdmin.Shared.Models.Game;
+using WebAdmin.Shared.Responses;
 
 namespace WebAdmin.Client.Services.Interfaces
 {
     public interface IGameService
     {
-        Task<IEnumerable<GameSummary>> GetGamesAsync(string query = null, int pageNumber = 1, int pageSize = 10);
-        Task<GameDetail> GetByIdAsync(string id);
+        Task<PagedList<GameSummary>> GetGamesAsync(string query = null, int pageNumber = 1, int pageSize = 10);
+        Task<ApiResponse<GameDetail>> GetByIdAsync(string id);
 
-        Task<GameDetail> CreateAsync(GameDetail model);
+        Task<ApiResponse<GameDetail>> CreateAsync(GameDetail model);
 
-        Task<GameDetail> EditAsync(GameDetail model);
+        Task<ApiResponse<GameDetail>> EditAsync(GameDetail model);
 
         Task DeleteAsync(string id);
     }

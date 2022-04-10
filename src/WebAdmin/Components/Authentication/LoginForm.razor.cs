@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
@@ -66,7 +65,7 @@ namespace WebAdmin.Components
 
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {

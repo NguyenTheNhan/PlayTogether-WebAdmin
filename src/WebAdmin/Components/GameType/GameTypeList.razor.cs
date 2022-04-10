@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
@@ -29,29 +27,6 @@ namespace WebAdmin.Components
         private bool _isBusy = false;
         private string _errorMessage = string.Empty;
 
-        private List<GameTypeSummary> _gameTypes = new();
-
-        private async Task<IEnumerable<GameTypeSummary>> GetGameTypesAsync(string query = "", int pageNumber = 1, int pageSize = 10)
-        {
-            _isBusy = true;
-            try
-            {
-                var result = await GameTypeService.GetGameTypesAsync(query, pageNumber, pageSize);
-                _gameTypes = result.ToList();
-
-                return result;
-            }
-            catch (ApiException ex)
-            {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                Error.HandleError(ex);
-            }
-            _isBusy = false;
-            return null;
-        }
 
         #region Edit
         private void EditGameType(GameTypeSummary gameType)

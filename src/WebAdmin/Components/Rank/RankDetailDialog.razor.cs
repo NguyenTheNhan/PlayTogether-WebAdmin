@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
@@ -52,13 +51,13 @@ namespace WebAdmin.Components
             try
             {
                 var result = await RankService.GetByIdAsync(RankId);
-                _rank = result;
+                _rank = result.Content;
                 StateHasChanged();
             }
             catch (ApiException ex)
             {
                 //Log this error
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {

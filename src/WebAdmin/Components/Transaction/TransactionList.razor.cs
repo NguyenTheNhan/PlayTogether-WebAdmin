@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
+using WebAdmin.Shared.Models;
 using WebAdmin.Shared.Models.Transaction;
 
 namespace WebAdmin.Components
@@ -39,18 +40,18 @@ namespace WebAdmin.Components
             await GetTransactionAsync();
             _isBusy = false;
         }
-        private async Task<IEnumerable<TransactionSummary>> GetTransactionAsync()
+        private async Task<PagedList<TransactionSummary>> GetTransactionAsync()
         {
             _isBusy = true;
             try
             {
                 var result = await TransactionService.GetTransactionsAsync(UserId);
-                _transactions = result.ToList();
+                _transactions = result.Content.ToList();
                 return result;
             }
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {

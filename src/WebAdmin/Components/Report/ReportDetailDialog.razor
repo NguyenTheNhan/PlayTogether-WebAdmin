@@ -1,4 +1,5 @@
-﻿@namespace WebAdmin.Components
+﻿
+@namespace WebAdmin.Components
 
 
 <MudDialog>
@@ -12,7 +13,7 @@
                     <MudItem xs="5">
                         <MudText Align="Align.Center" Typo="Typo.subtitle1" Class="ma-3"> Người báo cáo </MudText>
                         <div class="d-flex justify-center">
-                            <MudImage Src="@_reporter.Avatar" Alt="user" Style="width:70%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
+                            <MudImage Src="@_reporter.Avatar" Alt="@_reporter.Name" Style="width:70%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
                         </div>
                         <MudText Align="Align.Center" Typo="Typo.h5" Class="ma-3"> @_reporter.Name </MudText>
                         <MudText Align="Align.Center" Typo="Typo.subtitle1" Class="ma-2">Điểm hành vi: @(_reporter.BehaviorPoint != null ? _reporter.BehaviorPoint.Point : 100) </MudText>
@@ -30,7 +31,7 @@
                     <MudItem xs="5">
                         <MudText Align="Align.Center" Typo="Typo.subtitle1" Class="ma-3"> Người bị báo cáo </MudText>
                         <div class="d-flex justify-center">
-                            <MudImage Src="@_reported.Avatar" Alt="user" Style="width:70%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
+                            <MudImage Src="@_reported.Avatar" Alt="@_reported.Name" Style="width:70%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
                         </div>
                         <MudText Align="Align.Center" Typo="Typo.h5" Class="ma-3"> @_reported.Name </MudText>
                         <MudText Align="Align.Center" Typo="Typo.subtitle1" Class="ma-2">Điểm hành vi: @(_reported.BehaviorPoint != null ? _reported.BehaviorPoint.Point : 100) </MudText>

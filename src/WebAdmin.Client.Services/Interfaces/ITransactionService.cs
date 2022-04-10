@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebAdmin.Shared.Models;
 using WebAdmin.Shared.Models.Transaction;
 
 namespace WebAdmin.Client.Services.Interfaces
 {
     public interface ITransactionService
     {
-        Task<IEnumerable<TransactionSummary>>
+        Task<PagedList<TransactionSummary>>
             GetTransactionsAsync(string userId,
                            string type = null,
                            DateTime? fromDate = null,

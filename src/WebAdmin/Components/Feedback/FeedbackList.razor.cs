@@ -1,15 +1,16 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using System.Collections.Generic;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
-using WebAdmin.Shared.Models.Report;
+using WebAdmin.Shared.Models.Feedback;
 
 namespace WebAdmin.Components
 {
-    public partial class ReportList
+    public partial class FeedbackList
     {
         [Inject]
-        public IReportService ReportService { get; set; }
+        public IFeedbackService FeedbackService { get; set; }
 
         [Inject]
         public NavigationManager Navigation { get; set; }
@@ -22,12 +23,12 @@ namespace WebAdmin.Components
 
         private bool _isBusy = false;
         private string _errorMessage = string.Empty;
-        // private List<ReportSummary> _reports = new();
+        private List<FeedbackSummary> _reports = new();
 
 
 
         #region View
-        private void ViewReport(ReportSummary report)
+        private void ViewFeedback(FeedbackSummary report)
         {
             //Navigation.NavigateTo($"/hirers/order/{order.Id}");
 
@@ -36,9 +37,8 @@ namespace WebAdmin.Components
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
 
-            var dialog = DialogService.Show<ReportDetailDialog>("Thông tin report", parameters, options);
+            var dialog = DialogService.Show<FeedbackDetailDialog>("Thông tin report", parameters, options);
         }
         #endregion
-
     }
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
+using WebAdmin.Shared.Models;
 using WebAdmin.Shared.Models.Game;
 
 namespace WebAdmin.Components
@@ -32,19 +33,19 @@ namespace WebAdmin.Components
 
         private List<GameSummary> _games = new();
 
-        private async Task<IEnumerable<GameSummary>> GetGamesAsync(string query = "", int pageNumber = 1, int pageSize = 10)
+        private async Task<PagedList<GameSummary>> GetGamesAsync(string query = "", int pageNumber = 1, int pageSize = 10)
         {
             _isBusy = true;
             try
             {
                 var result = await GameService.GetGamesAsync(query, pageNumber, pageSize);
-                _games = result.ToList();
+                _games = result.Content.ToList();
 
                 return result;
             }
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {

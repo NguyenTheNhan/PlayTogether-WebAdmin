@@ -37,13 +37,13 @@ namespace WebAdmin.Components
             try
             {
                 var result = await HirerService.GetHirersAsync(query, status, isActive, pageNumber, pageSize);
-                _hirers = result.ToList();
+                _hirers = result.Content.ToList();
 
-                return result;
+                return result.Content;
             }
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {
@@ -82,7 +82,7 @@ namespace WebAdmin.Components
                 catch (ApiException ex)
                 {
                     //TODO: log this error
-                    _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                    _errorMessage = ex.ApiErrorResponse.Message;
                 }
                 catch (Exception ex)
                 {

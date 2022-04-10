@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
@@ -51,12 +50,11 @@ namespace WebAdmin.Components
             try
             {
                 var result = await ReportService.GetReportsAsync(_isApprove, _fromDate, _toDate, state.Page + 1, state.PageSize);
-                var tmp = await ReportService.GetReportsAsync(_isApprove, _fromDate, _toDate, 0, 1000);
-                if (tmp.Count() > 6) isMany = true;
+                if (result.TotalCount > 6) isMany = true;
                 return new TableData<ReportSummary>
                 {
-                    Items = result,
-                    TotalItems = tmp.Count(),
+                    Items = result.Content,
+                    TotalItems = result.TotalCount,
                 };
             }
             catch (Exception ex)

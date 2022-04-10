@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
+using WebAdmin.Shared.Models;
 using WebAdmin.Shared.Models.Charities;
 
 namespace WebAdmin.Components
@@ -30,19 +31,19 @@ namespace WebAdmin.Components
 
         private List<CharitiesSummary> _hirers = new();
 
-        private async Task<IEnumerable<CharitiesSummary>> GetCharitiessAsync(string query = "", bool isActive = true, int pageNumber = 1, int pageSize = 10)
+        private async Task<PagedList<CharitiesSummary>> GetCharitiessAsync(string query = "", bool isActive = true, int pageNumber = 1, int pageSize = 10)
         {
             _isBusy = true;
             try
             {
                 var result = await CharitiesService.GetCharitiesAsync(query, isActive, pageNumber, pageSize);
-                _hirers = result.ToList();
+                _hirers = result.Content.ToList();
 
                 return result;
             }
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {

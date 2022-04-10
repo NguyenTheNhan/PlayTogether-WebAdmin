@@ -71,12 +71,12 @@ namespace WebAdmin.Components
             try
             {
                 var result = await GameTypeService.GetGameTypesAsync("", 1, 100);
-                _gameTypes = result.ToList();
+                _gameTypes = result.Content.ToList();
                 StateHasChanged();
             }
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {

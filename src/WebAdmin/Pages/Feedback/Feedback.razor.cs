@@ -1,15 +1,15 @@
 ﻿using MudBlazor;
 using System.Collections.Generic;
 
-namespace WebAdmin.Pages.Proposal
+namespace WebAdmin.Pages.Feedback
 {
-    public partial class Proposal
+    public partial class Feedback
     {
 
         private List<BreadcrumbItem> _breadcrumbItems = new()
         {
             new BreadcrumbItem("Trang chủ", "/index"),
-            new BreadcrumbItem("Đề xuất", "/proposals", true),
+            new BreadcrumbItem("Đề xuất", "/feedbacks", true),
         };
     }
 }

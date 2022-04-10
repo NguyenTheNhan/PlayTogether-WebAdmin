@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
+using WebAdmin.Shared.Models.Feedback;
 using WebAdmin.Shared.Models.Hirer;
-using WebAdmin.Shared.Models.Report;
 
 namespace WebAdmin.Components
 {
-    public partial class ReportDetailDialog
+    public partial class FeedbackDetailDialog
     {
         [Inject]
-        public IReportService ReportService { get; set; }
+        public IFeedbackService FeedbackService { get; set; }
         [Inject]
         public IHirerService HirerService { get; set; }
 
@@ -32,18 +32,29 @@ namespace WebAdmin.Components
         MudDialogInstance MudDialog { get; set; }
 
 
-        private ReportDetails _model = new();
-        private UserDetail _reporter = new();
-        private UserDetail _reported = new();
+        private FeedbackDetail _model = new();
+        private UserDetail user = new();
         private bool _approve { get; set; } = true;
         private string _action = "Duyệt";
         private bool _isBusy { get; set; } = false;
         private string _errorMessage = string.Empty;
-        private float _rating { get; set; } = 0;
+        private string _type { get; set; } = string.Empty;
 
         protected override async Task OnInitializedAsync()
         {
-            await FetchReportByIdAsync();
+            await FetchFeedbackByIdAsync();
+            if (_model.TypeOfFeedback.Equals("Service"))
+            {
+                _type = "Dịch vụ";
+            }
+            else if (_model.TypeOfFeedback.Equals("Suggest"))
+            {
+                _type = "Đề xuất";
+            }
+            else if (_model.TypeOfFeedback.Equals("SystemError"))
+            {
+                _type = "Lỗi hệ thống";
+            }
         }
 
         private void Close()
@@ -51,20 +62,17 @@ namespace WebAdmin.Components
             MudDialog.Cancel();
         }
 
-        private async Task FetchReportByIdAsync()
+        private async Task FetchFeedbackByIdAsync()
         {
             _isBusy = true;
 
             try
             {
-                var result = await ReportService.GetByIdAsync(Id);
+                var result = await FeedbackService.GetByIdAsync(Id);
 
                 _model = result;
-                var reporter = await HirerService.GetByIdAsync(_model.UserId);
-                var reported = await HirerService.GetByIdAsync(_model.ToUserId);
+                user = await HirerService.GetByIdAsync(_model.UserId);
 
-                _reporter = reporter;
-                _reported = reported;
             }
             catch (ApiException ex)
             {
@@ -97,7 +105,7 @@ namespace WebAdmin.Components
         {
             _isBusy = true;
             var parameters = new DialogParameters();
-            parameters.Add("ContentText", _approve ? "Bạn muốn duyệt báo cáo này?" : $"Bạn không duyệt báo cáo này ?");
+            parameters.Add("ContentText", _approve ? "Bạn muốn duyệt đề xuất này?" : $"Bạn không duyệt đề xuất này ?");
             parameters.Add("ButtonText", _approve ? "Duyệt" : "Không duyệt");
             parameters.Add("Color", Color.Primary);
 
@@ -110,14 +118,14 @@ namespace WebAdmin.Components
             {
                 try
                 {
-                    await ReportService.ActiveAsync(_model.Id, _approve);
+                    await FeedbackService.ActiveAsync(_model.Id, _approve);
 
                     //success
                     Error.HandleSuccess("Thao tác");
                     //send a message about the approved
-                    MessagingCenter.Send(this, "report_approved", _model);
+                    MessagingCenter.Send(this, "feedback_approved", _model);
 
-                    await FetchReportByIdAsync();
+                    await FetchFeedbackByIdAsync();
 
                 }
                 catch (ApiException ex)
@@ -135,14 +143,9 @@ namespace WebAdmin.Components
 
         }
 
-        private void Reporter()
+        private void User()
         {
             Navigation.NavigateTo($"/hirers/details/{_model.UserId}");
-
-        }
-        private void Reported()
-        {
-            Navigation.NavigateTo($"/hirers/details/{_model.ToUserId}");
 
         }
     }

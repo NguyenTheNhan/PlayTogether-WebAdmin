@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
+using WebAdmin.Shared.Models;
 using WebAdmin.Shared.Models.Hirer;
 using WebAdmin.Shared.Responses;
 
@@ -18,12 +18,12 @@ namespace WebAdmin.Client.Services.Services
         {
             _httpClient = httpClient;
         }
-        public async Task<IEnumerable<HirerSummary>> GetHirersAsync(string query = null, string status = null, bool? isActive = null, int pageNumber = 1, int pageSize = 10)
+        public async Task<PagedList<HirerSummary>> GetHirersAsync(string query = null, string status = null, bool? isActive = null, int pageNumber = 1, int pageSize = 10)
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/admins/users?Name={query}&Status={status}&IsActive={isActive}&PageNumber={pageNumber}&PageSize={pageSize}");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<IEnumerable<HirerSummary>>();
+                var result = await response.Content.ReadFromJsonAsync<PagedList<HirerSummary>>();
                 return result;
             }
             else

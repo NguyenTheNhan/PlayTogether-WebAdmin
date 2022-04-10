@@ -1,23 +1,24 @@
 ﻿@namespace WebAdmin.Components
-
-@using WebAdmin.Shared.Models.Report
+@using WebAdmin.Shared.Models.Feedback
 @inject NavigationManager Navigation
 
 <MudGrid>
     <MudItem xs="12" sm="9">
-        <MudTable ServerData="@(new Func<TableState, Task<TableData<ReportSummary>>>(ServerReloadAsync))"
+        <MudTable ServerData="@(new Func<TableState, Task<TableData<FeedbackSummary>>>(ServerReloadAsync))"
                    Hover="true" @ref="_table" FixedHeader="true" Loading="true"
                   Height='@(isMany ? "480px" : null)' Striped="true" >            
             <HeaderContent>
-                <MudTh><MudTableSortLabel SortLabel="sign_field" T="ReportSummary">Nội dung báo cáo</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="sign_field" T="ReportSummary">Ngày báo cáo</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="name_field" T="ReportSummary">Trạng thái</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="position_field" T="ReportSummary">Actions</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="sign_field" T="FeedbackSummary">Tiêu đề</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="name_field" T="FeedbackSummary">Loại</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="sign_field" T="FeedbackSummary">Thời gian</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="sign_field" T="FeedbackSummary">Trạng thái</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="position_field" T="FeedbackSummary">Actions</MudTableSortLabel></MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Người báo cáo">@context.ReportMessage</MudTd>
-                <MudTd DataLabel="Ngày báo cáo"> @context.CreatedDate</MudTd>
-                <MudTd DataLabel="Trạng thái">@(context.IsApprove ==true ? "Đã duyệt" : context.IsApprove == false ? "Không duyệt" : "Chưa duyệt")</MudTd>
+                <MudTd DataLabel="Tiêu đề">@context.Title</MudTd>
+                <MudTd DataLabel="Loại"> @context.TypeOfFeedback</MudTd>
+                <MudTd DataLabel="Thời gian"> @context.CreatedDate</MudTd>
+                <MudTd DataLabel="Trạng thái">@(context.IsApprove == true ? "Đã duyệt" : context.IsApprove == false ? "Không duyệt" : "Chưa duyệt")</MudTd>
                 <MudTd DataLabel="Actions">                
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
                         <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
@@ -35,12 +36,18 @@
             <MudCard>
                 <MudCardHeader>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h6" Align="Align.Center">Bộ lọc báo cáo</MudText>
+                        <MudText Typo="Typo.h6" Align="Align.Center">Bộ lọc đề xuất</MudText>
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>                    
                     <MudDatePicker Label="Từ ngày" @bind-Date="_fromDate" Editable="true" Mask="@(new DateMask("dd.MM.yyyy"))" DateFormat="dd.MM.yyyy" />
                     <MudDatePicker Label="Đến ngày" @bind-Date="_toDate" DateFormat="dd.MM.yyyy" Editable="true" Mask="@(new DateMask("dd.MM.yyyy"))" />
+                    <MudSelect T="string" Label="Loại" AnchorOrigin="Origin.BottomCenter" @bind-Value="_type">
+                        <MudSelectItem Value='" "'>Tất cả</MudSelectItem>
+                        <MudSelectItem Value='"SystemError"'>Lỗi hệ thống</MudSelectItem>
+                        <MudSelectItem Value='"Service"'>Dịch vụ</MudSelectItem>
+                        <MudSelectItem Value='"Suggest"'>Đề nghị</MudSelectItem>
+                    </MudSelect>
                     <MudSelect Label="Trạng thái" AnchorOrigin="Origin.BottomCenter" @bind-Value="tmp">
                         <MudSelectItem Value=0 >Chưa duyệt</MudSelectItem>
                         <MudSelectItem Value=1>Đã duyệt</MudSelectItem>
@@ -48,9 +55,10 @@
                     </MudSelect>
                 </MudCardContent>
                 <MudCardActions>
-                    <MudButton FullWidth="true" OnClick="() => OnSearch(_fromDate,_toDate)" Variant="Variant.Filled" Color="Color.Primary" Disabled="_isBusy">Áp dụng</MudButton>
+                    <MudButton FullWidth="true" OnClick="() => OnSearch(_type,_fromDate,_toDate)" Variant="Variant.Filled" Color="Color.Primary" Disabled="_isBusy">Áp dụng</MudButton>
                 </MudCardActions>
             </MudCard>
         </MudPaper>
     </MudItem>
 </MudGrid>
+

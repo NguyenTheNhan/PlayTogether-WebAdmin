@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
+using WebAdmin.Shared.Models;
 using WebAdmin.Shared.Models.Charities;
 using WebAdmin.Shared.Responses;
 
@@ -65,12 +65,12 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<IEnumerable<CharitiesSummary>> GetCharitiesAsync(string query = null, bool isActive = true, int pageNumber = 1, int pageSize = 10)
+        public async Task<PagedList<CharitiesSummary>> GetCharitiesAsync(string query = null, bool isActive = true, int pageNumber = 1, int pageSize = 10)
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/charities?Name={query}&IsActive={isActive}&PageNumber={pageNumber}&PageSize={pageSize}");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<IEnumerable<CharitiesSummary>>();
+                var result = await response.Content.ReadFromJsonAsync<PagedList<CharitiesSummary>>();
                 return result;
             }
             else

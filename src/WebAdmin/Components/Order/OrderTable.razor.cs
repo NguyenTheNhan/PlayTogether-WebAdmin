@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
@@ -42,12 +41,11 @@ namespace WebAdmin.Components
             try
             {
                 var result = await OrderService.GetOrdersAsync(UserId, _status, _fromDate, _toDate, state.Page + 1, state.PageSize);
-                var tmp = await OrderService.GetOrdersAsync(UserId, _status, _fromDate, _toDate, 0, 1000);
 
                 return new TableData<OrderDetail>
                 {
-                    Items = result,
-                    TotalItems = tmp.Count(),
+                    Items = result.Content,
+                    TotalItems = result.TotalCount,
                 };
             }
             catch (Exception ex)

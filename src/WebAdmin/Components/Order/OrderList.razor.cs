@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
+using WebAdmin.Shared.Models;
 using WebAdmin.Shared.Models.Order;
 
 namespace WebAdmin.Components
@@ -38,18 +39,18 @@ namespace WebAdmin.Components
             await GetOrderAsync();
             _isBusy = false;
         }
-        private async Task<IEnumerable<OrderDetail>> GetOrderAsync()
+        private async Task<PagedList<OrderDetail>> GetOrderAsync()
         {
             _isBusy = true;
             try
             {
                 var result = await OrderService.GetOrdersAsync(UserId);
-                _orders = result.ToList();
+                _orders = result.Content.ToList();
                 return result;
             }
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {

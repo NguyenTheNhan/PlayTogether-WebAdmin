@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
@@ -42,7 +41,7 @@ namespace WebAdmin.Components
                 {
                     if (_model.Password.Equals(_model.ConfirmPassword) == true)
                     {
-                        _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                        _errorMessage = ex.ApiErrorResponse.Message;
                     }
                     else
                     {

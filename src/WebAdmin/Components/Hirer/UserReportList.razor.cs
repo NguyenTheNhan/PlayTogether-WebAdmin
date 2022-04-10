@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
+using WebAdmin.Shared.Models;
 using WebAdmin.Shared.Models.Report;
 
 namespace WebAdmin.Components
@@ -38,18 +39,18 @@ namespace WebAdmin.Components
             await GetReportAsync();
             _isBusy = false;
         }
-        private async Task<IEnumerable<ReportSummary>> GetReportAsync()
+        private async Task<PagedList<ReportSummary>> GetReportAsync()
         {
             _isBusy = true;
             try
             {
                 var result = await ReportService.GetByUserIdAsync(UserId);
-                _reports = result.ToList();
+                _reports = result.Content.ToList();
                 return result;
             }
             catch (ApiException ex)
             {
-                _errorMessage = ex.ApiErrorResponse.Errors.FirstOrDefault();
+                _errorMessage = ex.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {
