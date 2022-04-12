@@ -56,6 +56,7 @@ namespace WebAdmin.Components
             catch (ApiException ex)
             {
                 _errorMessage = ex.ApiErrorResponse.Message;
+                Error.HandleError(_errorMessage);
             }
             catch (Exception ex)
             {

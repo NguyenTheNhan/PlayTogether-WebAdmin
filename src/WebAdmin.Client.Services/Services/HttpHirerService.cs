@@ -32,12 +32,12 @@ namespace WebAdmin.Client.Services.Services
                 throw new ApiException(errorResponse, response.StatusCode);
             }
         }
-        public async Task<UserDetail> GetByIdAsync(string id)
+        public async Task<ApiResponse<UserDetail>> GetByIdAsync(string id)
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/users/{id}");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<UserDetail>();
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<UserDetail>>();
                 return result;
             }
             else
@@ -48,7 +48,7 @@ namespace WebAdmin.Client.Services.Services
         }
 
 
-        public async Task<UserDetail> ActiveAsync(string id, bool isActive, int numDateDisable, DateTime? dateDisable)
+        public async Task<ApiResponse<UserDetail>> ActiveAsync(string id, bool isActive, int numDateDisable, DateTime? dateDisable)
         {
             var response = await _httpClient.PutAsJsonAsync($"/api/play-together/v1/admins/users/activate/{id}", new
             {

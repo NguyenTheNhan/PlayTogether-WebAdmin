@@ -61,13 +61,14 @@ namespace WebAdmin.Components
                 _model = result;
                 var hirer = await HirerService.GetByIdAsync(_model.UserId);
                 var player = await HirerService.GetByIdAsync(_model.ToUserId);
-                _hirer = hirer;
-                _player = player;
+                _hirer = hirer.Content;
+                _player = player.Content;
                 _rating = _model.Ratings.Count() != 0 ? _model.Ratings.FirstOrDefault().Rate : 0;
             }
             catch (ApiException ex)
             {
                 _errorMessage = ex.ApiErrorResponse.Message;
+                Error.HandleError(_errorMessage);
             }
             catch (Exception ex)
             {

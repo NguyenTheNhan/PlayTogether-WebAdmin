@@ -63,8 +63,8 @@ namespace WebAdmin.Components
                 var reporter = await HirerService.GetByIdAsync(_model.UserId);
                 var reported = await HirerService.GetByIdAsync(_model.ToUserId);
 
-                _reporter = reporter;
-                _reported = reported;
+                _reporter = reporter.Content;
+                _reported = reported.Content;
             }
             catch (ApiException ex)
             {
@@ -97,13 +97,15 @@ namespace WebAdmin.Components
         {
             _isBusy = true;
             var parameters = new DialogParameters();
-            parameters.Add("ContentText", _approve ? "Bạn muốn duyệt báo cáo này?" : $"Bạn không duyệt báo cáo này ?");
-            parameters.Add("ButtonText", _approve ? "Duyệt" : "Không duyệt");
+            parameters.Add("ContentText", _model.IsApprove == null ? (_approve ? "Bạn muốn duyệt báo cáo này?" : "Bạn không duyệt báo cáo này ?")
+                                                                   : (_model.IsApprove == true ? "Bạn không duyệt báo cáo này ?" : "Bạn muốn duyệt báo cáo này?"));
+            parameters.Add("ButtonText", _model.IsApprove == null ? (_approve ? "Duyệt" : "Không duyệt")
+                                                                  : (_model.IsApprove == true ? "Không duyệt" : "Duyệt"));
             parameters.Add("Color", Color.Primary);
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-            var dialog = DialogService.Show<ConfirmationDialog>(_approve ? "Duyệt" : "Không duyệt", parameters, options);
+            var dialog = DialogService.Show<ConfirmationDialog>("Xác nhận", parameters, options);
 
             var confirmationResult = await dialog.Result;
             if (!confirmationResult.Cancelled)
@@ -123,6 +125,7 @@ namespace WebAdmin.Components
                 catch (ApiException ex)
                 {
                     _errorMessage = ex.ApiErrorResponse.Message;
+                    Error.HandleError(_errorMessage);
                 }
                 catch (Exception ex)
                 {

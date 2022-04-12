@@ -21,7 +21,7 @@ namespace WebAdmin.Components
         private bool _isBusy = false;
         private string _name { get; set; }
         private int _no { get; set; }
-        private string _errorMessage = string.Empty;
+        private string _errorMessage { get; set; } = string.Empty;
 
         private async Task AddRankAsync()
         {
@@ -33,7 +33,7 @@ namespace WebAdmin.Components
                     _errorMessage = "Name is required";
                     return;
                 }
-                if (_no <= 0)
+                if (_no < 0)
                 {
                     _errorMessage = "No must more than 0";
                     return;
@@ -43,14 +43,16 @@ namespace WebAdmin.Components
                 var result = await RankService.CreateAsync(_no, _name, GameId);
                 _name = string.Empty;
                 _no = 0;
-                if (result.Content.Id != null)
+                if (result.IsSuccess == true)
                 {
                     MessagingCenter.Send(this, "rank_added", result.Content);
+                    Error.HandleSuccess("Thêm mới");
                     //_errorMessage = string.Empty;
                 }
                 else
                 {
-                    _errorMessage = "No hoặc Name đã tồn tại";
+
+                    _errorMessage = result.Error.Message;
                     Error.HandleError("Không thể thêm mới rank");
                 }
 
@@ -60,6 +62,7 @@ namespace WebAdmin.Components
             catch (ApiException ex)
             {
                 _errorMessage = ex.ApiErrorResponse.Message;
+                Error.HandleError(_errorMessage);
             }
             catch (Exception ex)
             {

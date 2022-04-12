@@ -23,21 +23,21 @@ namespace WebAdmin.Components
 
         private bool _isBusy = false;
         private string _errorMessage = string.Empty;
-        private List<FeedbackSummary> _reports = new();
+        private List<FeedbackSummary> _feedbacks = new();
 
 
 
         #region View
-        private void ViewFeedback(FeedbackSummary report)
+        private void ViewFeedback(FeedbackSummary feedback)
         {
             //Navigation.NavigateTo($"/hirers/order/{order.Id}");
 
             var parameters = new DialogParameters();
-            parameters.Add("Id", report.Id);
+            parameters.Add("Feedback", feedback);
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
 
-            var dialog = DialogService.Show<FeedbackDetailDialog>("Thông tin report", parameters, options);
+            var dialog = DialogService.Show<FeedbackDetailDialog>("Thông tin báo cáo", parameters, options);
         }
         #endregion
     }

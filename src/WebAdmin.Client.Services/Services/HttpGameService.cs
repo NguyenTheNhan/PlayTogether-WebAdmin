@@ -62,16 +62,10 @@ namespace WebAdmin.Client.Services.Services
         public async Task<ApiResponse<GameDetail>> GetByIdAsync(string id)
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/games/{id}");
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await response.Content.ReadFromJsonAsync<ApiResponse<GameDetail>>();
-                return result;
-            }
-            else
-            {
-                var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
-                throw new ApiException(errorResponse, response.StatusCode);
-            }
+
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<GameDetail>>();
+            return result;
+
         }
 
         public async Task<PagedList<GameSummary>> GetGamesAsync(string query = null, int pageNumber = 1, int pageSize = 10)

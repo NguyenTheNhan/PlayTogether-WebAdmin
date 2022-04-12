@@ -24,8 +24,8 @@ namespace WebAdmin.Components
         [CascadingParameter]
         public Error Error { get; set; }
 
+        private string _errorMessage { get; set; } = string.Empty;
         private bool _isBusy = false;
-        private string _errorMessage = string.Empty;
 
 
         #region Edit
@@ -60,7 +60,9 @@ namespace WebAdmin.Components
                 }
                 catch (ApiException ex)
                 {
-                    // TODO: Log this error 
+                    // TODO: Log this error
+                    _errorMessage = ex.ApiErrorResponse.Message;
+                    Error.HandleError(_errorMessage);
                 }
                 catch (Exception ex)
                 {

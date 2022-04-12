@@ -1,41 +1,44 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject Blazored.LocalStorage.ILocalStorageService Storage
 
-<MudLayout>
-    <MudAppBar Elevation="1" Fixed="true" Style="background-color:white">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Dark" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <img oncontextmenu="return false;" src="https://media.publit.io/file/LogoPlayTogether/logo.png" alt="logo" style="width:6%" onclick="Navigator('/')"/>
-        <img oncontextmenu="return false;" src="https://media.publit.io/file/LogoPlayTogether/name.png" alt="name" style="width:10%" class="mt-1"/>
-        <MudSpacer />
-        <LoginDisplay />
-    </MudAppBar>
-        <AuthorizeView>
-            <Authorized>
-    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
-        <NavMenu />
-    </MudDrawer>
-            </Authorized>
-        </AuthorizeView>
-    <MudMainContent>
-        @Body
-    </MudMainContent>
 
-</MudLayout>
+<AuthorizeView>
+    <Authorized>
+        <MudLayout>
+            <MudAppBar Elevation="1" Fixed="true" Style="background-color:white">
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Dark" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+                <img oncontextmenu="return false;" src="https://media.publit.io/file/LogoPlayTogether/logo.png" alt="logo" style="width:6%" onclick="Navigator('/')" />
+                <img oncontextmenu="return false;" src="https://media.publit.io/file/LogoPlayTogether/name.png" alt="name" style="width:10%" class="mt-1" />
+                <MudSpacer />
+                <LoginDisplay />
+            </MudAppBar>
+            <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+                <NavMenu />
+            </MudDrawer>
+            <MudMainContent>
+                @Body
+            </MudMainContent>
+        </MudLayout>
+    </Authorized>
+    <NotAuthorized>
+       <MudPaper Elevation="0" Height="100%" Width="100%">
+                <MudText Typo="Typo.h5" Color="Color.Error">
+                    You need to <MudElement HtmlTag="a"
+                                            Class="ma-0"
+                                            Style="color:red;font-weight:bold;-ms-text-underline-position"
+                                            href="/authentication/login"
+                                            rel="noopener noreferrer">
 
+                        Login
+                    </MudElement>
+                    to access this page.
+                </MudText>
+            </MudPaper>
+    </NotAuthorized>
+</AuthorizeView>
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-@code {
-        bool _drawerOpen = true;
-
-        void DrawerToggle()
-        {
-            _drawerOpen = !_drawerOpen;
-        }
-        MudTheme _lightTheme = new MudTheme
-        {
-            Palette = new Palette
-            {               
-            }
-        };
-}

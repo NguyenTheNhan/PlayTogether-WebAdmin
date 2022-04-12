@@ -43,6 +43,7 @@ namespace WebAdmin.Components
             {
                 //TODO: Handle error globally
                 _errorMessage = ex.ApiErrorResponse.Message;
+                Error.HandleError(_errorMessage);
             }
             catch (Exception ex)
             {

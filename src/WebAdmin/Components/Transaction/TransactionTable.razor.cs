@@ -24,7 +24,6 @@ namespace WebAdmin.Components
         [CascadingParameter]
         public Error Error { get; set; }
         public bool _isBusy { get; set; }
-
         private string _type { get; set; } = string.Empty;
         private DateTime? _fromDate { get; set; } = DateTime.Parse("1/1/2000");
         private DateTime? _toDate { get; set; } = DateTime.Now;

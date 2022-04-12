@@ -27,17 +27,17 @@ namespace WebAdmin.Client.Services.Services
                 No = no,
                 Name = name,
             });
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await response.Content.ReadFromJsonAsync<ApiResponse<RankDetail>>();
-                return result;
-            }
-            else
-            {
-                var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+            //if (response.IsSuccessStatusCode)
+            //{
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<RankDetail>>();
+            return result;
+            //}
+            //else
+            //{
+            //    var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+            //    throw new ApiException(errorResponse, response.StatusCode);
 
-                throw new ApiException(errorResponse, response.StatusCode);
-            }
+            //}
         }
 
         public async Task DeleteAsync(string id)

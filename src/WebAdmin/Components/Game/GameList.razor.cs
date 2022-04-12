@@ -46,6 +46,7 @@ namespace WebAdmin.Components
             catch (ApiException ex)
             {
                 _errorMessage = ex.ApiErrorResponse.Message;
+                Error.HandleError(_errorMessage);
             }
             catch (Exception ex)
             {
@@ -89,6 +90,8 @@ namespace WebAdmin.Components
                 catch (ApiException ex)
                 {
                     // TODO: Log this error 
+                    _errorMessage = ex.ApiErrorResponse.Message ?? ex.Message;
+                    Error.HandleError(_errorMessage);
                 }
                 catch (Exception ex)
                 {

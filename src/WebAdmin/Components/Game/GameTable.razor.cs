@@ -4,6 +4,7 @@ using MudBlazor;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
 using WebAdmin.Shared.Models.Game;
@@ -28,6 +29,7 @@ namespace WebAdmin.Components
 
         private MudTable<GameSummary> _table;
         private string _query = string.Empty;
+        private string _errorMessage { get; set; } = string.Empty;
 
         protected override void OnInitialized()
         {
@@ -49,6 +51,11 @@ namespace WebAdmin.Components
                     Items = result.Content,
                     TotalItems = result.TotalCount
                 };
+            }
+            catch (ApiException ex)
+            {
+                _errorMessage = ex.ApiErrorResponse.Message;
+                Error.HandleError(_errorMessage);
             }
             catch (Exception ex)
             {

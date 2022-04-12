@@ -70,13 +70,14 @@ namespace WebAdmin.Components
                 {
                     var result = await GameService.CreateAsync(_model);
                     Error.HandleSuccess("Thêm mới game");
+                    Navigation.NavigateTo($"/games/form/{result.Content.Id}");
                 }
-                //success
-                Navigation.NavigateTo("/games");
+
             }
             catch (ApiException ex)
             {
                 _errorMessage = ex.ApiErrorResponse.Message;
+                Error.HandleError(_errorMessage);
             }
             catch (Exception ex)
             {
@@ -134,7 +135,7 @@ namespace WebAdmin.Components
 
             try
             {
-                var result = await GameTypeService.GetGameTypesAsync("", 1, 100);
+                var result = await GameTypeService.GetGameTypesAsync("", 1, 1000);
                 _gameTypes = result.Content.ToList();
                 StateHasChanged();
             }

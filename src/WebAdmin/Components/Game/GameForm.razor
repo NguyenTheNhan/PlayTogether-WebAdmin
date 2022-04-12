@@ -56,10 +56,9 @@
     </MudCardActions>
         
 
-        @if (_ranks != null)
-        {
+        
             <RankList GameId="@_model.Id" />
-        }
+        
         @if (!string.IsNullOrWhiteSpace(_errorMessage))
         {
             <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_errorMessage</MudAlert>

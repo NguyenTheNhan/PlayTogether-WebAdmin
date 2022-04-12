@@ -1,4 +1,4 @@
-using AKSoftware.Blazor.Utilities;
+﻿using AKSoftware.Blazor.Utilities;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
@@ -86,13 +86,13 @@ namespace WebAdmin.Components
         private async Task DeleteRankAsync(RankDetail rank)
         {
             var parameters = new DialogParameters();
-            parameters.Add("ContentText", $"Do you really want to delete '{rank.Name}'?");
-            parameters.Add("ButtonText", "Delete");
+            parameters.Add("ContentText", $"Bạn có muốn xoá '{rank.Name}'?");
+            parameters.Add("ButtonText", "Xoá");
             parameters.Add("Color", Color.Error);
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-            var dialog = DialogService.Show<ConfirmationDialog>("Delete", parameters, options);
+            var dialog = DialogService.Show<ConfirmationDialog>("Xoá rank", parameters, options);
             var confirmationResult = await dialog.Result;
 
             if (!confirmationResult.Cancelled)
@@ -108,6 +108,8 @@ namespace WebAdmin.Components
                 catch (ApiException ex)
                 {
                     // TODO: Log this error 
+                    _errorMessage = ex.ApiErrorResponse.Message;
+                    Error.HandleError(_errorMessage);
                 }
                 catch (Exception ex)
                 {

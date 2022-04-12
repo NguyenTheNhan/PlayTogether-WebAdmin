@@ -16,7 +16,7 @@ namespace WebAdmin.Client.Services.Services
         {
             _httpClient = httpClient;
         }
-        public async Task<TypeOfGameSummary> CreateAsync(string gameId, string gameTypeId)
+        public async Task<ApiResponse<TypeOfGameSummary>> CreateAsync(string gameId, string gameTypeId)
         {
 
             var response = await _httpClient.PostAsJsonAsync($"/api/play-together/v1/types-of-game", new
@@ -46,12 +46,12 @@ namespace WebAdmin.Client.Services.Services
         }
 
 
-        public async Task<TypeOfGameSummary> GetByIdAsync(string id)
+        public async Task<ApiResponse<TypeOfGameSummary>> GetByIdAsync(string id)
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/types-of-game/{id}");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<TypeOfGameSummary>();
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<TypeOfGameSummary>>();
                 return result;
             }
             else

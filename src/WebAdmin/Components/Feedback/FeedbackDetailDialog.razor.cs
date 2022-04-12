@@ -24,7 +24,7 @@ namespace WebAdmin.Components
         public IDialogService DialogService { get; set; }
 
         [Parameter]
-        public string Id { get; set; }
+        public FeedbackSummary Feedback { get; set; }
 
         [CascadingParameter]
         public Error Error { get; set; }
@@ -68,15 +68,16 @@ namespace WebAdmin.Components
 
             try
             {
-                var result = await FeedbackService.GetByIdAsync(Id);
+                var result = await FeedbackService.GetByIdAsync(Feedback.Id);
 
                 _model = result;
-                user = await HirerService.GetByIdAsync(_model.UserId);
+                //  user = await HirerService.GetByIdAsync(_model.UserId);
 
             }
             catch (ApiException ex)
             {
                 _errorMessage = ex.ApiErrorResponse.Message;
+                Error.HandleError(_errorMessage);
             }
             catch (Exception ex)
             {
@@ -103,22 +104,34 @@ namespace WebAdmin.Components
 
         private async Task ApproveAsync()
         {
-            _isBusy = true;
-            var parameters = new DialogParameters();
-            parameters.Add("ContentText", _approve ? "Bạn muốn duyệt đề xuất này?" : $"Bạn không duyệt đề xuất này ?");
-            parameters.Add("ButtonText", _approve ? "Duyệt" : "Không duyệt");
-            parameters.Add("Color", Color.Primary);
 
+            var parameters = new DialogParameters();
+            parameters.Add("ContentText", _model.IsApprove == null ? (_approve ? "Bạn muốn duyệt đề xuất này?" : "Bạn không duyệt đề xuất này ?")
+                                                                   : (_model.IsApprove == true ? "Bạn không duyệt đề xuất này ?" : "Bạn muốn duyệt đề xuất này?"));
+            parameters.Add("ButtonText", _model.IsApprove == null ? (_approve ? "Duyệt" : "Không duyệt")
+                                                                  : (_model.IsApprove == true ? "Không duyệt" : "Duyệt"));
+            parameters.Add("Color", Color.Primary);
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-            var dialog = DialogService.Show<ConfirmationDialog>(_approve ? "Duyệt" : "Không duyệt", parameters, options);
+            var dialog = DialogService.Show<ConfirmationDialog>("Xác nhận", parameters, options);
 
             var confirmationResult = await dialog.Result;
             if (!confirmationResult.Cancelled)
             {
                 try
                 {
-                    await FeedbackService.ActiveAsync(_model.Id, _approve);
+                    if (_model.IsApprove == true)
+                    {
+                        await FeedbackService.ActiveAsync(Feedback.Id, false);
+                    }
+                    else if (_model.IsApprove == false)
+                    {
+                        await FeedbackService.ActiveAsync(Feedback.Id, true);
+                    }
+                    else
+                    {
+                        await FeedbackService.ActiveAsync(Feedback.Id, _approve);
+                    }
 
                     //success
                     Error.HandleSuccess("Thao tác");
@@ -139,7 +152,7 @@ namespace WebAdmin.Components
 
                 }
             }
-            _isBusy = false;
+
 
         }
 

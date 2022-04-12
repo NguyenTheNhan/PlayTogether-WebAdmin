@@ -7,7 +7,7 @@ namespace WebAdmin.Shared.Models.Hirer
     {
 
         public string Avatar { get; set; }
-        public bool IsPlayer { get; set; }
+
         public DateTime DateOfBirth { get; set; }
         public string City { get; set; }
         public bool Gender { get; set; }

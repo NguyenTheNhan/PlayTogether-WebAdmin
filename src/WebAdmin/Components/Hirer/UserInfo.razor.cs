@@ -100,12 +100,13 @@ namespace WebAdmin.Components
             try
             {
                 var result = await UserService.GetByIdAsync(Id);
-                _model = result;
+                _model = result.Content;
 
             }
             catch (ApiException ex)
             {
                 _errorMessage = ex.ApiErrorResponse.Message;
+                Error.HandleError(_errorMessage);
             }
             catch (Exception ex)
             {

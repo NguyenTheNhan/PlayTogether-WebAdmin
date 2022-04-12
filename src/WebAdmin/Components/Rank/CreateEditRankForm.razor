@@ -8,15 +8,16 @@
                   Variant="Variant.Outlined" 
                   Margin="Margin.Dense"
                   Error="@(!string.IsNullOrEmpty(_errorMessage))"
-                  ErrorText="@_errorMessage"></MudTextField>
+                 ></MudTextField>
     <MudNumericField @bind-Value="_no" 
                   Label="No" 
                   Class="flex-grow-0 mr-1" 
                   Variant="Variant.Outlined" 
                   Margin="Margin.Dense"
                   Error="@(!string.IsNullOrEmpty(_errorMessage))"
-                  ErrorText="@_errorMessage" />
-    @if (_isBusy)
+                 />
+       
+        @if (_isBusy)
             {
                 <MudProgressCircular Color="Color.Primary" Indeterminate="true" Class="flex-grow-0 flex-shrink-0 mr-2" />
             }
@@ -27,5 +28,11 @@
             }
 
 </div>
+
+
+ @if(_errorMessage != string.Empty)
+        {
+            <MudText Class="ma-2" Color="Color.Error">@_errorMessage</MudText>
+        }
 
 </MudPaper>

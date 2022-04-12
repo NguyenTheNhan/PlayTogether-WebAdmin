@@ -24,9 +24,9 @@
                         {
                             <MudText Align="Align.Center" Typo="Typo.subtitle1" Class="ma-3"> Người đề xuất </MudText>
                             <div class="d-flex justify-center">
-                                <MudImage Src="@user.Avatar" Alt="@user.Name" Style="width:70%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
+                                <MudImage Src="@_model.User.Avatar" Alt="@_model.User.Name" Style="width:70%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
                             </div>
-                            <MudText Align="Align.Center" Typo="Typo.h6" Class="mt-3"> @user.Name </MudText>
+                            <MudText Align="Align.Center" Typo="Typo.h6" Class="mt-3"> @_model.User.Name </MudText>
                             @*<div class="d-flex justify-center">
                                 <MudButton OnClick='User'>Xem chi tiết</MudButton>
                                 </div>*@
@@ -42,11 +42,11 @@
                         }
                         else
                         {
-                            <MudText Typo="Typo.h6" Class="mt-10" Color="@(_model.IsApprove == true ? Color.Success : Color.Error)">@(_model.IsApprove == null ? "Chưa duyệt" : _model.IsApprove == true ? "Đã duyệt" : "Không duyệt")</MudText>
+                            <MudText Typo="Typo.h6" Class="mt-10" style="border-block; border-block-color:ActiveBorder" Color="@(_model.IsApprove == true ? Color.Success : Color.Error)">@(_model.IsApprove == null ? "Chưa duyệt" : _model.IsApprove == true ? "Đã duyệt" : "Không duyệt")</MudText> 
                             <MudText Typo="Typo.subtitle1" Class="mt-2">Loại yêu cầu: @_type</MudText>
-                            <MudText Typo="Typo.subtitle1">Ngày tạo yêu cầu: @_model.CreatedDate </MudText>
+                            <MudText Typo="Typo.subtitle1">Ngày tạo yêu cầu: @Feedback.CreatedDate </MudText>
                             <MudText Typo="Typo.subtitle1">Nội dung: </MudText>
-                            <MudTextField Value="@_model.Title" Lines="2" ReadOnly="true" Variant="Variant.Outlined" />
+                            <MudTextField Value="@_model.Message" Lines="2" ReadOnly="true" Variant="Variant.Outlined" />
                         }
                     </MudItem>
                 </MudGrid>
