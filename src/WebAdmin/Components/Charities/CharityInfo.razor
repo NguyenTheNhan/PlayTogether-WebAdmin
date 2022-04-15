@@ -1,5 +1,8 @@
 ﻿@namespace WebAdmin.Components
 
+
+<MudText Typo="Typo.h5" Style="mb-2"> Thông tin</MudText>
+<MudPaper Class="py-4 px-4" >
 <EditForm Model="_model" >
     <FluentValidationValidator />
 
@@ -22,7 +25,7 @@
                         </MudText>
                     </MudItem>
                     <MudItem xs="10">
-                        <MudTextField @bind-Value="@_model.OrganizationName" Variant="Variant.Outlined" />
+                        <MudTextField @bind-Value="@_model.OrganizationName" Variant="Variant.Outlined" ReadOnly="true"/>
                     </MudItem>
                 </MudGrid>
                 <MudGrid>
@@ -32,14 +35,14 @@
                     </MudItem>
                     <MudItem xs="10">
                         <div class="d-flex">
-                            <MudTextField @bind-Value="@_model.Email" Variant="Variant.Outlined"   />
+                            <MudTextField @bind-Value="@_model.Email" Variant="Variant.Outlined"  ReadOnly="true" />
 
                             <div>
                             <br />
                             <MudText Class="mr-4 ml-2">Điện thoại:</MudText>
                             </div>
 
-                            <MudTextField @bind-Value="@_model.Phone" Variant="Variant.Outlined"   />
+                            <MudTextField @bind-Value="@_model.Phone" Variant="Variant.Outlined"  ReadOnly="true" />
 
 
                         </div>
@@ -54,7 +57,7 @@
                     </MudItem>
                     <MudItem xs="10">
 
-                        <MudTextField @bind-Value="@_model.Address" Variant="Variant.Outlined"   />
+                        <MudTextField @bind-Value="@_model.Address" Variant="Variant.Outlined"  ReadOnly="true" />
 
 
                     </MudItem>
@@ -67,7 +70,7 @@
                         <MudText>Mô tả:</MudText>
                     </MudItem>
                     <MudItem xs="10">
-                        <MudTextField @bind-Value="@_model.Information" Lines="8" Variant="Variant.Outlined"   />
+                        <MudTextField @bind-Value="@_model.Information" Lines="8" Variant="Variant.Outlined"  ReadOnly="true" />
                     </MudItem>
                 </MudGrid>
             }
@@ -103,3 +106,4 @@
     <ValidationSummary />
 
 </EditForm>
+</MudPaper>

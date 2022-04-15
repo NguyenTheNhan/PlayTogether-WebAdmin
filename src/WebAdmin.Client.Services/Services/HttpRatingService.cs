@@ -5,22 +5,22 @@ using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared.Models;
-using WebAdmin.Shared.Models.Feedback;
+using WebAdmin.Shared.Models.Rating;
 using WebAdmin.Shared.Responses;
 
 namespace WebAdmin.Client.Services.Services
 {
-    public class HttpFeedbackService : IFeedbackService
+    public class HttpRatingService : IRatingService
     {
         private readonly HttpClient _httpClient;
-        public HttpFeedbackService(HttpClient httpClient)
+        public HttpRatingService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
         public async Task ActiveAsync(string id, bool isApprove)
         {
-            var response = await _httpClient.PutAsJsonAsync($"/api/play-together/v1/admins/feedbacks/{id}", new
+            var response = await _httpClient.PutAsJsonAsync($"/api/play-together/v1/rating/process/{id}", new
             {
                 isApprove = isApprove
             });
@@ -37,12 +37,12 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<ApiResponse<FeedbackDetail>> GetByIdAsync(string id)
+        public async Task<ApiResponse<RatingDetail>> GetByIdAsync(string id)
         {
-            var response = await _httpClient.GetAsync($"/api/play-together/v1/feedbacks/{id}");
+            var response = await _httpClient.GetAsync($"/api/play-together/v1/rating/{id}");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<ApiResponse<FeedbackDetail>>();
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<RatingDetail>>();
                 return result;
             }
             else
@@ -52,12 +52,12 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<PagedList<FeedbackSummary>> GetFeedbacksAsync(string type = "", bool? isApprove = null, DateTime? fromDate = null, DateTime? toDate = null, int pageNumber = 1, int pageSize = 10)
+        public async Task<PagedList<RatingDetail>> GetRatingsAsync(bool? isActive = null, int pageNumber = 1, int pageSize = 10)
         {
-            var response = await _httpClient.GetAsync($"/api/play-together/v1/feedbacks?Type={type}&IsApprove={isApprove}&FromDate={fromDate}&ToDate={toDate}&PageNumber={pageNumber}&PageSize={pageSize}&IsNew=true");
+            var response = await _httpClient.GetAsync($"/api/play-together/v1/rating/violates?IsActive={isActive}&PageNumber={pageNumber}&PageSize={pageSize}&IsNew=true");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<PagedList<FeedbackSummary>>();
+                var result = await response.Content.ReadFromJsonAsync<PagedList<RatingDetail>>();
                 return result;
             }
             else

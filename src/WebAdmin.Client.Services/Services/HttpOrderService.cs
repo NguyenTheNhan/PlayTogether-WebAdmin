@@ -18,12 +18,12 @@ namespace WebAdmin.Client.Services.Services
         {
             _httpClient = httpClient;
         }
-        public async Task<OrderDetail> GetByIdAsync(string id)
+        public async Task<ApiResponse<OrderDetail>> GetByIdAsync(string id)
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/orders/detail/{id}");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<OrderDetail>();
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<OrderDetail>>();
                 return result;
             }
             else

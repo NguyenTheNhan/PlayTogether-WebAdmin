@@ -1,0 +1,27 @@
+﻿@namespace WebAdmin.Components
+
+<MudDialog>
+
+    <DialogContent >
+    <MudPaper Width="400px" Height="200px" Elevation="0">
+        <MudSelect Label="Điểm hành vi" AnchorOrigin="Origin.BottomCenter" @bind-Value="_point">
+                        <MudSelectItem Value=0 >0</MudSelectItem>
+                        <MudSelectItem Value=5>5</MudSelectItem>
+                        <MudSelectItem Value=10>10</MudSelectItem>
+        </MudSelect>
+        <MudSelect Label="Điểm tích cực" AnchorOrigin="Origin.BottomCenter" @bind-Value="_satisfiedPoint">
+                        <MudSelectItem Value=0 >0</MudSelectItem>
+                        <MudSelectItem Value=5>5</MudSelectItem>
+                        <MudSelectItem Value=10>10</MudSelectItem>
+        </MudSelect>
+        <MudSelect Label="Khoá người dùng" AnchorOrigin="Origin.BottomCenter" @bind-Value="_isDisable">                        
+                        <MudSelectItem Value=true>Khoá người dùng</MudSelectItem>
+                        <MudSelectItem Value=false>Không khoá người dùng</MudSelectItem>
+        </MudSelect>
+    </MudPaper>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Close">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="ApproveAsync">Duyệt</MudButton>
+    </DialogActions>
+</MudDialog>

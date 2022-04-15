@@ -52,7 +52,7 @@ namespace WebAdmin.Components
         {
             if (_isEditMode)
                 await FetchGameByIdAsync();
-            await FetchGameTypeAsync();
+
         }
 
 
@@ -97,9 +97,11 @@ namespace WebAdmin.Components
             StateHasChanged();
 
         }
-        private void OnItemDeletedCallBack(TypeOfGameWithGameTypeDetail item)
+        private async void OnItemDeletedCallBack(TypeOfGameWithGameTypeDetail item)
         {
             _typeOfGameWithGameTypes.Remove(item);
+            await FetchGameByIdAsync();
+            StateHasChanged();
 
         }
 
@@ -109,11 +111,23 @@ namespace WebAdmin.Components
 
             try
             {
+                await FetchGameTypeAsync();
                 var result = await GameService.GetByIdAsync(Id);
                 _model = result.Content;
                 _ranks = _model.ranks;
                 _typeOfGameWithGameTypes = _model.typeOfGames;
+                foreach (var typeOfGame in _typeOfGameWithGameTypes)
+                {
+                    foreach (var gametype in _gameTypes)
+                    {
+                        if (typeOfGame.GameType.Id.Contains(gametype.Id))
+                        {
+                            _gameTypes.Remove(gametype);
+                            break;
+                        }
 
+                    }
+                }
                 StateHasChanged();
             }
             catch (ApiException ex)
@@ -137,6 +151,8 @@ namespace WebAdmin.Components
             {
                 var result = await GameTypeService.GetGameTypesAsync("", 1, 1000);
                 _gameTypes = result.Content.ToList();
+
+
                 StateHasChanged();
             }
             catch (ApiException ex)

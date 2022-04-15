@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
-using WebAdmin.Shared.Models.Feedback;
 using WebAdmin.Shared.Models.Hirer;
+using WebAdmin.Shared.Models.Rating;
 
 namespace WebAdmin.Components
 {
-    public partial class FeedbackDetailDialog
+    public partial class RatingReportDialog
     {
         [Inject]
-        public IFeedbackService FeedbackService { get; set; }
+        public IRatingService RatingService { get; set; }
         [Inject]
         public IHirerService HirerService { get; set; }
 
@@ -24,7 +24,7 @@ namespace WebAdmin.Components
         public IDialogService DialogService { get; set; }
 
         [Parameter]
-        public FeedbackSummary Feedback { get; set; }
+        public RatingDetail Rating { get; set; }
 
         [CascadingParameter]
         public Error Error { get; set; }
@@ -32,7 +32,7 @@ namespace WebAdmin.Components
         MudDialogInstance MudDialog { get; set; }
 
 
-        private FeedbackDetail _model = new();
+        private RatingDetail _model = new();
         private UserDetail user = new();
         private bool _approve { get; set; } = true;
         private string _action = "Duyệt";
@@ -42,19 +42,8 @@ namespace WebAdmin.Components
 
         protected override async Task OnInitializedAsync()
         {
-            await FetchFeedbackByIdAsync();
-            if (_model.TypeOfFeedback.Equals("Service"))
-            {
-                _type = "Dịch vụ";
-            }
-            else if (_model.TypeOfFeedback.Equals("Suggest"))
-            {
-                _type = "Đề xuất";
-            }
-            else if (_model.TypeOfFeedback.Equals("SystemError"))
-            {
-                _type = "Lỗi hệ thống";
-            }
+            await FetchRatingByIdAsync();
+
         }
 
         private void Close()
@@ -62,16 +51,15 @@ namespace WebAdmin.Components
             MudDialog.Cancel();
         }
 
-        private async Task FetchFeedbackByIdAsync()
+        private async Task FetchRatingByIdAsync()
         {
             _isBusy = true;
 
             try
             {
-                var result = await FeedbackService.GetByIdAsync(Feedback.Id);
+                var result = await RatingService.GetByIdAsync(Rating.Id);
 
                 _model = result.Content;
-                //  user = await HirerService.GetByIdAsync(_model.UserId);
 
             }
             catch (ApiException ex)
@@ -106,8 +94,8 @@ namespace WebAdmin.Components
         {
 
             var parameters = new DialogParameters();
-            parameters.Add("ContentText", _model.IsApprove == null ? (_approve ? "Bạn muốn duyệt đề xuất này?" : "Bạn không duyệt đề xuất này ?")
-                                                                   : (_model.IsApprove == true ? "Bạn không duyệt đề xuất này ?" : "Bạn muốn duyệt đề xuất này?"));
+            parameters.Add("ContentText", _model.IsApprove == null ? (_approve ? "Bạn muốn duyệt báo cáo này?" : "Bạn không duyệt báo cáo này ?")
+                                                                   : (_model.IsApprove == true ? "Bạn không duyệt báo cáo này ?" : "Bạn muốn duyệt báo cáo này?"));
             parameters.Add("ButtonText", _model.IsApprove == null ? (_approve ? "Duyệt" : "Không duyệt")
                                                                   : (_model.IsApprove == true ? "Không duyệt" : "Duyệt"));
             parameters.Add("Color", Color.Primary);
@@ -122,23 +110,23 @@ namespace WebAdmin.Components
                 {
                     if (_model.IsApprove == true)
                     {
-                        await FeedbackService.ActiveAsync(Feedback.Id, false);
+                        await RatingService.ActiveAsync(Rating.Id, false);
                     }
                     else if (_model.IsApprove == false)
                     {
-                        await FeedbackService.ActiveAsync(Feedback.Id, true);
+                        await RatingService.ActiveAsync(Rating.Id, true);
                     }
                     else
                     {
-                        await FeedbackService.ActiveAsync(Feedback.Id, _approve);
+                        await RatingService.ActiveAsync(Rating.Id, _approve);
                     }
 
                     //success
                     Error.HandleSuccess("Thao tác");
                     //send a message about the approved
-                    MessagingCenter.Send(this, "feedback_approved", _model);
+                    MessagingCenter.Send(this, "rating_approved", _model);
 
-                    await FetchFeedbackByIdAsync();
+                    await FetchRatingByIdAsync();
 
                 }
                 catch (ApiException ex)
@@ -158,7 +146,7 @@ namespace WebAdmin.Components
 
         private void User()
         {
-            Navigation.NavigateTo($"/hirers/details/{_model.UserId}");
+            Navigation.NavigateTo($"/feedback-report");
 
         }
     }

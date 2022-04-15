@@ -38,11 +38,17 @@ namespace WebAdmin.Components
 
         protected override void OnInitialized()
         {
-            MessagingCenter.Subscribe<ReportDetailDialog, ReportDetails>(this, "report_approved", async (sender, args) =>
+            MessagingCenter.Subscribe<ReportDetailDialog, ReportDetails>(this, "report_disapproved", async (sender, args) =>
             {
                 await _table.ReloadServerData();
                 StateHasChanged();
             });
+            MessagingCenter.Subscribe<ProcessApproveDialog, string>(this, "report_approved", async (sender, args) =>
+            {
+                await _table.ReloadServerData();
+                StateHasChanged();
+            });
+
         }
 
         private async Task<TableData<ReportSummary>> ServerReloadAsync(TableState state)

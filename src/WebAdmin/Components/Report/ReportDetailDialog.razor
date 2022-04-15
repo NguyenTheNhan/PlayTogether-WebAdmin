@@ -53,6 +53,8 @@
         </MudContainer>
     </DialogContent>
     <DialogActions>
+   
+
         <div class="d-flex flex-row-reverse">
             <MudButton Color="Color.Default" Class="mr-3" Style="width:100px;" Variant="Variant.Filled" OnClick="Close">Đóng</MudButton>
             @if (_model.IsApprove == null)
@@ -65,13 +67,9 @@
                     </MudMenu>
                 </MudButtonGroup>
             }
-            else
-            {
-                <MudButton OnClick="ApproveAsync" Color="Color.Primary" Variant="@(_model.IsApprove == true ? Variant.Outlined : Variant.Filled)" Class="mr-3" DisableElevation="true" Style="width:150px">@(_model.IsApprove == true ? "Không duyệt" : "Duyệt")</MudButton>
-            }
-
-
+            
         </div>
+    
 
     </DialogActions>
 </MudDialog>

@@ -58,7 +58,7 @@ namespace WebAdmin.Components
             {
                 var result = await OrderService.GetByIdAsync(Id);
 
-                _model = result;
+                _model = result.Content;
                 var hirer = await HirerService.GetByIdAsync(_model.UserId);
                 var player = await HirerService.GetByIdAsync(_model.ToUserId);
                 _hirer = hirer.Content;

@@ -17,12 +17,12 @@ namespace WebAdmin.Client.Services.Services
             _httpClient = httpClient;
         }
 
-        public async Task<DashBoardResponse> GetDashBoard()
+        public async Task<ApiResponse<DashBoardResponse>> GetDashBoard()
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/admins/dash-board");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<DashBoardResponse>();
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<DashBoardResponse>>();
                 return result;
             }
             else

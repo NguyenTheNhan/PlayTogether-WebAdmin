@@ -19,7 +19,8 @@ namespace WebAdmin.Client.Services
                            .AddScoped<ICharitiesService, HttpCharitiesService>()
                            .AddScoped<IReportService, HttpReportService>()
                            .AddScoped<IDashBoardService, HttpDashBoardService>()
-                           .AddScoped<IFeedbackService, HttpFeedbackService>();
+                           .AddScoped<IFeedbackService, HttpFeedbackService>()
+                           .AddScoped<IRatingService, HttpRatingService>();
         }
     }
 }

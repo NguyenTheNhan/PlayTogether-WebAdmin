@@ -29,14 +29,14 @@ namespace WebAdmin.Components
         {
             await GetDashBoardAsync();
         }
-        private async Task<DashBoardResponse> GetDashBoardAsync()
+        private async Task GetDashBoardAsync()
         {
 
             try
             {
                 var result = await DashBoardService.GetDashBoard();
-                dashBoard = result;
-                return result;
+                dashBoard = result.Content;
+
             }
             catch (ApiException ex)
             {
@@ -48,7 +48,7 @@ namespace WebAdmin.Components
                 Error.HandleError(ex);
             }
 
-            return null;
+
         }
     }
 }

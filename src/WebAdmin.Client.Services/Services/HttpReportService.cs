@@ -19,11 +19,14 @@ namespace WebAdmin.Client.Services.Services
             _httpClient = httpClient;
         }
 
-        public async Task ActiveAsync(string id, bool isApprove)
+        public async Task ActiveAsync(string id, bool isApprove, int point = 0, int satisfiedPoint = 0, bool isDisableAccount = false)
         {
             var response = await _httpClient.PutAsJsonAsync($"/api/play-together/v1/admins/reports/{id}", new
             {
-                isApprove = isApprove
+                isApprove = isApprove,
+                point = point,
+                satisfiedPoint = satisfiedPoint,
+                isDisableAccount = isDisableAccount,
             });
             if (response.IsSuccessStatusCode)
             {
@@ -37,19 +40,23 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<ReportDetails> GetByIdAsync(string id)
+        public async Task<ApiResponse<ReportDetails>> GetByIdAsync(string id)
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/admins/reports/{id}");
-            if (response.IsSuccessStatusCode)
+
+
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<ReportDetails>>();
+            if (result.IsSuccess)
             {
-                var result = await response.Content.ReadFromJsonAsync<ReportDetails>();
                 return result;
+
             }
             else
             {
-                var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+                var errorResponse = result.Error;
                 throw new ApiException(errorResponse, response.StatusCode);
             }
+
         }
 
         public async Task<PagedList<ReportSummary>> GetByUserIdAsync(string userId, bool? isApprove = null, DateTime? fromDate = null, DateTime? toDate = null, int pageNumber = 1, int pageSize = 10)

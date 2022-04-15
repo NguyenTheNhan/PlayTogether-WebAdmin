@@ -35,27 +35,22 @@ namespace WebAdmin.Client.Services.Services
         }
 
 
-        public async Task<CharitiesSummary> EditAsync(CharitiesSummary model)
+        public async Task EditAsync(CharitiesSummary model)
         {
             var response = await _httpClient.PutAsJsonAsync($"/api/play-together/v1/charities/{model.Id}", model);
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await GetByIdAsync(model.Id);
-                return result;
-            }
-            else
+            if (!response.IsSuccessStatusCode)
             {
                 var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
                 throw new ApiException(errorResponse, response.StatusCode);
             }
         }
 
-        public async Task<CharitiesSummary> GetByIdAsync(string id)
+        public async Task<ApiResponse<CharitiesSummary>> GetByIdAsync(string id)
         {
             var response = await _httpClient.GetAsync($"/api/play-together/v1/charities/{id}");
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<CharitiesSummary>();
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<CharitiesSummary>>();
                 return result;
             }
             else
@@ -79,20 +74,14 @@ namespace WebAdmin.Client.Services.Services
                 throw new ApiException(errorResponse, response.StatusCode);
             }
         }
-        public async Task<CharitiesSummary> ActiveAsync(string id, bool isActive)
+        public async Task ActiveAsync(string id, bool isActive)
         {
             var response = await _httpClient.PutAsJsonAsync($"/api/play-together/v1/admins/charities/{id}", new
             {
                 isActive = isActive,
             });
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
-                var result = await GetByIdAsync(id);
-                return result;
-            }
-            else
-            {
-
                 var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
                 throw new ApiException(errorResponse, response.StatusCode);
             }

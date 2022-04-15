@@ -6,8 +6,6 @@ namespace WebAdmin.Shared.Models.Hirer
     public class UserDetail : HirerSummary
     {
 
-        public string Avatar { get; set; }
-
         public DateTime DateOfBirth { get; set; }
         public string City { get; set; }
         public bool Gender { get; set; }

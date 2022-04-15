@@ -65,7 +65,6 @@ namespace WebAdmin.Components
                 //Log this error
                 Error.HandleError(ex);
             }
-
             _isBusy = false;
         }
 

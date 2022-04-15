@@ -7,24 +7,16 @@ using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
 using WebAdmin.Client.Services.Interfaces;
 using WebAdmin.Shared;
-using WebAdmin.Shared.Models.Feedback;
+using WebAdmin.Shared.Models.Rating;
 
 namespace WebAdmin.Components
 {
-    public partial class FeedbackTable
+    public partial class RatingReportTable
     {
         [Inject]
-        public IFeedbackService FeedbackService { get; set; }
-
-
-        [Parameter]
-        public EventCallback<FeedbackSummary> OnViewClicked { get; set; }
-
-
-
-        [Parameter]
-        public string UserId { get; set; }
-
+        public IRatingService RatingService { get; set; }
+        [Inject]
+        public IDialogService DialogService { get; set; }
         [CascadingParameter]
         public Error Error { get; set; }
         public bool _isBusy { get; set; }
@@ -32,29 +24,26 @@ namespace WebAdmin.Components
         private int tmp { get; set; } = 0;
         private bool isMany { get; set; } = false;
         private bool? _isApprove { get; set; } = null;
-        private string _type { get; set; } = string.Empty;
         private string _errorMessage { get; set; } = string.Empty;
-        private DateTime? _fromDate { get; set; } = DateTime.Parse("0001-01-01");
-        private DateTime? _toDate { get; set; } = DateTime.Now;
 
-        private MudTable<FeedbackSummary> _table;
+        private MudTable<RatingDetail> _table;
 
         protected override void OnInitialized()
         {
-            MessagingCenter.Subscribe<FeedbackDetailDialog, FeedbackDetail>(this, "feedback_approved", async (sender, args) =>
+            MessagingCenter.Subscribe<RatingReportDialog, RatingDetail>(this, "rating_approved", async (sender, args) =>
             {
                 await _table.ReloadServerData();
                 StateHasChanged();
             });
         }
 
-        private async Task<TableData<FeedbackSummary>> ServerReloadAsync(TableState state)
+        private async Task<TableData<RatingDetail>> ServerReloadAsync(TableState state)
         {
             try
             {
-                var result = await FeedbackService.GetFeedbacksAsync(_type, _isApprove, _fromDate, _toDate, state.Page + 1, state.PageSize);
-                if (result.TotalCount > 6) isMany = true;
-                return new TableData<FeedbackSummary>
+                var result = await RatingService.GetRatingsAsync(_isApprove, state.Page + 1, state.PageSize);
+                //if (result.TotalCount > 6) isMany = true;
+                return new TableData<RatingDetail>
                 {
                     Items = result.Content,
                     TotalItems = result.TotalCount,
@@ -70,14 +59,14 @@ namespace WebAdmin.Components
                 Error.HandleError(ex);
             }
 
-            return new TableData<FeedbackSummary>
+            return new TableData<RatingDetail>
             {
-                Items = new List<FeedbackSummary>(),
+                Items = new List<RatingDetail>(),
                 TotalItems = 0
             };
         }
 
-        private void OnSearch(int tmp, string type, DateTime? fromDate, DateTime? toDate)
+        private void OnSearch(int tmp)
         {
             switch (tmp)
             {
@@ -91,10 +80,21 @@ namespace WebAdmin.Components
                     _isApprove = false;
                     break;
             }
-            _type = type;
-            _fromDate = fromDate;
-            _toDate = toDate;
+
             _table.ReloadServerData();
         }
+
+
+        private void ViewRating(RatingDetail rating)
+        {
+
+            var parameters = new DialogParameters();
+            parameters.Add("Rating", rating);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
+
+            var dialog = DialogService.Show<RatingReportDialog>("Thông tin báo cáo", parameters, options);
+        }
+
     }
 }

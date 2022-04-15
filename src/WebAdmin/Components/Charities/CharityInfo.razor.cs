@@ -87,7 +87,7 @@ namespace WebAdmin.Components
             try
             {
                 var result = await CharitiesService.GetByIdAsync(Id);
-                _model = result;
+                _model = result.Content;
 
             }
             catch (ApiException ex)

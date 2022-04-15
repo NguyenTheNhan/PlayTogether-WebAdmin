@@ -19,7 +19,6 @@ namespace WebAdmin.Components
         public EventCallback<OrderDetail> OnViewClicked { get; set; }
 
 
-
         [Parameter]
         public string UserId { get; set; }
 

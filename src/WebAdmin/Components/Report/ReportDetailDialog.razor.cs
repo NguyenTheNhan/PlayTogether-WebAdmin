@@ -59,7 +59,7 @@ namespace WebAdmin.Components
             {
                 var result = await ReportService.GetByIdAsync(Id);
 
-                _model = result;
+                _model = result.Content;
                 var reporter = await HirerService.GetByIdAsync(_model.UserId);
                 var reported = await HirerService.GetByIdAsync(_model.ToUserId);
 
@@ -96,46 +96,66 @@ namespace WebAdmin.Components
         private async Task ApproveAsync()
         {
             _isBusy = true;
-            var parameters = new DialogParameters();
-            parameters.Add("ContentText", _model.IsApprove == null ? (_approve ? "Bạn muốn duyệt báo cáo này?" : "Bạn không duyệt báo cáo này ?")
-                                                                   : (_model.IsApprove == true ? "Bạn không duyệt báo cáo này ?" : "Bạn muốn duyệt báo cáo này?"));
-            parameters.Add("ButtonText", _model.IsApprove == null ? (_approve ? "Duyệt" : "Không duyệt")
-                                                                  : (_model.IsApprove == true ? "Không duyệt" : "Duyệt"));
-            parameters.Add("Color", Color.Primary);
-
-            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-
-            var dialog = DialogService.Show<ConfirmationDialog>("Xác nhận", parameters, options);
-
-            var confirmationResult = await dialog.Result;
-            if (!confirmationResult.Cancelled)
+            if (_approve)
             {
-                try
+                ViewApprove();
+            }
+            else
+            {
+                var parameters = new DialogParameters();
+                parameters.Add("ContentText", _model.IsApprove == null ? (_approve ? "Bạn muốn duyệt báo cáo này?" : "Bạn không duyệt báo cáo này ?")
+                                                                       : (_model.IsApprove == true ? "Bạn không duyệt báo cáo này ?" : "Bạn muốn duyệt báo cáo này?"));
+                parameters.Add("ButtonText", _model.IsApprove == null ? (_approve ? "Duyệt" : "Không duyệt")
+                                                                      : (_model.IsApprove == true ? "Không duyệt" : "Duyệt"));
+                parameters.Add("Color", Color.Primary);
+
+                var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+                var dialog = DialogService.Show<ConfirmationDialog>("Xác nhận", parameters, options);
+
+                var confirmationResult = await dialog.Result;
+                if (!confirmationResult.Cancelled)
                 {
-                    await ReportService.ActiveAsync(_model.Id, _approve);
 
-                    //success
-                    Error.HandleSuccess("Thao tác");
-                    //send a message about the approved
-                    MessagingCenter.Send(this, "report_approved", _model);
+                    try
+                    {
+                        await ReportService.ActiveAsync(_model.Id, _approve);
 
-                    await FetchReportByIdAsync();
+                        //success
+                        Error.HandleSuccess("Thao tác");
+                        //send a message about the approved
+                        MessagingCenter.Send(this, "report_disapproved", _model);
 
-                }
-                catch (ApiException ex)
-                {
-                    _errorMessage = ex.ApiErrorResponse.Message;
-                    Error.HandleError(_errorMessage);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    Error.HandleError(ex);
+                        await FetchReportByIdAsync();
 
+                    }
+                    catch (ApiException ex)
+                    {
+                        _errorMessage = ex.ApiErrorResponse.Message;
+                        Error.HandleError(_errorMessage);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        Error.HandleError(ex);
+
+                    }
                 }
             }
             _isBusy = false;
 
+        }
+
+        private void ViewApprove()
+        {
+            //Navigation.NavigateTo($"/hirers/order/{order.Id}");
+
+            var parameters = new DialogParameters();
+            parameters.Add("Id", _model.Id);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
+
+            var dialog = DialogService.Show<ProcessApproveDialog>("Duyệt báo cáo", parameters, options);
         }
 
         private void Reporter()

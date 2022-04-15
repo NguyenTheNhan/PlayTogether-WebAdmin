@@ -1,0 +1,58 @@
+﻿@namespace WebAdmin.Components
+@using WebAdmin.Shared.Models.Rating
+@inject NavigationManager Navigation
+
+<MudGrid>
+    <MudItem xs="12" sm="9">
+        <MudTable ServerData="@(new Func<TableState, Task<TableData<RatingDetail>>>(ServerReloadAsync))"
+                   Hover="true" @ref="_table" FixedHeader="true" Loading="true"
+                   Striped="true" >            
+            <HeaderContent>
+                <MudTh><MudTableSortLabel SortLabel="sign_field" T="RatingDetail">Nguời báo cáo</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="name_field" T="RatingDetail">Đánh giá</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="sign_field" T="RatingDetail">Phản hồi</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="sign_field" T="RatingDetail">Trạng thái</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="position_field" T="RatingDetail">Actions</MudTableSortLabel></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Tiêu đề">@context.User.Name</MudTd>
+                <MudTd DataLabel="Loại"> @context.Rate</MudTd>
+                <MudTd DataLabel="Thời gian"> @context.Comment</MudTd>
+                <MudTd DataLabel="Trạng thái">@(context.IsApprove == true ? "Đã duyệt" : context.IsApprove == false ? "Không duyệt" : "Chưa duyệt")</MudTd>
+                <MudTd DataLabel="Actions">                
+                    <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
+                        <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success" 
+                        OnClick="() => ViewRating(context)"/>
+                                  
+                    </MudButtonGroup>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+    </MudItem>
+    <MudItem xs="12" sm="3">
+        <MudPaper>
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6" Align="Align.Center">Bộ lọc đề xuất</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>   
+                   
+                    <MudSelect Label="Trạng thái" AnchorOrigin="Origin.BottomCenter" @bind-Value="tmp">
+                        <MudSelectItem Value=0 >Chưa duyệt</MudSelectItem>
+                        <MudSelectItem Value=1>Đã duyệt</MudSelectItem>
+                        <MudSelectItem Value=2>Không duyệt</MudSelectItem>
+                    </MudSelect>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton FullWidth="true" OnClick="() => OnSearch(tmp)" Variant="Variant.Filled" Color="Color.Primary" Disabled="_isBusy">Áp dụng</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
