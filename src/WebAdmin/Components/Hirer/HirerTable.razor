@@ -17,7 +17,7 @@
             <RowTemplate>
                 <MudTd DataLabel="Tên tài khoản">@context.Name</MudTd>
                 <MudTd DataLabel="Email">@context.Email</MudTd>
-                <MudTd DataLabel="Ngày đăng ký"> @context.CreatedDate</MudTd>
+                <MudTd DataLabel="Ngày đăng ký"> @(context.CreatedDate.ToString(CultureInfo.GetCultureInfo("en-GB")))</MudTd>
                 <MudTd DataLabel="Trạng thái">@(context.IsActive == true ? "Active" : "Banned")</MudTd>
                 <MudTd DataLabel="Actions">                
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">

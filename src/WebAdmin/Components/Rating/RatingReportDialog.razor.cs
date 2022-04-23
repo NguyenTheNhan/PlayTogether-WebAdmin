@@ -140,14 +140,18 @@ namespace WebAdmin.Components
 
                 }
             }
-
-
         }
 
-        private void User()
+        private void ViewOrder()
         {
-            Navigation.NavigateTo($"/feedback-report");
+            //Navigation.NavigateTo($"/hirers/order/{order.Id}");
 
+            var parameters = new DialogParameters();
+            parameters.Add("Id", _model.Order.Id);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
+
+            var dialog = DialogService.Show<OrderDetails>("Thông tin thuê", parameters, options);
         }
     }
 }

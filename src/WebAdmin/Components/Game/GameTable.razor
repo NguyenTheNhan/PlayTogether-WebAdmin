@@ -5,14 +5,18 @@
 <MudTable ServerData="@(new Func<TableState, Task<TableData<GameSummary>>>(ServerReloadAsync))"
           Dense="true" Hover="true" @ref="_table" MultiSelection="true" FixedHeader="true"
           Height="400px" Striped="true" Loading="true" SortLabel="Sort By">
-    <ToolBarContent >
+    <ToolBarContent>
         <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Tìm kiếm" Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.AddCircle" Color="Color.Primary" OnClick='() => Navigation.NavigateTo($"/games/form")'/>
-        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Class="ma-4"/>
+        <MudTooltip Text="Thêm mới">
+            <MudIconButton Icon="@Icons.Material.Filled.AddCircle" Color="Color.Primary" OnClick='() => Navigation.NavigateTo($"/games/form")' />
+        </MudTooltip>
+        <MudTooltip Text="Xoá">
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Class="ma-4" />
+        </MudTooltip>
     </ToolBarContent>
-    <HeaderContent >
+    <HeaderContent>
         <MudTh><MudTableSortLabel Enabled="true" SortBy="new Func<GameSummary, object>(x=>x.Name)" T="GameSummary">Game</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel Enabled="false" SortLabel="position_field" T="GameSummary">Actions</MudTableSortLabel></MudTh>
     </HeaderContent>
@@ -21,10 +25,10 @@
         <MudTd DataLabel="Actions">
             <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
 
-            <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
-                           OnClick="async () => await OnEditClicked.InvokeAsync(context)" />
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"
-                           OnClick="async () => await OnDeleteClicked.InvokeAsync(context)" />
+                <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
+                               OnClick="async () => await OnEditClicked.InvokeAsync(context)" />
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"
+                               OnClick="async () => await OnDeleteClicked.InvokeAsync(context)" />
 
             </MudButtonGroup>
         </MudTd>

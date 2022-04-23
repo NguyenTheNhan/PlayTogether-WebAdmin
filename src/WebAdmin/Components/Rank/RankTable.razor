@@ -6,7 +6,7 @@
 {
     
 <MudTable ServerData="@(new Func<TableState, Task<TableData<RankDetail>>>(ServerReloadAsync))"
-          Dense="true" Hover="true" @ref="_table" FixedHeader="true"
+          Dense="true" Hover="true" @ref="_table" FixedHeader="true" Loading="_isBusy"
           Height=@_isMany Striped="true" MultiSelection="true"
           Bordered = "true">
     <ToolBarContent >

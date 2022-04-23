@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
 using System.Linq;
@@ -38,11 +38,44 @@ namespace WebAdmin.Components
         private bool _isBusy = false;
         private string _errorMessage = string.Empty;
         private float _rating = 0;
+        private string _type { get; set; } = string.Empty;
+
 
         protected override async Task OnInitializedAsync()
         {
             await FetchOrderByIdAsync();
-
+            if (_model.Status.Equals("Hirer Finish Soon"))
+            {
+                _type = "Người thuê kết thúc sớm";
+            }
+            else if (_model.Status.Equals("Player Finish Soon"))
+            {
+                _type = "Người được thuê kết thúc sớm";
+            }
+            else if (_model.Status.Equals("Cancel"))
+            {
+                _type = "Bị huỷ";
+            }
+            else if (_model.Status.Equals("OverTime"))
+            {
+                _type = "Quá hạn xác nhận";
+            }
+            else if (_model.Status.Equals("Reject"))
+            {
+                _type = "Bị từ chối";
+            }
+            else if (_model.Status.Equals("Starting"))
+            {
+                _type = "Đang thuê";
+            }
+            else if (_model.Status.Equals("Finish"))
+            {
+                _type = "Hoàn thành";
+            }
+            else if (_model.Status.Equals("Processing"))
+            {
+                _type = "Đang thương lượng";
+            }
         }
 
         private void Close()

@@ -19,7 +19,7 @@ namespace WebAdmin.Components
         public IDialogService DialogService { get; set; }
         [CascadingParameter]
         public Error Error { get; set; }
-        public bool _isBusy { get; set; }
+        public bool _isBusy { get; set; } = false;
 
         private int tmp { get; set; } = 0;
         private bool isMany { get; set; } = false;
@@ -28,6 +28,8 @@ namespace WebAdmin.Components
 
         private MudTable<RatingDetail> _table;
 
+        private string reporter { get; set; }
+
         protected override void OnInitialized()
         {
             MessagingCenter.Subscribe<RatingReportDialog, RatingDetail>(this, "rating_approved", async (sender, args) =>
@@ -35,14 +37,18 @@ namespace WebAdmin.Components
                 await _table.ReloadServerData();
                 StateHasChanged();
             });
+
         }
+
 
         private async Task<TableData<RatingDetail>> ServerReloadAsync(TableState state)
         {
+            _isBusy = true;
             try
             {
                 var result = await RatingService.GetRatingsAsync(_isApprove, state.Page + 1, state.PageSize);
                 //if (result.TotalCount > 6) isMany = true;
+                _isBusy = false;
                 return new TableData<RatingDetail>
                 {
                     Items = result.Content,

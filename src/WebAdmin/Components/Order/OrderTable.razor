@@ -19,8 +19,14 @@
             <RowTemplate>
                 <MudTd DataLabel="Người thuê">@context.User.Name</MudTd>
                 <MudTd DataLabel="Người được thuê">@context.ToUser.Name</MudTd>
-                <MudTd DataLabel="Ngày thuê"> @context.ProcessExpired</MudTd>
-                <MudTd DataLabel="Trạng thái">@context.Status</MudTd>
+                <MudTd DataLabel="Ngày thuê"> @(context.ProcessExpired.ToString("d",CultureInfo.GetCultureInfo("en-GB")))</MudTd>
+                <MudTd DataLabel="Trạng thái">@(context.Status.Equals("Player Finish Soon") ? "Người được thuê kết thúc sớm" 
+                                              : context.Status.Equals("Hirer Finish Soon") ? "Người thuê kết thúc sớm"
+                                              : context.Status.Equals("Cancel") ? "Bị huỷ"
+                                              : context.Status.Equals("Reject") ? "Bị từ chối" 
+                                              : context.Status.Equals("OverTime") ? "Quá hạn xác nhận" 
+                                              : context.Status.Equals("Processing") ? "Đang thương lượng" 
+                                              : context.Status.Equals("Finish") ? "Hoàn thành" : "Đang thuê")</MudTd>
                 <MudTd DataLabel="Actions">                
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
                         <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
@@ -47,10 +53,13 @@
                     <MudDatePicker Style="height:10% width:10%" Label="Đến ngày" @bind-Date="_toDate" DateFormat="dd.MM.yyyy" Editable="true" Mask="@(new DateMask("dd.MM.yyyy"))" />
                     <MudSelect T="string" Label="Trạng thái" AnchorOrigin="Origin.BottomCenter" @bind-Value="_status">
                         <MudSelectItem Value='" "'>Tất cả</MudSelectItem>
-                        <MudSelectItem Value='"Finish"'>Finish</MudSelectItem>
-                        <MudSelectItem Value='"Finish soon"'>Finish soon</MudSelectItem>
-                        <MudSelectItem Value='"Processing"'>Processing</MudSelectItem>
-                        <MudSelectItem Value='"Cancel"'>Cancel</MudSelectItem>
+                        <MudSelectItem Value='"Finish"'>Hoàn thành</MudSelectItem>
+                        <MudSelectItem Value='"Finish soon"'>Kết thúc sớm</MudSelectItem>
+                        <MudSelectItem Value='"Cancel"'>Bị huỷ</MudSelectItem>
+                        <MudSelectItem Value='"Reject"'>Bị từ chối</MudSelectItem>
+                        <MudSelectItem Value='"OverTime"'>Quá hạn</MudSelectItem>
+                        <MudSelectItem Value='"Processing"'>Đang thương lượng</MudSelectItem>
+                        <MudSelectItem Value='"Starting"'>Đang thuê</MudSelectItem>
                     </MudSelect>
                 </MudCardContent>
                 <MudCardActions>

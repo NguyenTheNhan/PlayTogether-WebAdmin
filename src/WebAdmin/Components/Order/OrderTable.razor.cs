@@ -33,7 +33,6 @@ namespace WebAdmin.Components
         private MudTable<OrderDetail> _table;
 
 
-
         private async Task<TableData<OrderDetail>> ServerReloadAsync(TableState state)
         {
             try

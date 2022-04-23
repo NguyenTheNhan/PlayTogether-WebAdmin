@@ -1,7 +1,9 @@
 ﻿@namespace WebAdmin.Components
 
     <div class="d-flex flex-row-reverse mr-5" > 
-        <MudIconButton Icon="@Icons.Material.Filled.Refresh" ButtonType="ButtonType.Reset" OnClick="Reload"/>
+        <MudTooltip Text="Reload">
+            <MudIconButton Icon="@Icons.Material.Filled.Refresh" ButtonType="ButtonType.Reset" OnClick="Reload"/>
+        </MudTooltip>
     </div>
 <MudGrid Justify="Justify.Center" Spacing="8">
     <MudItem sm="10" md="10" lg="5">

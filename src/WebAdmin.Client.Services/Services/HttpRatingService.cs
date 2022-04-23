@@ -39,7 +39,7 @@ namespace WebAdmin.Client.Services.Services
 
         public async Task<ApiResponse<RatingDetail>> GetByIdAsync(string id)
         {
-            var response = await _httpClient.GetAsync($"/api/play-together/v1/rating/{id}");
+            var response = await _httpClient.GetAsync($"/api/play-together/v1/rating/detail/{id}");
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<RatingDetail>>();
@@ -52,9 +52,9 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<PagedList<RatingDetail>> GetRatingsAsync(bool? isActive = null, int pageNumber = 1, int pageSize = 10)
+        public async Task<PagedList<RatingDetail>> GetRatingsAsync(bool? isApprove = null, int pageNumber = 1, int pageSize = 10)
         {
-            var response = await _httpClient.GetAsync($"/api/play-together/v1/rating/violates?IsActive={isActive}&PageNumber={pageNumber}&PageSize={pageSize}&IsNew=true");
+            var response = await _httpClient.GetAsync($"/api/play-together/v1/rating/violates?IsApprove={isApprove}&PageNumber={pageNumber}&PageSize={pageSize}&IsNew=true");
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<PagedList<RatingDetail>>();

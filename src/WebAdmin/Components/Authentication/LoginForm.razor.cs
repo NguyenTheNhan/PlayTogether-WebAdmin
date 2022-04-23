@@ -33,7 +33,7 @@ namespace WebAdmin.Components
         private LoginRequest _model = new LoginRequest();
         private bool _isBusy = false;
         private string _errorMessage = string.Empty;
-
+        private bool isViewPassword { get; set; } = false;
 
         private async Task LoginUserAsync()
         {
@@ -46,7 +46,7 @@ namespace WebAdmin.Components
                 {
                     if (result.Success == false)
                     {
-                        _errorMessage = "Email or Password incorrect. Try again!";
+                        _errorMessage = "Email hoặc mật khẩu không chính xác. Vui lòng kiểm tra và thử lại!";
                     }
                     else
                     {
@@ -58,6 +58,7 @@ namespace WebAdmin.Components
                         await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
                         Navigation.NavigateTo("/index");
+                        Error.HandleSuccess("Đăng nhập");
                     }
                 }
 

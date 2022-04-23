@@ -11,8 +11,8 @@
         </MudCardHeader>
         <MudCardContent>
             <MudTextField Label="Email" @bind-Value="@_model.Email" />
-            <MudTextField InputType="InputType.Password" Label="Mật khẩu"  @bind-Value="@_model.Password" />
-
+            <MudTextField InputType="@(isViewPassword ? InputType.Text : InputType.Password)" Label="Mật khẩu"  @bind-Value="@_model.Password" />
+            <MudCheckBox @bind-Checked="@isViewPassword" Label="Hiện mật khẩu" Color="Color.Primary"></MudCheckBox>
             <ValidationSummary />
 
             @if (!string.IsNullOrWhiteSpace(_errorMessage))

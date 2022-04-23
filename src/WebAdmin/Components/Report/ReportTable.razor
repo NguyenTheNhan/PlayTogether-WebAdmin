@@ -16,7 +16,7 @@
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Người báo cáo">@context.ReportMessage</MudTd>
-                <MudTd DataLabel="Ngày báo cáo"> @context.CreatedDate</MudTd>
+                <MudTd DataLabel="Ngày báo cáo"> @(context.CreatedDate.ToString("d",CultureInfo.GetCultureInfo("en-GB")))</MudTd>
                 <MudTd DataLabel="Trạng thái">@(context.IsApprove ==true ? "Đã duyệt" : context.IsApprove == false ? "Không duyệt" : "Chưa duyệt")</MudTd>
                 <MudTd DataLabel="Actions">                
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">

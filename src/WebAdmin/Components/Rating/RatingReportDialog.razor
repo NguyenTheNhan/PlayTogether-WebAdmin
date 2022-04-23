@@ -3,6 +3,7 @@
 <MudDialog>
     <TitleContent>
         <MudText Typo="Typo.h5">Đánh giá bị báo cáo</MudText>
+        <MudDivider DividerType="DividerType.FullWidth" Class="mt-1" />
     </TitleContent>
     <DialogContent>
         <MudContainer MaxWidth="MaxWidth.Small">
@@ -12,50 +13,50 @@
                         @if (_isBusy)
                         {
                             <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text"
-                                                     Style="min-width:200px" />
+                                     Style="min-width:200px" />
                             <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle"
-                                                     Height="40px" Style="min-width:200px" />
+                                     Height="40px" Style="min-width:200px" />
                             <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text"
-                                                     Style="min-width:200px" />
+                                     Style="min-width:200px" />
                             <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text"
-                                                     Style="min-width:200px" />
+                                     Style="min-width:200px" />
                         }
                         else
                         {
                             <MudText Align="Align.Center" Typo="Typo.subtitle1" Class="ma-3"> Người báo cáo </MudText>
                             <div class="d-flex justify-center">
-                                <MudImage Src="@_model.User.Avatar" Alt="@_model.User.Name" Style="width:70%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
+                                <MudImage Src="@_model.Order.ToUser.Avatar" Alt="@_model.Order.ToUser.Name" Style="width:70%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
                             </div>
-                            <MudText Align="Align.Center" Typo="Typo.h6" Class="mt-3"> @_model.User.Name </MudText>
-                            @*<div class="d-flex justify-center">
-                                <MudButton OnClick='User'>Xem chi tiết</MudButton>
-                                </div>*@
+                            <MudText Align="Align.Center" Typo="Typo.h6" Class="mt-3"> @_model.Order.ToUser.Name </MudText>
+                            <div class="d-flex justify-center">
+                                <MudButton OnClick='ViewOrder' Variant="Variant.Outlined">Chi tiết đơn thuê</MudButton>
+                            </div>
                         }
                     </MudItem>
                     <MudItem xs="7">
                         @if (_isBusy)
                         {
-                            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"   />
-                            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"   />
-                            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"   />
-                            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px"   />
+                            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
                         }
                         else
                         {
                             <MudPaper Width="140px" Class="pa-2 ma-2" Outlined="true" Style='@(_model.IsApprove == true ? "border-color:#00C853" : "border-color:red")'>
-                            <MudText Typo="Typo.h6" Align="Align.Center" Color="@(_model.IsApprove == true ? Color.Success : Color.Error)">@(_model.IsApprove == null ? "Chưa duyệt" : _model.IsApprove == true ? "Đã duyệt" : "Không duyệt")</MudText> 
+                                <MudText Typo="Typo.h6" Align="Align.Center" Color="@(_model.IsApprove == true ? Color.Success : Color.Error)">@(_model.IsApprove == null ? "Chưa duyệt" : _model.IsApprove == true ? "Đã duyệt" : "Không duyệt")</MudText>
                             </MudPaper>
-                            <MudPaper Width="300px" Height="200px" Class="ma-2 pa-4">
+                            <MudPaper Width="300px" Height="220px" Class="ma-2 pa-4">
                                 <div class="d-flex">
-                                    <MudAvatar Image="@_model.User.Avatar" Class="mr-3"/>
-                                    <MudText Typo="Typo.h6" > @_model.User.Name </MudText>
+                                    <MudAvatar Image="@_model.User.Avatar" Class="mr-3" />
+                                    <MudText Typo="Typo.h6"> @_model.User.Name </MudText>
                                 </div>
-                            <div class="d-flex">
+                                <div class="d-flex">
 
-                            <MudText Typo="Typo.subtitle1">Đánh giá: @Rating.Rate </MudText><MudIcon Icon="@Icons.Material.Filled.StarRate" Style="color:yellow" />
-                            </div>
-                            <MudText Typo="Typo.subtitle1">Nội dung đánh giá: </MudText>
-                            <MudTextField Value="@_model.Comment" Lines="2" ReadOnly="true" Variant="Variant.Outlined" />
+                                    <MudText Typo="Typo.subtitle1">Đánh giá:  </MudText> <MudRating SelectedValue="@Rating.Rate" Size="Size.Small" ReadOnly="true" Class="pa-1" />
+                                </div>
+                                <MudText Typo="Typo.subtitle1">Nội dung đánh giá: </MudText>
+                                <MudTextField Value="@_model.Comment" Lines="2" ReadOnly="true" Variant="Variant.Outlined" />
                             </MudPaper>
                         }
                     </MudItem>
@@ -83,9 +84,9 @@
                 </MudButtonGroup>
             }
             @*else
-            {
+                {
                 <MudButton OnClick="ApproveAsync" Color="Color.Primary" Variant="@(_model.IsApprove == true ? Variant.Outlined : Variant.Filled)" Class="mr-3" DisableElevation="true" Style="width:150px">@(_model.IsApprove == true ? "Không duyệt" : "Duyệt")</MudButton>
-            }*@
+                }*@
 
 
         </div>

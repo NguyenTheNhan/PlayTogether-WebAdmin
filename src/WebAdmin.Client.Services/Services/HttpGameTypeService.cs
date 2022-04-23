@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
@@ -24,13 +23,11 @@ namespace WebAdmin.Client.Services.Services
             var response = await _httpClient.PostAsJsonAsync($"/api/play-together/v1/game-types", model);
             if (response.IsSuccessStatusCode)
             {
-                Console.WriteLine("OK nè");
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<GameTypeSummary>>();
                 return result;
             }
             else
             {
-                Console.WriteLine("Không Ok rồi");
                 var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
                 throw new ApiException(errorResponse, response.StatusCode);
             }

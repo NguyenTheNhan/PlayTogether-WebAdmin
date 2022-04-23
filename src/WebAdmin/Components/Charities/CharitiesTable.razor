@@ -10,7 +10,9 @@
     <ToolBarContent >
         
         <MudSpacer />
-        Đăng ký tổ chức mới <MudIconButton Icon="@Icons.Material.Filled.AddCircle" Color="Color.Primary" OnClick='() => Navigation.NavigateTo($"/charities/details/form")'>Thêm mới tổ chức từ thiện</MudIconButton>
+        <MudTooltip Text="Đăng ký tổ chức mới">
+         <MudIconButton Icon="@Icons.Material.Filled.AddCircle" Color="Color.Primary" OnClick='() => Navigation.NavigateTo($"/charities/details/form")'>Thêm mới tổ chức từ thiện</MudIconButton>
+        </MudTooltip>
         
     </ToolBarContent>
     <HeaderContent >
@@ -26,7 +28,7 @@
          <MudTd DataLabel="Nr"><img src="@context.Avatar" style="width: 50px" /></MudTd>
         <MudTd DataLabel="Email">@context.Email</MudTd>
         <MudTd DataLabel="Tên tổ chức">@context.OrganizationName</MudTd>
-        <MudTd DataLabel="Ngày đăng ký">@context.CreatedDate</MudTd>
+        <MudTd DataLabel="Ngày đăng ký">@(context.CreatedDate.ToString(CultureInfo.GetCultureInfo("en-GB")))</MudTd>
         <MudTd DataLabel="Actions">
             
 

@@ -17,7 +17,7 @@
             <RowTemplate>
                 <MudTd DataLabel="Giao dịch">@(context.Operation.Equals("Add") ? "+" : "-") @String.Format("{0:#,##0}", context.Money)đ</MudTd>
                 <MudTd DataLabel="Loại giao dịch">@context.TypeOfTransaction</MudTd>
-                <MudTd DataLabel="Ngày giao dịch"> @context.CreatedDate</MudTd>
+                <MudTd DataLabel="Ngày giao dịch"> @(context.CreatedDate.ToString(CultureInfo.GetCultureInfo("en-GB")))</MudTd>
                 @*<MudTd DataLabel="Trạng thái">@context.Status</MudTd>*@
                 @*<MudTd DataLabel="Actions">                
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">

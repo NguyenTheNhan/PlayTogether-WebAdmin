@@ -1,0 +1,25 @@
+﻿@namespace WebAdmin.Components
+
+@*@if (_isBusy)
+{
+    <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text"
+             Style="min-width:200px" />
+}
+else
+{*@
+    <div class=" d-flex justify-start flex-row flex-grow-1 gap-4">
+        <MudGrid>
+            <MudItem xs="4">
+                <MudText Class=" ml-4 pt-5 object-left">@_name</MudText>
+            </MudItem>
+            <MudItem xs="3">
+                <MudNumericField HideSpinButtons="true" Min='0' Max="@(Item.No == 4 ? 1 : 10)" @bind-Value="Item.Value" 
+                                 KeyPressPreventDefault="true" Class="flex-grow-0 mr-3 object-center" Variant="Variant.Text" 
+                                 Margin="Margin.Dense"
+                                 Error="@(!string.IsNullOrEmpty(_errorMessage))"
+                                 ErrorText="@_errorMessage" />
+            </MudItem>
+            <MudItem xs="5"></MudItem>
+        </MudGrid>
+    </div>
+@*}*@

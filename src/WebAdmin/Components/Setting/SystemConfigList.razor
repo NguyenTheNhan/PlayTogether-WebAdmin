@@ -1,0 +1,44 @@
+﻿@namespace WebAdmin.Components
+
+<MudGrid>
+    <MudItem xs="4">
+        <MudText Typo="Typo.h6"> Chi tiết</MudText>
+    </MudItem>
+    <MudItem xs="3">
+        <div class="d-flex flex-row-reverse ">
+            <MudTooltip Text="Reload">
+                <MudIconButton Icon="@Icons.Material.Filled.Refresh" ButtonType="ButtonType.Reset" OnClick="Reload" />
+            </MudTooltip>
+        </div>
+    </MudItem>
+    <MudItem xs="5"></MudItem>
+</MudGrid>
+
+<MudContainer >
+    @if(_isBusy){
+        <MudProgressCircular Color="Color.Primary" Style="height:70px;width:70px;" Indeterminate="true" />
+    }
+    else
+    {
+    foreach (var item in _systemConfigs)
+    {
+
+        <ItemSystemConfigDetail Item="item" />
+
+
+    }
+    }
+    <MudDivider DividerType="DividerType.FullWidth" Class="my-2" Style="width:60%" />
+
+    <MudGrid>
+        <MudItem xs="4"></MudItem>
+        <MudItem xs="3">
+            <div class="d-flex flex-row-reverse">
+                <MudButton Class="ma-3 ml-6" Color="Color.Primary" Style="width:100px;" Variant="Variant.Filled" OnClick="SubmitFormAsync" Disabled="_isBusy">Lưu</MudButton>
+            </div>
+        </MudItem>
+        <MudItem xs="5"></MudItem>
+    </MudGrid>
+
+
+</MudContainer>

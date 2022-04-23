@@ -1,14 +1,16 @@
 ﻿@namespace WebAdmin.Components
 
 
-<MudDialog>
+<MudDialog >
     <TitleContent >
         <MudText  Typo="Typo.h5">Chi tiết thuê </MudText>
+    <MudDivider DividerType="DividerType.FullWidth" Class="mt-1" />
     </TitleContent>
     <DialogContent>
         <MudContainer MaxWidth="MaxWidth.Small">
         
             <EditForm Model="_model">
+                <MudText Align="Align.Center" Typo="Typo.h6" Class="ma-3"> @_type </MudText>
                 <MudGrid>                    
                     <MudItem xs="4">
                         <div class="d-flex justify-center">
@@ -21,10 +23,9 @@
                         </div>
                     </MudItem>
                     <MudItem xs="4">
-                        <div class="d-flex justify-center ">
+                        <div class="d-flex justify-center mt-8">
                             <MudImage Src="https://media.publit.io/file/LogoPlayTogether/logo.png" Style="width:60%" ObjectFit="ObjectFit.Contain" />
-                        </div>
-                        <MudText Align="Align.Center" Typo="Typo.h6" Class="ma-3"> @_model.Status </MudText>
+                        </div>                        
                         <div class="d-flex justify-center">
                             <MudRating SelectedValue="(int) Math.Round(_rating)" ReadOnly="true" Style="width:75%"/>
                         </div>

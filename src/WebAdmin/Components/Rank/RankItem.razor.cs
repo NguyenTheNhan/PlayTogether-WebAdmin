@@ -63,7 +63,7 @@ namespace WebAdmin.Components
                     _errorMessage = "Name is required";
                     return;
                 }
-                if (Item.No <= 0)
+                if (Item.No < 0)
                 {
                     _errorMessage = "No must more than 0";
                     return;
