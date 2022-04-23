@@ -1,17 +1,17 @@
 ﻿@namespace WebAdmin.Components
 
 <MudGrid>
-    <MudItem xs="4">
+    <MudItem xs="4" sm="6">
         <MudText Typo="Typo.h6"> Chi tiết</MudText>
     </MudItem>
-    <MudItem xs="3">
+    <MudItem xs="3" sm="4">
         <div class="d-flex flex-row-reverse ">
             <MudTooltip Text="Reload">
                 <MudIconButton Icon="@Icons.Material.Filled.Refresh" ButtonType="ButtonType.Reset" OnClick="Reload" />
             </MudTooltip>
         </div>
     </MudItem>
-    <MudItem xs="5"></MudItem>
+    <MudItem xs="5" sm="0"></MudItem>
 </MudGrid>
 
 <MudContainer >
@@ -31,13 +31,13 @@
     <MudDivider DividerType="DividerType.FullWidth" Class="my-2" Style="width:60%" />
 
     <MudGrid>
-        <MudItem xs="4"></MudItem>
-        <MudItem xs="3">
+        <MudItem xs="4" sm="6"></MudItem>
+        <MudItem xs="3" sm="4">
             <div class="d-flex flex-row-reverse">
                 <MudButton Class="ma-3 ml-6" Color="Color.Primary" Style="width:100px;" Variant="Variant.Filled" OnClick="SubmitFormAsync" Disabled="_isBusy">Lưu</MudButton>
             </div>
         </MudItem>
-        <MudItem xs="5"></MudItem>
+        <MudItem xs="5" sm="0"></MudItem>
     </MudGrid>
 
 
