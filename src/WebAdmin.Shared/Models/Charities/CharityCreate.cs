@@ -5,7 +5,10 @@ namespace WebAdmin.Shared.Models.Charities
 
     public class CharityCreate
     {
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
+        [Required]
         public string OrganizationName { get; set; }
 
         [Required]

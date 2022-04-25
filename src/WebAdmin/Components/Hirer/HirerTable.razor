@@ -6,7 +6,7 @@
     <MudItem xs="12" lg="9">
         <MudTable ServerData="@(new Func<TableState, Task<TableData<HirerSummary>>>(ServerReloadAsync))"
                   Hover="true" @ref="_table" FixedHeader="true"
-                  Height="480px" Striped="true" >            
+                  Height="480px" Striped="true">
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="HirerSummary">Tên tài khoản</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="HirerSummary">Email</MudTableSortLabel></MudTh>
@@ -19,14 +19,18 @@
                 <MudTd DataLabel="Email">@context.Email</MudTd>
                 <MudTd DataLabel="Ngày đăng ký"> @(context.CreatedDate.ToString(CultureInfo.GetCultureInfo("en-GB")))</MudTd>
                 <MudTd DataLabel="Trạng thái">@(context.IsActive == true ? "Active" : "Banned")</MudTd>
-                <MudTd DataLabel="Actions">                
+                <MudTd DataLabel="Actions">
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
-                        <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
-                                   OnClick="async () => await OnViewClicked.InvokeAsync(context)" />
-                        @if(context.IsActive == false)
+                        <MudTooltip Text="Xem chi tiết">
+                            <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
+                                           OnClick="async () => await OnViewClicked.InvokeAsync(context)" />
+                        </MudTooltip>
+                        @if (context.IsActive == false)
                         {
-                        <MudIconButton Icon="@(context.IsActive ? Icons.Material.Filled.Lock : Icons.Material.Filled.LockOpen)" Color="@(context.IsActive ? Color.Error : Color.Success)"
-                                              OnClick="async () => await OnEditClicked.InvokeAsync(context)"/>                            
+                            <MudTooltip Text="Mở khoá">
+                                <MudIconButton Icon="@(context.IsActive ? Icons.Material.Filled.Lock : Icons.Material.Filled.LockOpen)" Color="@(context.IsActive ? Color.Error : Color.Success)"
+                                           OnClick="async () => await OnEditClicked.InvokeAsync(context)" />
+                            </MudTooltip>
                         }
                     </MudButtonGroup>
                 </MudTd>

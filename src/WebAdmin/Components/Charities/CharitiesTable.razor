@@ -31,9 +31,10 @@
         <MudTd DataLabel="Ngày đăng ký">@(context.CreatedDate.ToString(CultureInfo.GetCultureInfo("en-GB")))</MudTd>
         <MudTd DataLabel="Actions">
             
-
+            <MudTooltip Text="Xem chi tiết">
             <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
                            OnClick="async () => await OnEditClicked.InvokeAsync(context)" />            
+            </MudTooltip>
             @*<MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"
                            OnClick="async () => await OnDeleteClicked.InvokeAsync(context)" />*@
             

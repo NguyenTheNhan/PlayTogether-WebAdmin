@@ -12,7 +12,7 @@
 
     </MudSelect>
 
-   
+
 
     @if (_isBusy)
     {
@@ -20,13 +20,15 @@
     }
     else
     {
-        <MudIconButton Icon="@Icons.Material.Filled.Add" aria-label="delete" Color="Color.Success" Class="flex-grow-0 flex-shrink-0 mr-2"
-                   OnClick="AddTypeOfGameItemAsync"></MudIconButton>
+        <MudTooltip Text="Lưu">
+            <MudIconButton Icon="@Icons.Material.Filled.Add" aria-label="delete" Color="Color.Success" Class="flex-grow-0 flex-shrink-0 mr-2"
+                       OnClick="AddTypeOfGameItemAsync"></MudIconButton>
+        </MudTooltip>
     }
 
 </div>
 
- @*<MudAutocomplete Label="Thể loại" @bind-Value="model" SearchFunc="@Search1" 
-                         ResetValueOnEmptyText="true"
-                         CoerceText="false" CoerceValue="false"/>*@
+@*<MudAutocomplete Label="Thể loại" @bind-Value="model" SearchFunc="@Search1"
+    ResetValueOnEmptyText="true"
+    CoerceText="false" CoerceValue="false"/>*@
 

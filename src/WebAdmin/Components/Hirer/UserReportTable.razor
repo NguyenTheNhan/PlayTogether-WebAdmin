@@ -5,8 +5,8 @@
 <MudGrid>
     <MudItem xs="12" sm="9">
         <MudTable ServerData="@(new Func<TableState, Task<TableData<ReportSummary>>>(ServerReloadAsync))"
-                   Hover="true" @ref="_table" FixedHeader="true"
-                  Height='@(isMany ? "480px" : null)' Striped="true" >            
+                  Hover="true" @ref="_table" FixedHeader="true"
+                  Height='@(isMany ? "480px" : null)' Striped="true">
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="ReportSummary">Nội dung báo cáo</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="ReportSummary">Ngày báo cáo</MudTableSortLabel></MudTh>
@@ -17,10 +17,12 @@
                 <MudTd DataLabel="Người báo cáo">@context.ReportMessage</MudTd>
                 <MudTd DataLabel="Ngày báo cáo"> @(context.CreatedDate.ToString("d",CultureInfo.GetCultureInfo("en-GB")))</MudTd>
                 <MudTd DataLabel="Trạng thái">@(context.IsApprove == null ? "Chưa duyệt" : context.IsApprove == true ? "Đã duyệt" : "Không duyệt")</MudTd>
-                <MudTd DataLabel="Actions">                
+                <MudTd DataLabel="Actions">
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
-                        <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
-                                   OnClick="async () => await OnViewClicked.InvokeAsync(context)" />                        
+                        <MudTooltip Text="Xem chi tiết">
+                            <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
+                                           OnClick="async () => await OnViewClicked.InvokeAsync(context)" />
+                        </MudTooltip>
                     </MudButtonGroup>
                 </MudTd>
             </RowTemplate>
@@ -37,11 +39,11 @@
                         <MudText Typo="Typo.h6" Align="Align.Center">Bộ lọc lịch sử</MudText>
                     </CardHeaderContent>
                 </MudCardHeader>
-                <MudCardContent>                    
+                <MudCardContent>
                     <MudDatePicker Label="Từ ngày" @bind-Date="_fromDate" Editable="true" Mask="@(new DateMask("dd.MM.yyyy"))" DateFormat="dd.MM.yyyy" />
                     <MudDatePicker Label="Đến ngày" @bind-Date="_toDate" DateFormat="dd.MM.yyyy" Editable="true" Mask="@(new DateMask("dd.MM.yyyy"))" />
                     <MudSelect Label="Trạng thái" AnchorOrigin="Origin.BottomCenter" @bind-Value="tmp">
-                        <MudSelectItem Value=0 >Chưa duyệt</MudSelectItem>
+                        <MudSelectItem Value=0>Chưa duyệt</MudSelectItem>
                         <MudSelectItem Value=1>Đã duyệt</MudSelectItem>
                         <MudSelectItem Value=2>Không duyệt</MudSelectItem>
                     </MudSelect>

@@ -5,8 +5,8 @@
 <MudGrid>
     <MudItem xs="12" sm="9">
         <MudTable ServerData="@(new Func<TableState, Task<TableData<RatingDetail>>>(ServerReloadAsync))"
-                   Hover="true" @ref="_table" FixedHeader="true" Loading="@_isBusy"
-                   Striped="true" >            
+                  Hover="true" @ref="_table" FixedHeader="true" Loading="@_isBusy"
+                  Striped="true">
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="RatingDetail">Nguời bị báo cáo</MudTableSortLabel></MudTh>
 
@@ -18,11 +18,13 @@
                 <MudTd DataLabel="Người bị báo cáo">@context.User.Name</MudTd>
                 <MudTd DataLabel="Lý do"> @(context.Reason != null ? context.Reason : "Không có lý do")</MudTd>
                 <MudTd DataLabel="Trạng thái">@(context.IsApprove == true ? "Đã duyệt" : context.IsApprove == false ? "Không duyệt" : "Chưa duyệt")</MudTd>
-                <MudTd DataLabel="Actions">                
+                <MudTd DataLabel="Actions">
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
-                        <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success" 
-                        OnClick="() => ViewRating(context)"/>
-                                  
+                        <MudTooltip Text="Xem chi tiết">
+                            <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
+                                           OnClick="() => ViewRating(context)" />
+                        </MudTooltip>
+
                     </MudButtonGroup>
                 </MudTd>
             </RowTemplate>
@@ -39,16 +41,16 @@
                         <MudText Typo="Typo.h6" Align="Align.Center">Bộ lọc báo cáo</MudText>
                     </CardHeaderContent>
                 </MudCardHeader>
-                <MudCardContent>   
-                   
+                <MudCardContent>
+
                     <MudSelect Label="Trạng thái" AnchorOrigin="Origin.BottomCenter" @bind-Value="tmp">
-                        <MudSelectItem Value=0 >Chưa duyệt</MudSelectItem>
+                        <MudSelectItem Value=0>Chưa duyệt</MudSelectItem>
                         <MudSelectItem Value=1>Đã duyệt</MudSelectItem>
                         <MudSelectItem Value=2>Không duyệt</MudSelectItem>
                     </MudSelect>
                 </MudCardContent>
                 <MudCardActions>
-                    <MudButton FullWidth="true" OnClick="() => OnSearch(tmp)" Variant="Variant.Filled" Color="Color.Primary" >Áp dụng</MudButton>
+                    <MudButton FullWidth="true" OnClick="() => OnSearch(tmp)" Variant="Variant.Filled" Color="Color.Primary">Áp dụng</MudButton>
                 </MudCardActions>
             </MudCard>
         </MudPaper>

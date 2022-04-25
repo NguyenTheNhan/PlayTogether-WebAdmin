@@ -8,9 +8,9 @@
     <FluentValidationValidator />
     <MudTextField Label="Email"  Required="true" @bind-Value="@_model.Email" Variant="Variant.Outlined" Class="ma-2 mb-4"/>
     <MudTextField Label="Tên tổ chức"  Required="true" @bind-Value="@_model.OrganizationName" Lines="2" Class="ma-2 mb-4" Variant="Variant.Outlined" />
-    <MudTextField Label="Mật khẩu"  Required="true" @bind-Value="@_model.Password" Variant="Variant.Outlined" Class="ma-2 mb-4" />
-    <MudTextField Label="Nhập lại mật khẩu"  Required="true" @bind-Value="@_model.ConfirmPassword" Class="ma-2 mb-4" Variant="Variant.Outlined" />
-
+    <MudTextField InputType="@(isViewPassword ? InputType.Text : InputType.Password)" Label="Mật khẩu"  @bind-Value="@_model.Password" Required="true" Variant="Variant.Outlined" Class="ma-2 mb-4"/>
+    <MudTextField InputType="@(isViewPassword ? InputType.Text : InputType.Password)" Label="Nhập lại mật khẩu"  Required="true" @bind-Value="@_model.ConfirmPassword" Class="ma-2 mb-4" Variant="Variant.Outlined" />
+    <MudCheckBox @bind-Checked="@isViewPassword" Label="Hiện mật khẩu" Color="Color.Primary"></MudCheckBox>
 
     @if (!string.IsNullOrWhiteSpace(_errorMessage))
     {

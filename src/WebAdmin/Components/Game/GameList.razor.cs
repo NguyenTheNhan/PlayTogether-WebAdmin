@@ -1,4 +1,4 @@
-using AKSoftware.Blazor.Utilities;
+﻿using AKSoftware.Blazor.Utilities;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System;
@@ -67,13 +67,13 @@ namespace WebAdmin.Components
         private async Task DeleteGameAsync(GameSummary game)
         {
             var parameters = new DialogParameters();
-            parameters.Add("ContentText", $"Do you really want to delete '{game.Name}'?");
-            parameters.Add("ButtonText", "Delete");
+            parameters.Add("ContentText", $"Bạn có muốn xoá '{game.Name}'?");
+            parameters.Add("ButtonText", "Xoá");
             parameters.Add("Color", Color.Error);
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-            var dialog = DialogService.Show<ConfirmationDialog>("Delete", parameters, options);
+            var dialog = DialogService.Show<ConfirmationDialog>("Xoá game", parameters, options);
             var confirmationResult = await dialog.Result;
 
             if (!confirmationResult.Cancelled)
@@ -83,7 +83,7 @@ namespace WebAdmin.Components
                 {
                     await GameService.DeleteAsync(game.Id);
 
-                    Error.HandleSuccess("Xo� game");
+                    Error.HandleSuccess("Xoá game");
                     // Send a message about the deleted game type
                     MessagingCenter.Send(this, "game_deleted", game);
                 }

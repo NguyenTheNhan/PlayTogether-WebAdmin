@@ -7,8 +7,8 @@
 <MudGrid>
     <MudItem xs="12" sm="9">
         <MudTable ServerData="@(new Func<TableState, Task<TableData<OrderDetail>>>(ServerReloadAsync))"
-                   Hover="true" @ref="_table" FixedHeader="true"
-                  Height="400px" Striped="true" >            
+                  Hover="true" @ref="_table" FixedHeader="true"
+                  Height="400px" Striped="true">
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="OrderDetail">Người thuê</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="OrderDetail">Người được thuê</MudTableSortLabel></MudTh>
@@ -20,17 +20,21 @@
                 <MudTd DataLabel="Người thuê">@context.User.Name</MudTd>
                 <MudTd DataLabel="Người được thuê">@context.ToUser.Name</MudTd>
                 <MudTd DataLabel="Ngày thuê"> @(context.ProcessExpired.ToString("d",CultureInfo.GetCultureInfo("en-GB")))</MudTd>
-                <MudTd DataLabel="Trạng thái">@(context.Status.Equals("Player Finish Soon") ? "Người được thuê kết thúc sớm" 
-                                              : context.Status.Equals("Hirer Finish Soon") ? "Người thuê kết thúc sớm"
-                                              : context.Status.Equals("Cancel") ? "Bị huỷ"
-                                              : context.Status.Equals("Reject") ? "Bị từ chối" 
-                                              : context.Status.Equals("OverTime") ? "Quá hạn xác nhận" 
-                                              : context.Status.Equals("Processing") ? "Đang thương lượng" 
-                                              : context.Status.Equals("Finish") ? "Hoàn thành" : "Đang thuê")</MudTd>
-                <MudTd DataLabel="Actions">                
+                <MudTd DataLabel="Trạng thái">
+                    @(context.Status.Equals("Player Finish Soon") ? "Người được thuê kết thúc sớm"
+                    : context.Status.Equals("Hirer Finish Soon") ? "Người thuê kết thúc sớm"
+                    : context.Status.Equals("Cancel") ? "Bị huỷ"
+                    : context.Status.Equals("Reject") ? "Bị từ chối"
+                    : context.Status.Equals("OverTime") ? "Quá hạn xác nhận"
+                    : context.Status.Equals("Processing") ? "Đang thương lượng"
+                    : context.Status.Equals("Finish") ? "Hoàn thành" : "Đang thuê")
+                </MudTd>
+                <MudTd DataLabel="Actions">
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
-                        <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
-                                   OnClick="async () => await OnViewClicked.InvokeAsync(context)" />                        
+                        <MudTooltip Text="Xem chi tiết">
+                            <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
+                                           OnClick="async () => await OnViewClicked.InvokeAsync(context)" />
+                        </MudTooltip>
                     </MudButtonGroup>
                 </MudTd>
             </RowTemplate>
@@ -48,7 +52,7 @@
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
-                    <MudTextField Label="Tên tài khoản/Email" @bind-Value="_query" />  
+                    <MudTextField Label="Tên tài khoản/Email" @bind-Value="_query" />
                     <MudDatePicker Style="height:10% width:10%" Label="Từ ngày" @bind-Date="_fromDate" Editable="true" Mask="@(new DateMask("dd.MM.yyyy"))" DateFormat="dd.MM.yyyy" />
                     <MudDatePicker Style="height:10% width:10%" Label="Đến ngày" @bind-Date="_toDate" DateFormat="dd.MM.yyyy" Editable="true" Mask="@(new DateMask("dd.MM.yyyy"))" />
                     <MudSelect T="string" Label="Trạng thái" AnchorOrigin="Origin.BottomCenter" @bind-Value="_status">

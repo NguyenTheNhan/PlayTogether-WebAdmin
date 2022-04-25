@@ -24,11 +24,14 @@
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="Actions">
             <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
-
-                <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
-                               OnClick="async () => await OnEditClicked.InvokeAsync(context)" />
-                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"
-                               OnClick="async () => await OnDeleteClicked.InvokeAsync(context)" />
+                <MudTooltip Text="Xem chi tiết">
+                    <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
+                                   OnClick="async () => await OnEditClicked.InvokeAsync(context)" />
+                </MudTooltip>
+                <MudTooltip Text="Xoá">
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"
+                                   OnClick="async () => await OnDeleteClicked.InvokeAsync(context)" />
+                </MudTooltip>
 
             </MudButtonGroup>
         </MudTd>

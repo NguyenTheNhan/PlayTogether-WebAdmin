@@ -6,20 +6,20 @@
 <MudTable ServerData="@(new Func<TableState, Task<TableData<GameTypeSummary>>>(ServerReloadAsync))"
           Dense="true" Hover="true" @ref="_table" MultiSelection="true" FixedHeader="true"
           Height="400px" Striped="true" Loading="true">
-    <ToolBarContent >
+    <ToolBarContent>
         <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Tìm kiếm" Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         <MudSpacer />
         <MudTooltip Text="Thêm mới">
-        <MudIconButton Icon="@Icons.Material.Filled.AddCircle" Color="Color.Primary" OnClick='() => Navigation.NavigateTo($"/gametypes/form")'/>
+            <MudIconButton Icon="@Icons.Material.Filled.AddCircle" Color="Color.Primary" OnClick='() => Navigation.NavigateTo($"/gametypes/form")' />
         </MudTooltip>
         <MudTooltip Text="Xoá">
-        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Class="ma-4"/>
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Class="ma-4" />
         </MudTooltip>
     </ToolBarContent>
-    <HeaderContent >
-@*        <MudTh><MudTableSortLabel SortLabel="nr_field" T="GameTypeSummary"></MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortLabel="sign_field" T="GameTypeSummary">Tên danh mục</MudTableSortLabel></MudTh>*@
+    <HeaderContent>
+        @*        <MudTh><MudTableSortLabel SortLabel="nr_field" T="GameTypeSummary"></MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="sign_field" T="GameTypeSummary">Tên danh mục</MudTableSortLabel></MudTh>*@
         <MudTh><MudTableSortLabel SortLabel="sign_field" T="GameTypeSummary">Thể loại</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortLabel="name_field" T="GameTypeSummary"><MudText Typo="Typo.subtitle1">Mô tả</MudText></MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortLabel="position_field" T="GameTypeSummary">Actions</MudTableSortLabel></MudTh>
@@ -29,13 +29,15 @@
         <MudTd DataLabel="Mô tả">@context.Description</MudTd>
         <MudTd DataLabel="Actions">
             <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
+                <MudTooltip Text="Xem chi tiết">
+                    <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
+                                   OnClick="async () => await OnEditClicked.InvokeAsync(context)" />
+                </MudTooltip>
 
-            <MudIconButton Icon="@Icons.Material.Filled.Preview" Color="Color.Success"
-                           OnClick="async () => await OnEditClicked.InvokeAsync(context)" />
-            @*<MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Default"
-                           OnClick="async () => await OnEditClicked.InvokeAsync(context)" />*@
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"
-                           OnClick="async () => await OnDeleteClicked.InvokeAsync(context)" />
+                <MudTooltip Text="Xoá">
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"
+                                   OnClick="async () => await OnDeleteClicked.InvokeAsync(context)" />
+                </MudTooltip>
             </MudButtonGroup>
         </MudTd>
     </RowTemplate>

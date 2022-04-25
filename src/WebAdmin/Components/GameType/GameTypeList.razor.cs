@@ -39,13 +39,13 @@ namespace WebAdmin.Components
         private async Task DeleteGameTypeAsync(GameTypeSummary gameType)
         {
             var parameters = new DialogParameters();
-            parameters.Add("ContentText", $"Do you really want to delete '{gameType.ShortName}'?");
-            parameters.Add("ButtonText", "Delete");
+            parameters.Add("ContentText", $"Bạn có muốn xoá '{gameType.ShortName}'?");
+            parameters.Add("ButtonText", "Xoá");
             parameters.Add("Color", Color.Error);
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-            var dialog = DialogService.Show<ConfirmationDialog>("Delete", parameters, options);
+            var dialog = DialogService.Show<ConfirmationDialog>("Xoá thể loại", parameters, options);
             var confirmationResult = await dialog.Result;
 
             if (!confirmationResult.Cancelled)
