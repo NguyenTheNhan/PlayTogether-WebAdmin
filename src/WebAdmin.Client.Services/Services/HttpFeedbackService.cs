@@ -18,7 +18,7 @@ namespace WebAdmin.Client.Services.Services
             _httpClient = httpClient;
         }
 
-        public async Task ActiveAsync(string id, bool isApprove)
+        public async Task ActiveAsync(string id, int isApprove)
         {
             var response = await _httpClient.PutAsJsonAsync($"/api/play-together/v1/admins/feedbacks/{id}", new
             {
@@ -52,9 +52,9 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<PagedList<FeedbackSummary>> GetFeedbacksAsync(string type = "", bool? isApprove = null, DateTime? fromDate = null, DateTime? toDate = null, int pageNumber = 1, int pageSize = 10)
+        public async Task<PagedList<FeedbackSummary>> GetFeedbacksAsync(string type = "", int isApprove = -1, bool GetAll = true, DateTime? fromDate = null, DateTime? toDate = null, int pageNumber = 1, int pageSize = 10)
         {
-            var response = await _httpClient.GetAsync($"/api/play-together/v1/feedbacks?Type={type}&IsApprove={isApprove}&FromDate={fromDate}&ToDate={toDate}&PageNumber={pageNumber}&PageSize={pageSize}&IsNew=true");
+            var response = await _httpClient.GetAsync($"/api/play-together/v1/feedbacks?Type={type}&IsApprove={isApprove}&GetAll={GetAll}&FromDate={fromDate}&ToDate={toDate}&PageNumber={pageNumber}&PageSize={pageSize}&IsNew=true");
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<PagedList<FeedbackSummary>>();

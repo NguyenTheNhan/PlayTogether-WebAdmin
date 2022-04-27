@@ -43,10 +43,10 @@
                         }
                         else
                         {
-                            <MudPaper Width="140px" Class="pa-2 ma-2" Outlined="true" Style='@(_model.IsApprove == true ? "border-color:#00C853" : "border-color:red")'>
+                            <MudPaper Width="140px" Class="pa-2 ma-2" Outlined="true" Style='@(_model.IsApprove == 1 ? "border-color:#00C853" : "border-color:red")'>
                                 <MudText Typo="Typo.h6" Align="Align.Center" 
-                                         Color="@(_model.IsApprove == true ? Color.Success : Color.Error)">
-                                         @(_model.IsApprove == null ? "Chưa duyệt" : _model.IsApprove == true ? "Đã duyệt" : "Không duyệt")</MudText>
+                                         Color="@(_model.IsApprove == 1 ? Color.Success : Color.Error)">
+                                         @(_model.IsApprove == -1 ? "Chưa duyệt" : _model.IsApprove == 1 ? "Đã duyệt" : "Không duyệt")</MudText>
                             </MudPaper>
                             <MudText Typo="Typo.subtitle1" Class="mt-2">Loại yêu cầu: @_type</MudText>
                             <MudText Typo="Typo.subtitle1">Ngày tạo yêu cầu: @Feedback.CreatedDate </MudText>
@@ -67,7 +67,7 @@
     <DialogActions>
         <div class="d-flex flex-row-reverse">
             <MudButton Color="Color.Default" Class="mr-3" Style="width:100px;" Variant="Variant.Filled" OnClick="Close">Đóng</MudButton>
-            @if (_model.IsApprove == null)
+            @if (_model.IsApprove == -1)
             {
                 <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Class="mr-3" DisableElevation="true">
                     <MudButton OnClick="ApproveAsync">  @_action </MudButton>
@@ -79,7 +79,7 @@
             }
             else
             {
-                <MudButton OnClick="ApproveAsync" Color="Color.Primary" Variant="@(_model.IsApprove == true ? Variant.Outlined : Variant.Filled)" Class="mr-3" DisableElevation="true" Style="width:150px">@(_model.IsApprove == true ? "Không duyệt" : "Duyệt")</MudButton>
+                @*<MudButton OnClick="ApproveAsync" Color="Color.Primary" Variant="@(_model.IsApprove == 1 ? Variant.Outlined : Variant.Filled)" Class="mr-3" DisableElevation="true" Style="width:150px">@(_model.IsApprove == 1 ? "Không duyệt" : "Duyệt")</MudButton>*@
             }
 
 

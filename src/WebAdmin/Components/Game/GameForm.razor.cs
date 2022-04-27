@@ -64,12 +64,12 @@ namespace WebAdmin.Components
                 if (_isEditMode)
                 {
                     await GameService.EditAsync(_model);
-                    Error.HandleSuccess("Chỉnh sửa");
+                    Error.HandleSuccess("Chỉnh sửa thành công");
                 }
                 else
                 {
                     var result = await GameService.CreateAsync(_model);
-                    Error.HandleSuccess("Thêm mới game");
+                    Error.HandleSuccess("Thêm mới game thành công");
                     Navigation.NavigateTo($"/games/form/{result.Content.Id}");
                 }
 

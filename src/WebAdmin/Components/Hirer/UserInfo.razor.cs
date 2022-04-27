@@ -74,7 +74,7 @@ namespace WebAdmin.Components
                     await UserService.ActiveAsync(_model.Id, !_model.IsActive, _numDateDisable, DateTime.Now);
 
                     //success
-                    Error.HandleSuccess(_model.IsActive ? "Khoá tài khoản" : "Mở khoá tài khoản");
+                    Error.HandleSuccess(_model.IsActive ? "Khoá tài khoản thành công" : "Mở khoá tài khoản thành công");
                     await FetchUserByIdAsync();
 
                 }

@@ -43,12 +43,12 @@ namespace WebAdmin.Components
                 if (_isEditMode)
                 {
                     await GameTypeService.EditAsync(_model);
-                    Error.HandleSuccess("Chỉnh sửa");
+                    Error.HandleSuccess("Chỉnh sửa thành công");
                 }
                 else
                 {
                     await GameTypeService.CreateAsync(_model);
-                    Error.HandleSuccess("Thêm mới thể loại");
+                    Error.HandleSuccess("Thêm mới thể loại thành công");
                 }
                 //success
                 Navigation.NavigateTo("/gametypes");

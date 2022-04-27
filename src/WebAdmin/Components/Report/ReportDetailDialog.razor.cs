@@ -122,7 +122,7 @@ namespace WebAdmin.Components
                         await ReportService.ActiveAsync(_model.Id, _approve);
 
                         //success
-                        Error.HandleSuccess("Thao tác");
+                        Error.HandleSuccess("Thao tác thành công");
                         //send a message about the approved
                         MessagingCenter.Send(this, "report_disapproved", _model);
 

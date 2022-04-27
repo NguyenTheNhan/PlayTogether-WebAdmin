@@ -122,7 +122,7 @@ namespace WebAdmin.Components
                     }
 
                     //success
-                    Error.HandleSuccess("Thao tác");
+                    Error.HandleSuccess("Thao tác thành công");
                     //send a message about the approved
                     MessagingCenter.Send(this, "rating_approved", _model);
 

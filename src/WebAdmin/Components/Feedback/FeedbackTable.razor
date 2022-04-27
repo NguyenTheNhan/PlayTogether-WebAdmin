@@ -5,8 +5,8 @@
 <MudGrid>
     <MudItem xs="12" sm="9">
         <MudTable ServerData="@(new Func<TableState, Task<TableData<FeedbackSummary>>>(ServerReloadAsync))"
-                  Hover="true" @ref="_table" FixedHeader="true" Loading="true"
-                  Height='@(isMany ? "480px" : null)' Striped="true">
+                  Hover="true" @ref="_table" FixedHeader="true" Loading="_isBusy"
+                  Striped="true">
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="FeedbackSummary">Tiêu đề</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="name_field" T="FeedbackSummary">Loại</MudTableSortLabel></MudTh>
@@ -18,7 +18,7 @@
                 <MudTd DataLabel="Tiêu đề">@context.Title</MudTd>
                 <MudTd DataLabel="Loại"> @context.TypeOfFeedback</MudTd>
                 <MudTd DataLabel="Thời gian">@(context.CreatedDate.ToString(CultureInfo.GetCultureInfo("en-GB")))</MudTd>
-                <MudTd DataLabel="Trạng thái">@(context.IsApprove == true ? "Đã duyệt" : context.IsApprove == false ? "Không duyệt" : "Chưa duyệt")</MudTd>
+                <MudTd DataLabel="Trạng thái">@(context.IsApprove == 1 ? "Đã duyệt" : context.IsApprove == 0 ? "Không duyệt" : "Chưa duyệt")</MudTd>
                 <MudTd DataLabel="Actions">
                     <MudTooltip Text="Xem chi tiết">
                         <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
@@ -51,13 +51,14 @@
                         <MudSelectItem Value='"Suggest"'>Đề nghị</MudSelectItem>
                     </MudSelect>
                     <MudSelect Label="Trạng thái" AnchorOrigin="Origin.BottomCenter" @bind-Value="tmp">
-                        <MudSelectItem Value=0>Chưa duyệt</MudSelectItem>
-                        <MudSelectItem Value=1>Đã duyệt</MudSelectItem>
-                        <MudSelectItem Value=2>Không duyệt</MudSelectItem>
+                        <MudSelectItem Value=0>Tất cả</MudSelectItem>
+                        <MudSelectItem Value=1>Chưa duyệt</MudSelectItem>
+                        <MudSelectItem Value=2>Đã duyệt</MudSelectItem>
+                        <MudSelectItem Value=3>Không duyệt</MudSelectItem>
                     </MudSelect>
                 </MudCardContent>
                 <MudCardActions>
-                    <MudButton FullWidth="true" OnClick="() => OnSearch(tmp,_type,_fromDate,_toDate)" Variant="Variant.Filled" Color="Color.Primary" Disabled="_isBusy">Áp dụng</MudButton>
+                    <MudButton FullWidth="true" OnClick="() => OnSearch(_type,_fromDate,_toDate)" Variant="Variant.Filled" Color="Color.Primary" >Áp dụng</MudButton>
                 </MudCardActions>
             </MudCard>
         </MudPaper>

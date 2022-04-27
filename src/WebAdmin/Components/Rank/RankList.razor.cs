@@ -104,6 +104,7 @@ namespace WebAdmin.Components
 
                     // Send a message about the deleted rank type
                     MessagingCenter.Send(this, "rank_deleted", rank);
+                    Error.HandleSuccess("Xoá rank thành công");
                 }
                 catch (ApiException ex)
                 {
@@ -113,6 +114,7 @@ namespace WebAdmin.Components
                 }
                 catch (Exception ex)
                 {
+                    Error.HandleError(ex.Message);
                     // TODO: Log this error 
                 }
 

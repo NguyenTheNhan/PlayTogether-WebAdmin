@@ -26,7 +26,7 @@ namespace WebAdmin.Components
 
         [CascadingParameter]
         public Error Error { get; set; }
-        public bool _isBusy { get; set; }
+        public bool _isBusy { get; set; } = false;
 
         private int tmp { get; set; } = 0;
         private bool isMany { get; set; } = false;
@@ -53,10 +53,12 @@ namespace WebAdmin.Components
 
         private async Task<TableData<ReportSummary>> ServerReloadAsync(TableState state)
         {
+            _isBusy = true;
             try
             {
                 var result = await ReportService.GetReportsAsync(_isApprove, _fromDate, _toDate, state.Page + 1, state.PageSize);
                 if (result.TotalCount > 6) isMany = true;
+                _isBusy = false;
                 return new TableData<ReportSummary>
                 {
                     Items = result.Content,

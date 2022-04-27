@@ -27,11 +27,11 @@ namespace WebAdmin.Components
 
         [CascadingParameter]
         public Error Error { get; set; }
-        public bool _isBusy { get; set; }
+        public bool _isBusy { get; set; } = false;
 
+        private bool _getAll { get; set; } = true;
+        private int _isApprove { get; set; } = -1;
         private int tmp { get; set; } = 0;
-        private bool isMany { get; set; } = false;
-        private bool? _isApprove { get; set; } = null;
         private string _type { get; set; } = string.Empty;
         private string _errorMessage { get; set; } = string.Empty;
         private DateTime? _fromDate { get; set; } = DateTime.Parse("0001-01-01");
@@ -50,10 +50,11 @@ namespace WebAdmin.Components
 
         private async Task<TableData<FeedbackSummary>> ServerReloadAsync(TableState state)
         {
+            _isBusy = true;
             try
             {
-                var result = await FeedbackService.GetFeedbacksAsync(_type, _isApprove, _fromDate, _toDate, state.Page + 1, state.PageSize);
-                if (result.TotalCount > 6) isMany = true;
+                var result = await FeedbackService.GetFeedbacksAsync(_type, _isApprove, _getAll, _fromDate, _toDate, state.Page + 1, state.PageSize);
+                _isBusy = false;
                 return new TableData<FeedbackSummary>
                 {
                     Items = result.Content,
@@ -77,19 +78,27 @@ namespace WebAdmin.Components
             };
         }
 
-        private void OnSearch(int tmp, string type, DateTime? fromDate, DateTime? toDate)
+        private void OnSearch(string type, DateTime? fromDate, DateTime? toDate)
         {
             switch (tmp)
             {
                 case 0:
-                    _isApprove = null;
+                    _isApprove = -1;
+                    _getAll = true;
                     break;
                 case 1:
-                    _isApprove = true;
+                    _isApprove = -1;
+                    _getAll = false;
                     break;
                 case 2:
-                    _isApprove = false;
+                    _isApprove = 1;
+                    _getAll = false;
                     break;
+                case 3:
+                    _isApprove = 0;
+                    _getAll = false;
+                    break;
+
             }
             _type = type;
             _fromDate = fromDate;

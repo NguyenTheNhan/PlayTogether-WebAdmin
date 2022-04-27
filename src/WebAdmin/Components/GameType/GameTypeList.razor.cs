@@ -54,7 +54,7 @@ namespace WebAdmin.Components
                 try
                 {
                     await GameTypeService.DeleteAsync(gameType.Id);
-                    Error.HandleSuccess("Xoá thể loại");
+                    Error.HandleSuccess("Xoá thể loại thành công");
                     // Send a message about the deleted game type
                     MessagingCenter.Send(this, "gameType_deleted", gameType);
                 }

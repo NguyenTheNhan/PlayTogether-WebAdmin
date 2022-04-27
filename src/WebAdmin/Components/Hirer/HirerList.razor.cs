@@ -76,7 +76,7 @@ namespace WebAdmin.Components
                     await HirerService.ActiveAsync(hirer.Id, !hirer.IsActive, 0, DateTime.Now);
 
                     //success
-                    Error.HandleSuccess(hirer.IsActive ? "Khoá tài khoản" : "Mở khoá tài khoản");
+                    Error.HandleSuccess(hirer.IsActive ? "Khoá tài khoản thành công" : "Mở khoá tài khoản thành công");
                     //send a message about the active/unactive
                     MessagingCenter.Send(this, "hirer_locked", hirer);
                 }

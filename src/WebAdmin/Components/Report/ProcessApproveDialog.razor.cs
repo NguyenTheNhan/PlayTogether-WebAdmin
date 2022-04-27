@@ -68,7 +68,7 @@ namespace WebAdmin.Components
                     await ReportService.ActiveAsync(Id, _approve, _point, _satisfiedPoint, _isDisable);
 
                     //success
-                    Error.HandleSuccess("Thao tác");
+                    Error.HandleSuccess("Thao tác thành công");
                     //send a message about the approved
                     Navigation.NavigateTo($"/account-reports");
                     MessagingCenter.Send(this, "report_approved", Id);

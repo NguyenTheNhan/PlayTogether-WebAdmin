@@ -28,7 +28,7 @@ namespace WebAdmin.Shared
         public void HandleSuccess(string action)
         {
             Snackbar.Configuration.SnackbarVariant = Variant.Filled;
-            Snackbar.Add(action + " thành công", Severity.Success);
+            Snackbar.Add(action, Severity.Success);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace WebAdmin.Components
                 if (result.IsSuccess == true)
                 {
                     MessagingCenter.Send(this, "rank_added", result.Content);
-                    Error.HandleSuccess("Thêm mới");
+                    Error.HandleSuccess("Thêm mới thành công");
                     //_errorMessage = string.Empty;
                 }
                 else

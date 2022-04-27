@@ -60,7 +60,7 @@ namespace WebAdmin.Components
                     await CharitiesService.ActiveAsync(_model.Id, !_model.IsActive);
 
                     //success
-                    Error.HandleSuccess(_model.IsActive ? "Khoá tài khoản" : "Mở khoá tài khoản");
+                    Error.HandleSuccess(_model.IsActive ? "Khoá tài khoản thành công" : "Mở khoá tài khoản thành công");
                     await FetchCharitiesByIdAsync();
 
                 }

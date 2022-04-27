@@ -58,7 +58,7 @@ namespace WebAdmin.Components
                         await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
                         Navigation.NavigateTo("/index");
-                        Error.HandleSuccess("Đăng nhập");
+                        Error.HandleSuccess("Đăng nhập thành công");
                     }
                 }
 

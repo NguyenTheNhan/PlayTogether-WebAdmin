@@ -89,7 +89,7 @@ namespace WebAdmin.Components
                 {
                     await SystemConfigService.MultiUpdate(_systemConfigs);
 
-                    Error.HandleSuccess("Cập nhật");
+                    Error.HandleSuccess("Cập nhật thành công");
 
                     await GetSystemConfigsAsync();
                 }

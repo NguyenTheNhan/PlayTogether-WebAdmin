@@ -106,10 +106,10 @@ namespace WebAdmin.Components
         {
 
             var parameters = new DialogParameters();
-            parameters.Add("ContentText", _model.IsApprove == null ? (_approve ? "Bạn muốn duyệt đề xuất này?" : "Bạn không duyệt đề xuất này ?")
-                                                                   : (_model.IsApprove == true ? "Bạn không duyệt đề xuất này ?" : "Bạn muốn duyệt đề xuất này?"));
-            parameters.Add("ButtonText", _model.IsApprove == null ? (_approve ? "Duyệt" : "Không duyệt")
-                                                                  : (_model.IsApprove == true ? "Không duyệt" : "Duyệt"));
+            parameters.Add("ContentText", _model.IsApprove == -1 ? (_approve ? "Bạn muốn duyệt đề xuất này?" : "Bạn không duyệt đề xuất này ?")
+                                                                   : (_model.IsApprove == 1 ? "Bạn không duyệt đề xuất này ?" : "Bạn muốn duyệt đề xuất này?"));
+            parameters.Add("ButtonText", _model.IsApprove == -1 ? (_approve ? "Duyệt" : "Không duyệt")
+                                                                  : (_model.IsApprove == 1 ? "Không duyệt" : "Duyệt"));
             parameters.Add("Color", Color.Primary);
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
@@ -120,21 +120,21 @@ namespace WebAdmin.Components
             {
                 try
                 {
-                    if (_model.IsApprove == true)
+                    if (_model.IsApprove == 1)
                     {
-                        await FeedbackService.ActiveAsync(Feedback.Id, false);
+                        await FeedbackService.ActiveAsync(Feedback.Id, 0);
                     }
-                    else if (_model.IsApprove == false)
+                    else if (_model.IsApprove == 0)
                     {
-                        await FeedbackService.ActiveAsync(Feedback.Id, true);
+                        await FeedbackService.ActiveAsync(Feedback.Id, 1);
                     }
                     else
                     {
-                        await FeedbackService.ActiveAsync(Feedback.Id, _approve);
+                        await FeedbackService.ActiveAsync(Feedback.Id, _approve ? 1 : 0);
                     }
 
                     //success
-                    Error.HandleSuccess("Thao tác");
+                    Error.HandleSuccess("Thao tác thành công");
                     //send a message about the approved
                     MessagingCenter.Send(this, "feedback_approved", _model);
 

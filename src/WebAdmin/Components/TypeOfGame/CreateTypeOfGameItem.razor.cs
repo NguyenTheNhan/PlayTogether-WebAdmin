@@ -45,7 +45,7 @@ namespace WebAdmin.Components
                 //Call Api to add TypeOfGame Item
                 await TypeOfGameService.CreateAsync(GameId, model.Id);
 
-                Error.HandleSuccess("Thêm thể loại cho game");
+                Error.HandleSuccess("Thêm thể loại cho game thành công");
                 //Notify the parent about the newly added item
                 await OnTypeOfGameAdded.InvokeAsync();
             }

@@ -49,7 +49,7 @@ namespace WebAdmin.Components
                 await CharitiesService.CreateAsync(_model);
                 //success
                 Navigation.NavigateTo("/charities");
-                Error.HandleSuccess("Đăng ký tổ chức");
+                Error.HandleSuccess("Đăng ký tổ chức thành công");
             }
             catch (ApiException ex)
             {

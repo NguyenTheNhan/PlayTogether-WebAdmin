@@ -1,4 +1,4 @@
-using AKSoftware.Blazor.Utilities;
+﻿using AKSoftware.Blazor.Utilities;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
@@ -75,6 +75,7 @@ namespace WebAdmin.Components
                 MessagingCenter.Send(this, "rank_edited", result.Content);
 
                 //Notify the parent about the edited item
+                Error.HandleSuccess("Chỉnh sửa thành công");
                 await OnItemEdited.InvokeAsync(result.Content);
             }
             catch (ApiException ex)
