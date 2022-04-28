@@ -16,5 +16,6 @@ namespace WebAdmin.Client.Services.Interfaces
 
         Task ActiveAsync(string id, bool isActive);
 
+
     }
 }

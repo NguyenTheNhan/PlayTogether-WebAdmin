@@ -27,7 +27,7 @@
                     : context.Status.Equals("Reject") ? "Bị từ chối"
                     : context.Status.Equals("OverTime") ? "Quá hạn xác nhận"
                     : context.Status.Equals("Processing") ? "Đang thương lượng"
-                    : context.Status.Equals("Finish") ? "Hoàn thành" : "Đang thuê")
+                    : context.Status.Equals("Complete") ? "Hoàn thành" : "Đang thuê")
                 </MudTd>
                 <MudTd DataLabel="Actions">
                     <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
@@ -57,7 +57,7 @@
                     <MudDatePicker Style="height:10% width:10%" Label="Đến ngày" @bind-Date="_toDate" DateFormat="dd.MM.yyyy" Editable="true" Mask="@(new DateMask("dd.MM.yyyy"))" />
                     <MudSelect T="string" Label="Trạng thái" AnchorOrigin="Origin.BottomCenter" @bind-Value="_status">
                         <MudSelectItem Value='" "'>Tất cả</MudSelectItem>
-                        <MudSelectItem Value='"Finish"'>Hoàn thành</MudSelectItem>
+                        <MudSelectItem Value='"Complete"'>Hoàn thành</MudSelectItem>
                         <MudSelectItem Value='"Finish soon"'>Kết thúc sớm</MudSelectItem>
                         <MudSelectItem Value='"Cancel"'>Bị huỷ</MudSelectItem>
                         <MudSelectItem Value='"Reject"'>Bị từ chối</MudSelectItem>
