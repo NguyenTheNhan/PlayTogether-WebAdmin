@@ -45,7 +45,7 @@
                         <MudText Typo="Typo.subtitle1">Tổng chi phí: @String.Format("{0:#,##0}", _model.TotalPrices)đ </MudText>
                         <MudText Typo="Typo.subtitle1">Giờ thuê thực: @(_model.TimeFinish.Subtract(_model.TimeStart).Hours == 0 ? "" : _model.TimeFinish.Subtract(_model.TimeStart).Hours + " giờ") 
                                                                       @(_model.TimeFinish.Subtract(_model.TimeStart).Minutes == 0 ? "" : _model.TimeFinish.Subtract(_model.TimeStart).Minutes + " phút") 
-                                                                      @(_model.TimeFinish.Subtract(_model.TimeStart).Seconds == 0 ? "" : _model.TimeFinish.Subtract(_model.TimeStart).Seconds + " giây"</MudText>
+                                                                      @(_model.TimeFinish.Subtract(_model.TimeStart).Seconds == 0 ? "" : _model.TimeFinish.Subtract(_model.TimeStart).Seconds + " giây")</MudText>
                         <MudText Typo="Typo.subtitle1">Chi phí thực: @String.Format("{0:#,##0}", _model.FinalPrices)đ</MudText>
                         <MudText Typo="Typo.subtitle1">Lý do kết thúc: </MudText>
                         <MudTextField Value="@_model.Reason" Lines="4" ReadOnly="true" Variant="Variant.Outlined" />
