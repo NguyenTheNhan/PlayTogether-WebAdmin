@@ -14,7 +14,7 @@
                 <MudGrid>                    
                     <MudItem xs="4">
                         <div class="d-flex justify-center">
-                            <MudImage Src="@_hirer.Avatar" Style="width:100%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
+                            <MudImage Src="@_hirer.Avatar" Height="168" Style="width:100%" Class="rounded-circle" />
                         </div>
                         <MudText Align="Align.Center" Typo="Typo.h6" Class="ma-3"> @_hirer.Name </MudText>
                         @*<MudLink onclick="@UserDetail(_hirer.Id)"  Underline="Underline.Always">Xem chi tiết</MudLink>*@
@@ -32,7 +32,7 @@
                     </MudItem>
                     <MudItem xs="4">
                         <div class="d-flex justify-center">
-                            <MudImage Src="@_player.Avatar" Style="width:100%" Class="rounded-circle" ObjectFit="ObjectFit.Contain" />
+                            <MudImage Src="@_player.Avatar" Height="168" Style="width:100%" Class="rounded-circle" />
                         </div>
                         <MudText Align="Align.Center" Typo="Typo.h6" Class="ma-3"> @_player.Name </MudText>
                         <div class="d-flex justify-center">
@@ -46,7 +46,6 @@
                         <MudText Typo="Typo.subtitle1">Giờ thuê thực: @(_model.TimeFinish.Subtract(_model.TimeStart).Hours == 0 ? "" : _model.TimeFinish.Subtract(_model.TimeStart).Hours + " giờ") 
                                                                       @(_model.TimeFinish.Subtract(_model.TimeStart).Minutes == 0 ? "" : _model.TimeFinish.Subtract(_model.TimeStart).Minutes + " phút") 
                                                                       @(_model.TimeFinish.Subtract(_model.TimeStart).Seconds == 0 ? "" : _model.TimeFinish.Subtract(_model.TimeStart).Seconds + " giây")</MudText>
-                        <MudText Typo="Typo.subtitle1">Chi phí thực: @String.Format("{0:#,##0}", _model.FinalPrices)đ</MudText>
                         <MudText Typo="Typo.subtitle1">Lý do kết thúc: </MudText>
                         <MudTextField Value="@_model.Reason" Lines="4" ReadOnly="true" Variant="Variant.Outlined" />
                 @if (!string.IsNullOrWhiteSpace(_errorMessage))
