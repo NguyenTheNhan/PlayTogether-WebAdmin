@@ -105,24 +105,24 @@ namespace WebAdmin.Components
 
                 }
             }
-            else
-            {
-                try
-                {
-                    await GetSystemConfigsAsync();
-                }
-                catch (ApiException ex)
-                {
-                    _errorMessage = ex.ApiErrorResponse.Message;
-                    Error.HandleError(_errorMessage);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    Error.HandleError(ex);
+            //else
+            //{
+            //    try
+            //    {
+            //        await GetSystemConfigsAsync();
+            //    }
+            //    catch (ApiException ex)
+            //    {
+            //        _errorMessage = ex.ApiErrorResponse.Message;
+            //        Error.HandleError(_errorMessage);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Console.WriteLine(ex.Message);
+            //        Error.HandleError(ex);
 
-                }
-            }
+            //    }
+            //}
         }
 
     }

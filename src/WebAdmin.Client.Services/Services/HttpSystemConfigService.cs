@@ -111,5 +111,44 @@ namespace WebAdmin.Client.Services.Services
                 await EditAsync(item.Id, item.Value);
             }
         }
+
+        public async Task MaintainSystem()
+        {
+            var response = await _httpClient.PutAsync($"/api/play-together/v1/admins/maintain", null);
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+                throw new ApiException(errorResponse, response.StatusCode);
+            }
+        }
+
+        public async Task NotifyAll(string title, string message, string referenceLink = "")
+        {
+            var response = await _httpClient.PostAsJsonAsync($"/api/play-together/v1/notification/all", new
+            {
+                title = title,
+                message = message,
+                referenceLink = referenceLink,
+            });
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+                throw new ApiException(errorResponse, response.StatusCode);
+            }
+        }
+        public async Task SendEmail(string toEmail, string subject, string body)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"/api/play-together/v1/email/send", new
+            {
+                toEmail = toEmail,
+                subject = subject,
+                body = body
+            });
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+                throw new ApiException(errorResponse, response.StatusCode);
+            }
+        }
     }
 }

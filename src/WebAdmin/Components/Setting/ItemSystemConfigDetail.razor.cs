@@ -1,5 +1,4 @@
-﻿using AKSoftware.Blazor.Utilities;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
 using WebAdmin.Client.Services.Exceptions;
@@ -22,11 +21,7 @@ namespace WebAdmin.Components
 
         private string _name { get; set; }
 
-        private bool check = false;
-
         public bool _isBusy = false;
-
-        private float _value = 0;
 
         private string _errorMessage = string.Empty;
 
@@ -38,7 +33,6 @@ namespace WebAdmin.Components
             {
 
                 _isBusy = true;
-                //Call Api to edit ToDo Item
                 var result = await SystemConfigService.GetByIdAsync(Item.Id);
                 Item = result.Content;
                 // MessagingCenter.Send(this, "item_config_edited", Item);
@@ -79,20 +73,6 @@ namespace WebAdmin.Components
                     _name = "Phi giao dịch";
                     break;
             }
-        }
-        protected override void OnInitialized()
-        {
-
-            MessagingCenter.Subscribe<SystemConfigList, SystemConfigDetail>(this, "send_save", async (sender, args) =>
-            {
-                await GetItemAsync();
-                StateHasChanged();
-            });
-            MessagingCenter.Subscribe<SystemConfigList, SystemConfigDetail>(this, "send_reload", async (sender, args) =>
-            {
-                await GetItemAsync();
-                StateHasChanged();
-            });
         }
     }
 }

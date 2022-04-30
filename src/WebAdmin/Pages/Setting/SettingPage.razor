@@ -3,5 +3,14 @@
 <PageTitle>Cài đặt | Play Together</PageTitle>
 
 <PAPage Title="Cài đặt hệ thống" BreadcrumbItems="_breadcrumbItems">
-   <SystemConfigList />
+    <MudTabs Elevation="0" ApplyEffectsToContainer="true" >
+    <MudTabPanel Text="Chi tiết cài đặt" >
+        <SystemConfigList />       
+    </MudTabPanel>
+    <MudTabPanel Text="Bảo trì máy chủ">
+        <MaintainServer />
+    </MudTabPanel>
+
+</MudTabs>
+   
 </PAPage>

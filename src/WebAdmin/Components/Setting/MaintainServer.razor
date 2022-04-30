@@ -1,0 +1,35 @@
+﻿@namespace WebAdmin.Components
+
+
+<MudText Typo="Typo.h6" Class="mb-2 mt-6 ml-6"> Đặt lịch bảo trì</MudText>
+<div class=" d-flex justify-start flex-row flex-grow-1 gap-4 ml-6">
+    <MudGrid>
+        <MudItem lg="5" sm="6">
+
+            <MudDatePicker Label="Ngày bảo trì" @bind-Date="_date"
+                           Editable="true" Mask="@(new DateMask("dd.MM.yyyy"))"
+                           DateFormat="dd.MM.yyyy" />
+            <MudTimePicker PickerVariant="PickerVariant.Dialog" Label="Giờ bảo trì" Editable="true" @bind-Time="_time" />
+
+        </MudItem>
+        <MudItem lg="2" sm="4">
+        </MudItem>
+        <MudItem lg="5" sm="0"></MudItem>
+    </MudGrid>
+</div>
+<MudGrid>
+    <MudItem lg="5" md="5" sm="10">
+        @if (!string.IsNullOrWhiteSpace(_errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_errorMessage</MudAlert>
+        }
+
+
+        <div class="d-flex flex-row-reverse mt-2 ">
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mt-5 ml-6" OnClick="SendNotiAsync">Gửi thông báo</MudButton>
+        </div>
+
+    </MudItem>
+</MudGrid>
+
+<MudText Typo="Typo.h6" Class="mb-2 mt-6 ml-6"> Bảo trì hệ thống</MudText>

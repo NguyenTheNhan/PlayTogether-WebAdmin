@@ -16,7 +16,10 @@ namespace WebAdmin.Client.Services.Interfaces
 
         Task EditAsync(string id, float value);
         Task MultiUpdate(List<SystemConfigDetail> systemConfigs);
+        Task MaintainSystem();
+        Task NotifyAll(string title, string message, string referenceLink = "");
 
         Task DeleteAsync(string id);
+        Task SendEmail(string toEmail, string subject, string body);
     }
 }
