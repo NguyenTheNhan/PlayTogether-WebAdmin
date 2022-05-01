@@ -24,6 +24,7 @@ namespace WebAdmin.Components
         private int tmp { get; set; } = 0;
         private bool isMany { get; set; } = false;
         private bool? _isApprove { get; set; } = null;
+        private bool? _isViolate { get; set; } = true;
         private string _errorMessage { get; set; } = string.Empty;
 
         private MudTable<RatingDetail> _table;
@@ -46,7 +47,7 @@ namespace WebAdmin.Components
             _isBusy = true;
             try
             {
-                var result = await RatingService.GetRatingsAsync(_isApprove, state.Page + 1, state.PageSize);
+                var result = await RatingService.GetRatingsAsync(_isApprove, _isViolate, state.Page + 1, state.PageSize);
                 //if (result.TotalCount > 6) isMany = true;
                 _isBusy = false;
                 return new TableData<RatingDetail>
@@ -78,12 +79,15 @@ namespace WebAdmin.Components
             {
                 case 0:
                     _isApprove = null;
+                    _isViolate = true;
                     break;
                 case 1:
                     _isApprove = true;
+                    _isViolate = true;
                     break;
                 case 2:
                     _isApprove = false;
+                    _isViolate = null;
                     break;
             }
 

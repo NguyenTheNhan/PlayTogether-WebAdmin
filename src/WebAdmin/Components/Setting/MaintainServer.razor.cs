@@ -27,6 +27,7 @@ namespace WebAdmin.Components
         public Error Error { get; set; }
 
         private bool _isBusy { get; set; } = false;
+        private bool _check { get; set; } = false;
         private string _errorMessage = string.Empty;
         private DateTime? _date { get; set; } = null;
         private TimeSpan? _time = new TimeSpan(08, 00, 00);
@@ -99,11 +100,65 @@ namespace WebAdmin.Components
 
                 }
             }
-            else
+
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await CheckStatusAsync();
+            //MessagingCenter.Subscribe<MaintainServer, HirerSummary>(this, "maintain", async (sender, args) =>
+            //{
+            //    await CheckStatusAsync();
+            //    StateHasChanged();
+            //});
+            //MessagingCenter.Subscribe<MaintainServer, HirerSummary>(this, "maintain_finish", async (sender, args) =>
+            //{
+            //    await CheckStatusAsync();
+            //    StateHasChanged();
+            //});
+        }
+
+        private async Task CheckStatusAsync()
+        {
+            var result = await HirerService.GetHirersAsync(null, null, null, 1, 1);
+            foreach (var item in result.Content)
+            {
+                if (item.Status.Contains("Maintain"))
+                {
+                    _check = true;
+
+                }
+                else
+                {
+                    _check = false;
+
+                }
+            }
+
+        }
+        private async Task MaintainAsync()
+        {
+            _errorMessage = "";
+            var parameters = new DialogParameters();
+            parameters.Add("ContentText", _check ? "Hoàn tất bảo trì?" : "Bắt đầu bảo trì server?");
+            parameters.Add("ButtonText", _check ? "Hoàn tất" : "Bảo trì");
+            parameters.Add("Color", Color.Primary);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+            var dialog = DialogService.Show<ConfirmationDialog>("Xác nhận", parameters, options);
+
+            var confirmationResult = await dialog.Result;
+            if (!confirmationResult.Cancelled)
             {
                 try
                 {
+                    await SystemConfigService.MaintainSystem();
+                    _check = !_check;
+                    StateHasChanged();
 
+                    //  MessagingCenter.Send(this, "maintain", result.Content);
+                    Error.HandleSuccess(_check ? "Server hoàn tất bảo trì" : "Server vào trạng thái bảo trì");
                 }
                 catch (ApiException ex)
                 {
@@ -117,6 +172,7 @@ namespace WebAdmin.Components
 
                 }
             }
+
         }
     }
 }

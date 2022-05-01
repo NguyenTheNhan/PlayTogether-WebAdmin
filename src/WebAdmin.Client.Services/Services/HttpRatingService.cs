@@ -52,9 +52,9 @@ namespace WebAdmin.Client.Services.Services
             }
         }
 
-        public async Task<PagedList<RatingDetail>> GetRatingsAsync(bool? isApprove = null, int pageNumber = 1, int pageSize = 10)
+        public async Task<PagedList<RatingDetail>> GetRatingsAsync(bool? isApprove = null, bool? isViolate = null, int pageNumber = 1, int pageSize = 10)
         {
-            var response = await _httpClient.GetAsync($"/api/play-together/v1/rating/violates?IsApprove={isApprove}&PageNumber={pageNumber}&PageSize={pageSize}&IsNew=true");
+            var response = await _httpClient.GetAsync($"/api/play-together/v1/rating/violates?IsApprove={isApprove}&IsViolate={isViolate}&PageNumber={pageNumber}&PageSize={pageSize}&IsNew=true");
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<PagedList<RatingDetail>>();

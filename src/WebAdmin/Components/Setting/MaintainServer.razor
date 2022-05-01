@@ -32,3 +32,11 @@
 </MudGrid>
 
 <MudText Typo="Typo.h6" Class="mb-2 mt-6 ml-6"> Bảo trì hệ thống</MudText>
+<MudGrid>
+    <MudItem lg="5" md="5" sm="10">
+        <div class="d-flex flex-row-reverse mt-2 ">
+            <MudButton Style="width:200px;" Variant="_check ? Variant.Filled : Variant.Outlined" Color="Color.Primary" Class="mt-5 ml-6" OnClick="MaintainAsync" >@(_check ? "Hoàn tất bảo trì" : "Bảo trì hệ thống" )</MudButton>
+        </div>
+
+    </MudItem>
+</MudGrid>
