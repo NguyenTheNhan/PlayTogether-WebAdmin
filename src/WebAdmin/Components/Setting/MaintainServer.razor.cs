@@ -70,6 +70,10 @@ namespace WebAdmin.Components
 
                     var result = await HirerService.GetHirersAsync(null, null, null, 1, 100000);
 
+                    await SystemConfigService.NotifyAll("Thông báo bảo trì hệ thống", "Hệ thống sẽ bảo trì lúc '" + _time + " ngày " + _date?.ToString("d", CultureInfo.GetCultureInfo("en-GB")) +
+                                                      "'. Thời gian bảo trì dự tính là 30 phút." +
+                                                      " Vui lòng không sử dụng dịch vụ của hệ thống trong khoảng thời gian này để tránh những " +
+                                                      " sai sót và mất mát không cần thiết. PlayTogether xin cảm ơn!", "");
                     foreach (var item in result.Content)
                     {
                         await SystemConfigService.SendEmail(item.Email, "Thông báo bảo trì hệ thống",
