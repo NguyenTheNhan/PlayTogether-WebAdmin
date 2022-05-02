@@ -1,0 +1,36 @@
+﻿@namespace WebAdmin.Components
+
+
+
+<MudGrid>
+    <MudItem lg="5" md="5" sm="10">
+        <div class="d-flex mt-6 ">
+        <MudText Typo="Typo.h6" Class="mb-2  ml-6">Train model đề xuất người dùng</MudText>
+        <MudSpacer/>
+            <MudButton Style="width:150px;" Variant="Variant.Outlined" Color="Color.Primary" OnClick="TrainModelAsync" >Train model</MudButton>
+        </div>
+
+    </MudItem>
+</MudGrid>
+<div class=" d-flex justify-start flex-row flex-grow-1 gap-4">
+        <MudGrid>
+            <MudItem lg="3" sm="6">
+                <MudText Class=" ml-8 pt-5 object-left">Root Mean Square Error:</MudText>
+            </MudItem>
+            <MudItem lg="3" sm="4">                
+                <MudText Class=" mr-4 pt-5 object-left">@_rmse</MudText>
+            </MudItem>
+            <MudItem lg="6" sm="0"></MudItem>
+        </MudGrid>
+    </div>
+<div class=" d-flex justify-start flex-row flex-grow-1 gap-4 mt-2">
+        <MudGrid>
+            <MudItem lg="3" sm="6">
+                <MudText Class=" ml-8 pt-5 object-left">R-Square:</MudText>
+            </MudItem>
+            <MudItem lg="3" sm="4">                
+                <MudText Class=" mr-4 pt-5 object-left">@_rsq</MudText>
+            </MudItem>
+            <MudItem lg="6" sm="0"></MudItem>
+        </MudGrid>
+    </div>

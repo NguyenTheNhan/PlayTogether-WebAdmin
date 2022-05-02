@@ -121,11 +121,40 @@ namespace WebAdmin.Client.Services.Services
                 throw new ApiException(errorResponse, response.StatusCode);
             }
         }
+        public async Task<ApiResponse<TrainModelResponse>> TrainModelRecommendation()
+        {
+            var response = await _httpClient.GetAsync($"/api/play-together/v1/admins/train-model");
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<TrainModelResponse>>();
+                return result;
+            }
+            else
+            {
+                var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+                throw new ApiException(errorResponse, response.StatusCode);
+            }
+        }
 
         public async Task NotifyAll(string title, string message, string referenceLink = "")
         {
             var response = await _httpClient.PostAsJsonAsync($"/api/play-together/v1/notification/all", new
             {
+                title = title,
+                message = message,
+                referenceLink = referenceLink,
+            });
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+                throw new ApiException(errorResponse, response.StatusCode);
+            }
+        }
+        public async Task SendNotification(string receiverId, string title, string message, string referenceLink = "")
+        {
+            var response = await _httpClient.PostAsJsonAsync($"/api/play-together/v1/notification", new
+            {
+                receiverId = receiverId,
                 title = title,
                 message = message,
                 referenceLink = referenceLink,

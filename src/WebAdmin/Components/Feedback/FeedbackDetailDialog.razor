@@ -6,7 +6,7 @@
         <MudDivider Class="mt-1" DividerType="DividerType.FullWidth" />
     </TitleContent>
     <DialogContent>
-        <MudContainer MaxWidth="MaxWidth.Small">
+        <MudContainer MaxWidth="MaxWidth.Small" Style="min-width:648px; min-height:236px">
             <EditForm Model="_model">
                 <MudGrid>
                     <MudItem xs="5">
@@ -15,7 +15,7 @@
                             <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text"
                                      Style="min-width:200px" />
                             <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Rectangle"
-                                     Height="40px" Style="min-width:200px" />
+                                     Height="100px" Style="min-width:200px" />
                             <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text"
                                      Style="min-width:200px" />
                             <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text"
@@ -40,6 +40,8 @@
                             <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
                             <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
                             <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
+                            <MudSkeleton Animation="Animation.Wave" SkeletonType="SkeletonType.Text" Style="min-width:250px" />
                         }
                         else
                         {
@@ -49,8 +51,8 @@
                                          @(_model.IsApprove == -1 ? "Chưa duyệt" : _model.IsApprove == 1 ? "Đã duyệt" : "Không duyệt")</MudText>
                             </MudPaper>
                             <MudText Typo="Typo.subtitle1" Class="mt-2">Loại yêu cầu: @_type</MudText>
-                            <MudText Typo="Typo.subtitle1">Ngày tạo yêu cầu: @Feedback.CreatedDate </MudText>
-                            <MudText Typo="Typo.subtitle1">Nội dung: </MudText>
+                            <MudText Typo="Typo.subtitle1" Class="mt-1">Ngày tạo yêu cầu: @Feedback.CreatedDate </MudText>
+                            <MudText Typo="Typo.subtitle1" Class="mt-1">Nội dung: </MudText>
                             <MudTextField Value="@_model.Message" Lines="2" ReadOnly="true" Variant="Variant.Outlined" />
                         }
                     </MudItem>

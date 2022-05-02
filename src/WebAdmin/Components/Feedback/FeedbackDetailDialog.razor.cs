@@ -16,6 +16,8 @@ namespace WebAdmin.Components
         [Inject]
         public IFeedbackService FeedbackService { get; set; }
         [Inject]
+        public ISystemConfigService SystemConfigService { get; set; }
+        [Inject]
         public IHirerService HirerService { get; set; }
 
         [Inject]
@@ -131,6 +133,12 @@ namespace WebAdmin.Components
                     else
                     {
                         await FeedbackService.ActiveAsync(Feedback.Id, _approve ? 1 : 0);
+                        if (_approve)
+                        {
+                            await SystemConfigService.SendNotification(_model.UserId, "Cảm ơn bạn đã đóng góp ý kiến!", "Cảm ơn bạn đã đóng góp ý kiến! " +
+                                                                                "Phản hồi của bạn đã giúp hệ thống ngày càng hoàn thiện hơn."
+                                                                              , _model.Id);
+                        }
                     }
 
                     //success
