@@ -92,6 +92,13 @@ namespace WebAdmin.Components
                     Error.HandleSuccess("Cập nhật thành công");
 
                     await GetSystemConfigsAsync();
+                    await SystemConfigService.NotifyAll("Cập nhật hệ thống", "Các thông số cài đặt đã được thay đổi trong hệ thống. " +
+                                                                             $"Thời hạn chấp nhận yêu cầu: {_systemConfigs[0].Value} phút. " +
+                                                                             $"Thời hạn tiền nhận thuê khả dụng: {_systemConfigs[1].Value} giờ." +
+                                                                             $"Thời hạn cho phép đánh giá và báo cáo: {_systemConfigs[2].Value} giờ. " +
+                                                                             $"Phi giao dịch: {_systemConfigs[3].Value * 100}%", "");
+                    StateHasChanged();
+
                 }
                 catch (ApiException ex)
                 {
