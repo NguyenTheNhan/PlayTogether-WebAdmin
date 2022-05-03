@@ -15,6 +15,8 @@ namespace WebAdmin.Components
     {
         [Inject]
         public ISystemConfigService SystemConfigService { get; set; }
+        [Inject]
+        public IHirerService HirerService { get; set; }
 
         [Inject]
         public NavigationManager Navigation { get; set; }
@@ -26,6 +28,7 @@ namespace WebAdmin.Components
         public Error Error { get; set; }
 
         private bool _isBusy { get; set; } = false;
+        private bool _check { get; set; } = false;
         private string _errorMessage = string.Empty;
 
         private List<SystemConfigDetail> _systemConfigs = new();
@@ -34,6 +37,8 @@ namespace WebAdmin.Components
         protected async override Task OnInitializedAsync()
         {
             await GetSystemConfigsAsync();
+            await CheckStatusAsync();
+
         }
 
         private async Task GetSystemConfigsAsync(string query = "", int pageNumber = 1, int pageSize = 10)
@@ -59,6 +64,27 @@ namespace WebAdmin.Components
 
 
         }
+
+
+        private async Task CheckStatusAsync()
+        {
+            var result = await HirerService.GetHirersAsync(null, null, null, 1, 1);
+            foreach (var item in result.Content)
+            {
+                if (item.Status.Contains("Maintain"))
+                {
+                    _check = true;
+
+                }
+                else
+                {
+                    _check = false;
+
+                }
+            }
+
+        }
+
         public async Task Reload()
         {
             //foreach (var item in _systemConfigs)
