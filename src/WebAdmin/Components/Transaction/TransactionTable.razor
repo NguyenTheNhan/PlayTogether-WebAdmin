@@ -8,6 +8,7 @@
                    Hover="true" @ref="_table" Dense="true" Height="380px" FixedHeader="true"
                    Striped="true" >            
             <HeaderContent>
+                <MudTh><MudTableSortLabel SortLabel="sign_field" T="TransactionSummary">Mã giao dịch</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="TransactionSummary">Giao dịch</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="TransactionSummary">Loại giao dịch</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="sign_field" T="TransactionSummary">Ngày giao dịch</MudTableSortLabel></MudTh>
@@ -15,6 +16,7 @@
                 @*<MudTh><MudTableSortLabel SortLabel="position_field" T="TransactionSummary">Actions</MudTableSortLabel></MudTh>*@
             </HeaderContent>
             <RowTemplate>
+                 <MudTd DataLabel="Loại giao dịch">@context.Id</MudTd>
                 <MudTd DataLabel="Giao dịch">@(context.Operation.Equals("Add") ? "+" : "-") @String.Format("{0:#,##0}", context.Money)đ</MudTd>
                 <MudTd DataLabel="Loại giao dịch">@context.TypeOfTransaction</MudTd>
                 <MudTd DataLabel="Ngày giao dịch"> @(context.CreatedDate.ToString(CultureInfo.GetCultureInfo("en-GB")))</MudTd>
